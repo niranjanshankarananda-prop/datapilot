@@ -3,80 +3,217 @@
 {% block title %}DataPilot - Upload Data{% endblock %}
 
 {% block content %}
-<div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-2xl w-full space-y-8">
-        <div class="text-center">
-            <h1 class="text-4xl font-extrabold text-gray-900">DataPilot</h1>
-            <p class="mt-4 text-xl text-gray-600">Upload your data and get AI-powered insights</p>
+<div class="min-h-screen flex flex-col py-12 px-4 sm:px-6 lg:px-8 relative">
+
+    <!-- Decorative background orbs -->
+    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-600/5 rounded-full blur-3xl pointer-events-none"></div>
+
+    <!-- Top Bar: API Key Settings -->
+    <div class="relative z-10 max-w-4xl w-full mx-auto mb-6">
+        <div class="glass-card rounded-xl px-4 py-3 flex items-center justify-between animate-fade-in">
+            <div class="flex items-center gap-3">
+                <div class="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center">
+                    <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" />
+                    </svg>
+                </div>
+                <span class="text-xs font-medium" id="api-key-status-home">No key configured</span>
+            </div>
+            <button type="button" onclick="document.getElementById('api-settings-panel').classList.toggle('hidden')" class="text-xs text-gray-400 hover:text-white bg-surface-300/60 hover:bg-surface-300 border border-white/[0.06] px-3 py-1.5 rounded-lg transition-all">
+                Settings
+            </button>
+        </div>
+        <!-- Collapsible API Key Panel -->
+        <div id="api-settings-panel" class="hidden mt-2 glass-card rounded-xl p-4 animate-slide-down">
+            <div class="flex items-end gap-3">
+                <div class="flex-1">
+                    <label class="block text-xs text-gray-400 mb-1.5">API Key <span class="text-gray-600">(stored in your browser)</span></label>
+                    <input type="password" id="api-key-input-home" placeholder="gsk_... or sk-or-... or Together key"
+                        class="w-full bg-surface-300/60 border border-white/[0.06] rounded-lg px-3 py-2 text-sm text-gray-200 placeholder-gray-600 focus:outline-none focus:ring-1 focus:ring-indigo-500/40 font-mono">
+                </div>
+                <button type="button" onclick="saveApiKey()" class="text-xs bg-emerald-600/80 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg transition-colors font-medium whitespace-nowrap">Save Key</button>
+            </div>
+            <div class="flex gap-3 mt-2.5">
+                <span class="text-[10px] text-gray-600">Get a free key:</span>
+                <a href="https://console.groq.com/keys" target="_blank" class="text-[11px] text-indigo-400 hover:text-indigo-300 underline underline-offset-2">Groq</a>
+                <a href="https://api.together.xyz/settings/api-keys" target="_blank" class="text-[11px] text-emerald-400 hover:text-emerald-300 underline underline-offset-2">Together AI</a>
+                <a href="https://openrouter.ai/keys" target="_blank" class="text-[11px] text-purple-400 hover:text-purple-300 underline underline-offset-2">OpenRouter</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-2xl w-full space-y-8 relative z-10 animate-fade-in mx-auto flex-1 flex flex-col items-center justify-center">
+        <!-- Logo and Header -->
+        <div class="text-center space-y-4">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-500 to-cyan-400 shadow-lg shadow-indigo-500/25 mb-2 animate-bounce" style="animation-duration: 2s;">
+                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-1.5M12 12l3-1.5M12 12l-3-1.5M12 12V9.75M12 9.75L9 8.25M12 9.75l3-1.5" />
+                </svg>
+            </div>
+            <h1 class="text-5xl font-extrabold tracking-tight">
+                <span class="bg-gradient-to-r from-white via-gray-100 to-gray-300 bg-clip-text text-transparent">Data</span><span class="bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">Pilot</span>
+            </h1>
+            <p class="text-lg text-gray-400 font-light max-w-md mx-auto">Upload your data and get AI-powered insights in seconds</p>
+
+            <!-- Animated demo queries -->
+            <div class="mt-2 h-8 flex items-center justify-center">
+                <span class="text-sm text-gray-600 mr-1.5">Try:</span>
+                <span id="typing-demo" class="text-sm text-indigo-400 font-mono"></span>
+                <span class="animate-pulse text-indigo-400">|</span>
+            </div>
         </div>
 
-        <div class="mt-8 bg-white py-8 px-4 shadow-xl rounded-lg sm:px-10">
-            <form 
-                action="/upload" 
-                method="post" 
-                enctype="multipart/form-data" 
+        <!-- Main Upload Card -->
+        <div class="glass-card gradient-border rounded-2xl p-8 shadow-2xl shadow-black/20 hover-lift animate-slide-up">
+            <form
+                action="/upload"
+                method="post"
+                enctype="multipart/form-data"
                 class="space-y-6"
-                hx-post="/upload" 
-                hx-target="body"
-                hx-swap="outerHTML"
             >
+                <!-- File Upload Zone -->
                 <div>
-                    <label for="file-upload" class="block text-sm font-medium text-gray-700">
-                        Upload File
-                    </label>
-                    <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md hover:border-indigo-500 transition-colors cursor-pointer" id="drop-zone">
-                        <div class="space-y-1 text-center">
-                            <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-                            <div class="flex text-sm text-gray-600 justify-center">
-                                <label for="file-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none">
-                                    <span>Upload a file</span>
-                                    <input id="file-upload" name="file" type="file" class="sr-only" accept=".csv,.tsv,.xlsx,.xls">
-                                </label>
-                                <p class="pl-1">or drag and drop</p>
+                    <span class="block text-sm font-medium text-gray-300 mb-2">Upload File</span>
+                    <div class="relative mt-1 flex justify-center px-6 pt-8 pb-8 border-2 border-dashed border-gray-600/50 rounded-xl hover:border-indigo-500/60 hover:bg-indigo-500/5 transition-all duration-300 cursor-pointer group" id="drop-zone">
+                        <!-- Invisible file input covering entire zone -->
+                        <input id="file-upload" name="file" type="file"
+                            class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                            accept=".csv,.tsv,.xlsx,.xls">
+                        <div class="space-y-3 text-center">
+                            <div class="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-surface-300/50 group-hover:bg-indigo-500/10 transition-colors duration-300">
+                                <svg class="h-7 w-7 text-gray-500 group-hover:text-indigo-400 transition-colors duration-300" stroke="currentColor" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                                </svg>
+                            </div>
+                            <div class="flex text-sm text-gray-400 justify-center">
+                                <span class="font-semibold text-indigo-400">Choose a file</span>
+                                <p class="pl-1.5">or drag and drop</p>
                             </div>
                             <p class="text-xs text-gray-500">CSV, TSV, Excel up to 100MB</p>
                         </div>
                     </div>
                 </div>
 
-                <div id="file-info" class="hidden">
-                    <div class="flex items-center justify-between bg-indigo-50 rounded-md p-3">
-                        <span id="filename" class="text-sm font-medium text-indigo-700"></span>
-                        <button type="button" id="remove-file" class="text-indigo-500 hover:text-indigo-700">
-                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                <!-- File Info (shown after selection) -->
+                <div id="file-info" class="hidden animate-slide-down">
+                    <div class="flex items-center justify-between bg-indigo-500/10 border border-indigo-500/20 rounded-xl p-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-indigo-500/20 flex items-center justify-center">
+                                <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                                </svg>
+                            </div>
+                            <span id="filename" class="text-sm font-medium text-indigo-300"></span>
+                        </div>
+                        <button type="button" id="remove-file" class="p-1.5 rounded-lg text-gray-500 hover:text-red-400 hover:bg-red-500/10 transition-all duration-200">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                         </button>
                     </div>
                 </div>
 
-                <div class="border-t border-gray-200 pt-6">
-                    <p class="text-sm text-gray-500 text-center mb-4">or paste tabular data</p>
-                    <textarea 
-                        name="pasted-data" 
-                        placeholder="Paste your data here (tab or comma separated)..." 
-                        class="w-full h-40 p-3 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 font-mono text-sm"
+                <!-- Divider -->
+                <div class="relative py-2">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-gray-700/50"></div>
+                    </div>
+                    <div class="relative flex justify-center">
+                        <span class="bg-surface-200/80 backdrop-blur px-4 text-xs text-gray-500 uppercase tracking-widest">or paste data</span>
+                    </div>
+                </div>
+
+                <!-- Paste Area -->
+                <div>
+                    <textarea
+                        name="pasted-data"
+                        placeholder="Paste your data here (tab or comma separated)..."
+                        class="w-full h-36 p-4 bg-surface-300/40 border border-gray-700/40 rounded-xl text-gray-300 placeholder-gray-600 font-mono text-sm focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500/50 transition-all duration-200 resize-none"
                     ></textarea>
                 </div>
 
+                <!-- Submit Button -->
                 <div>
-                    <button 
-                        type="submit" 
-                        class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
+                    <button
+                        type="submit"
+                        class="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 via-indigo-500 to-purple-600 hover:from-indigo-500 hover:via-indigo-400 hover:to-purple-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:ring-offset-2 focus:ring-offset-surface shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30 transition-all duration-300 transform hover:scale-[1.01]"
                     >
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" />
+                        </svg>
                         Analyze Data
                     </button>
                 </div>
             </form>
         </div>
 
-        <div class="text-center text-sm text-gray-500">
-            <p>Supported formats: CSV, TSV, Excel (.xlsx, .xls)</p>
+        <!-- How It Works -->
+        <div class="glass-card rounded-2xl p-6 animate-slide-up" style="animation-delay: 0.1s;">
+            <h3 class="text-sm font-semibold text-white mb-4 text-center">How It Works</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="text-center space-y-2">
+                    <div class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 font-bold text-sm">1</div>
+                    <p class="text-xs text-gray-300 font-medium">Upload your CSV/Excel file</p>
+                    <p class="text-[11px] text-gray-600">Supports CSV, TSV, and Excel formats up to 100MB</p>
+                </div>
+                <div class="text-center space-y-2">
+                    <div class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 font-bold text-sm">2</div>
+                    <p class="text-xs text-gray-300 font-medium">Ask questions in plain English</p>
+                    <p class="text-[11px] text-gray-600">"Show top 10 products by revenue" or "What's the average salary?"</p>
+                </div>
+                <div class="text-center space-y-2">
+                    <div class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-400 font-bold text-sm">3</div>
+                    <p class="text-xs text-gray-300 font-medium">Get instant answers</p>
+                    <p class="text-[11px] text-gray-600">AI generates code, runs it securely, and shows results as tables or values</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feedback Section -->
+        <div class="glass-card rounded-2xl p-6 animate-slide-up" style="animation-delay: 0.2s;">
+            <h3 class="text-sm font-semibold text-white mb-3 text-center">Share Your Experience</h3>
+            <form id="feedback-form" onsubmit="submitFeedback(event)">
+                <div class="flex gap-3 justify-center mb-3" id="rating-stars">
+                    <button type="button" class="rating-star text-2xl text-gray-700 hover:text-yellow-400 transition-colors" data-rating="1">&#9733;</button>
+                    <button type="button" class="rating-star text-2xl text-gray-700 hover:text-yellow-400 transition-colors" data-rating="2">&#9733;</button>
+                    <button type="button" class="rating-star text-2xl text-gray-700 hover:text-yellow-400 transition-colors" data-rating="3">&#9733;</button>
+                    <button type="button" class="rating-star text-2xl text-gray-700 hover:text-yellow-400 transition-colors" data-rating="4">&#9733;</button>
+                    <button type="button" class="rating-star text-2xl text-gray-700 hover:text-yellow-400 transition-colors" data-rating="5">&#9733;</button>
+                </div>
+                <textarea id="feedback-text" placeholder="What did you like? What can be improved?"
+                    class="w-full h-20 p-3 bg-surface-300/40 border border-gray-700/40 rounded-xl text-gray-300 placeholder-gray-600 text-sm focus:ring-1 focus:ring-indigo-500/40 focus:border-indigo-500/50 transition-all duration-200 resize-none mb-3"></textarea>
+                <button type="submit" class="w-full py-2 px-4 rounded-lg text-xs font-medium text-white bg-surface-300/60 hover:bg-indigo-600/60 border border-white/[0.06] hover:border-indigo-500/30 transition-all">
+                    Submit Feedback
+                </button>
+            </form>
+            <div id="feedback-thanks" class="hidden text-center py-4">
+                <p class="text-emerald-400 text-sm font-medium">Thank you for your feedback!</p>
+            </div>
+        </div>
+
+        <!-- Footer Info -->
+        <div class="text-center space-y-3">
+            <div class="flex items-center justify-center gap-6 text-xs text-gray-600">
+                <span class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500/60"></span>
+                    CSV
+                </span>
+                <span class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-blue-500/60"></span>
+                    TSV
+                </span>
+                <span class="flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-purple-500/60"></span>
+                    Excel (.xlsx, .xls)
+                </span>
+            </div>
+            <p class="text-[10px] text-gray-700">Built with FastAPI, Pandas, and AI</p>
         </div>
     </div>
 </div>
+{% endblock %}
 
 {% block scripts %}
 <script>
@@ -112,18 +249,18 @@
 
     dropZone.addEventListener('dragover', function(e) {
         e.preventDefault();
-        dropZone.classList.add('border-indigo-500', 'bg-indigo-50');
+        dropZone.classList.add('border-indigo-500/60', 'bg-indigo-500/10');
     });
 
     dropZone.addEventListener('dragleave', function(e) {
         e.preventDefault();
-        dropZone.classList.remove('border-indigo-500', 'bg-indigo-50');
+        dropZone.classList.remove('border-indigo-500/60', 'bg-indigo-500/10');
     });
 
     dropZone.addEventListener('drop', function(e) {
         e.preventDefault();
-        dropZone.classList.remove('border-indigo-500', 'bg-indigo-50');
-        
+        dropZone.classList.remove('border-indigo-500/60', 'bg-indigo-500/10');
+
         const files = e.dataTransfer.files;
         if (files.length > 0) {
             fileInput.files = files;
@@ -131,6 +268,98 @@
             fileInput.dispatchEvent(event);
         }
     });
+
+    // API Key management
+    function getProviderName(key) {
+        if (key.startsWith('gsk_')) return 'Groq';
+        if (key.startsWith('sk-or-')) return 'OpenRouter';
+        return 'Together AI';
+    }
+
+    function updateApiKeyStatus() {
+        const key = localStorage.getItem('datapilot_api_key') || '';
+        const status = document.getElementById('api-key-status-home');
+        if (key) {
+            status.textContent = getProviderName(key) + ' key configured';
+            status.className = 'text-xs text-emerald-400';
+            document.getElementById('api-key-input-home').placeholder = '••••••' + key.slice(-6) + ' (saved)';
+        } else {
+            status.textContent = 'No key configured — get a free key below';
+            status.className = 'text-xs text-amber-400';
+        }
+    }
+
+    function saveApiKey() {
+        const input = document.getElementById('api-key-input-home');
+        const key = input.value.trim();
+        if (key) {
+            localStorage.setItem('datapilot_api_key', key);
+            input.value = '';
+        } else {
+            localStorage.removeItem('datapilot_api_key');
+        }
+        updateApiKeyStatus();
+    }
+
+    updateApiKeyStatus();
+
+    // Typing animation for demo queries
+    const demoQueries = [
+        "Show me the top 10 products by revenue",
+        "What is the average salary by department?",
+        "How many customers per region?",
+        "Find rows where profit margin > 30%",
+        "Total sales by quarter",
+    ];
+    let queryIdx = 0, charIdx = 0, isDeleting = false;
+    const typingEl = document.getElementById('typing-demo');
+
+    function typeDemo() {
+        const current = demoQueries[queryIdx];
+        if (!isDeleting) {
+            typingEl.textContent = current.substring(0, charIdx + 1);
+            charIdx++;
+            if (charIdx === current.length) {
+                isDeleting = true;
+                setTimeout(typeDemo, 2000);
+                return;
+            }
+            setTimeout(typeDemo, 50);
+        } else {
+            typingEl.textContent = current.substring(0, charIdx - 1);
+            charIdx--;
+            if (charIdx === 0) {
+                isDeleting = false;
+                queryIdx = (queryIdx + 1) % demoQueries.length;
+                setTimeout(typeDemo, 400);
+                return;
+            }
+            setTimeout(typeDemo, 30);
+        }
+    }
+    typeDemo();
+
+    // Star rating
+    let selectedRating = 0;
+    document.querySelectorAll('.rating-star').forEach(function(star) {
+        star.addEventListener('click', function() {
+            selectedRating = parseInt(this.dataset.rating);
+            document.querySelectorAll('.rating-star').forEach(function(s, i) {
+                s.style.color = i < selectedRating ? '#facc15' : '';
+            });
+        });
+    });
+
+    // Feedback submit
+    function submitFeedback(e) {
+        e.preventDefault();
+        const text = document.getElementById('feedback-text').value;
+        // Store in localStorage for now
+        const feedbacks = JSON.parse(localStorage.getItem('datapilot_feedback') || '[]');
+        feedbacks.push({ rating: selectedRating, text: text, date: new Date().toISOString() });
+        localStorage.setItem('datapilot_feedback', JSON.stringify(feedbacks));
+        document.getElementById('feedback-form').classList.add('hidden');
+        document.getElementById('feedback-thanks').classList.remove('hidden');
+    }
 </script>
-{% endblock %}
 {% endblock %}

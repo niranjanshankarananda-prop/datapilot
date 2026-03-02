@@ -2,50 +2,135 @@
 
 {% block title %}DataPilot - Workspace: {{ dataset.filename }}{% endblock %}
 
+{% block extra_head %}
+<style>
+    /* Data table styling */
+    .data-table-wrapper { position: relative; }
+    .data-table-wrapper table thead th {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+    .data-table-wrapper table tbody tr:nth-child(even) {
+        background: rgba(255, 255, 255, 0.015);
+    }
+    .data-table-wrapper table tbody tr:hover {
+        background: rgba(99, 102, 241, 0.06);
+    }
+
+    /* Data type color badges */
+    .dtype-int64, .dtype-float64, .dtype-int32, .dtype-float32, .dtype-number { color: #6ee7b7; background: rgba(16, 185, 129, 0.1); }
+    .dtype-object, .dtype-string, .dtype-str { color: #93c5fd; background: rgba(59, 130, 246, 0.1); }
+    .dtype-datetime64, .dtype-datetime, .dtype-date { color: #c4b5fd; background: rgba(139, 92, 246, 0.1); }
+    .dtype-bool, .dtype-boolean { color: #fca5a5; background: rgba(239, 68, 68, 0.1); }
+    .dtype-category { color: #fdba74; background: rgba(245, 158, 11, 0.1); }
+
+    /* Chat query input focus ring */
+    .query-input-wrapper:focus-within {
+        border-color: rgba(99, 102, 241, 0.5);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+
+    /* Profile card progress bars */
+    .null-bar { transition: width 0.6s ease-out; }
+
+    /* Workspace panel scrolling */
+    .workspace-panel { scrollbar-gutter: stable; }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="min-h-screen flex flex-col">
-    <header class="bg-white shadow">
-        <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-            <div class="flex items-center space-x-4">
-                <a href="/" class="text-indigo-600 hover:text-indigo-800">
-                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                    </svg>
-                </a>
-                <h1 class="text-xl font-bold text-gray-900">{{ dataset.filename }}</h1>
-                <span class="text-sm text-gray-500">{{ dataset.row_count }} rows, {{ dataset.column_count }} columns</span>
-            </div>
-            <div class="flex items-center space-x-2">
-                <span class="text-sm text-gray-500">{{ dataset.file_type|upper }}</span>
+
+    <!-- Top Navigation Bar -->
+    <header class="sticky top-0 z-50 glass-card border-b border-white/5">
+        <div class="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Left: Back + Branding -->
+                <div class="flex items-center space-x-4">
+                    <a href="/" class="group flex items-center justify-center w-9 h-9 rounded-lg bg-surface-300/50 hover:bg-indigo-500/10 border border-white/5 hover:border-indigo-500/30 transition-all duration-200">
+                        <svg class="h-4 w-4 text-gray-500 group-hover:text-indigo-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                        </svg>
+                    </a>
+                    <div class="hidden sm:flex items-center space-x-3">
+                        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center shadow-md shadow-indigo-500/20">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5" />
+                            </svg>
+                        </div>
+                        <span class="text-sm font-semibold text-white/80">DataPilot</span>
+                    </div>
+                    <div class="h-6 w-px bg-white/10 hidden sm:block"></div>
+                    <div class="flex items-center space-x-3 min-w-0">
+                        <h1 class="text-sm font-semibold text-white truncate max-w-[200px] lg:max-w-[300px]">{{ dataset.filename }}</h1>
+                    </div>
+                </div>
+
+                <!-- Right: Metadata pills -->
+                <div class="flex items-center space-x-2">
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-surface-300/60 border border-white/5 text-xs text-gray-400">
+                        <svg class="w-3.5 h-3.5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 01-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-7.5A1.125 1.125 0 0112 18.375m9.75-12.75c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125m19.5 0v1.5c0 .621-.504 1.125-1.125 1.125M2.25 5.625v1.5c0 .621.504 1.125 1.125 1.125m0 0h17.25m-17.25 0h7.5c.621 0 1.125.504 1.125 1.125M3.375 8.25c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m17.25-3.75h-7.5c-.621 0-1.125.504-1.125 1.125m8.625-1.125c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125M12 10.875v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125M12 12h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125M21.375 12c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125M12 14.625v-1.5m0 1.5c0 .621.504 1.125 1.125 1.125M12 14.625c0 .621-.504 1.125-1.125 1.125m1.125 0c-.621 0-1.125-.504-1.125-1.125" />
+                        </svg>
+                        {{ dataset.row_count }} rows
+                    </span>
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-surface-300/60 border border-white/5 text-xs text-gray-400">
+                        <svg class="w-3.5 h-3.5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 4.5v15m6-15v15m-10.875 0h15.75c.621 0 1.125-.504 1.125-1.125V5.625c0-.621-.504-1.125-1.125-1.125H4.125C3.504 4.5 3 5.004 3 5.625v12.75c0 .621.504 1.125 1.125 1.125z" />
+                        </svg>
+                        {{ dataset.column_count }} cols
+                    </span>
+                    <span class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-surface-300/60 border border-white/5 text-xs text-gray-400 uppercase font-mono">
+                        {{ dataset.file_type|upper }}
+                    </span>
+                </div>
             </div>
         </div>
     </header>
 
-    <main class="flex-1 max-w-7xl w-full mx-auto py-6 px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div class="space-y-6">
-                <div class="bg-white shadow rounded-lg overflow-hidden">
-                    <div class="px-4 py-3 border-b border-gray-200 bg-gray-50">
-                        <h2 class="text-lg font-medium text-gray-900">Data Preview</h2>
-                        <p class="text-sm text-gray-500">First 20 rows</p>
+    <!-- Main Content Area -->
+    <main class="flex-1 max-w-[1800px] w-full mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-6">
+
+            <!-- ========== LEFT PANEL: Data Preview + Profile ========== -->
+            <div class="xl:col-span-7 space-y-6">
+
+                <!-- Data Preview Card -->
+                <div class="glass-card gradient-border rounded-2xl overflow-hidden animate-slide-up">
+                    <div class="px-5 py-4 border-b border-white/5 flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 rounded-lg bg-indigo-500/10 flex items-center justify-center">
+                                <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 01-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-7.5A1.125 1.125 0 0112 18.375" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h2 class="text-sm font-semibold text-white">Data Preview</h2>
+                                <p class="text-xs text-gray-500">First 20 rows</p>
+                            </div>
+                        </div>
+                        <span class="text-xs text-gray-600 font-mono">{{ preview_columns|length }} columns</span>
                     </div>
-                    <div class="overflow-x-auto max-h-96">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50 sticky top-0">
-                                <tr>
+                    <div class="data-table-wrapper overflow-x-auto overflow-y-auto max-h-[420px]">
+                        <table class="min-w-full text-sm">
+                            <thead>
+                                <tr class="bg-surface-300/80 backdrop-blur">
                                     {% for col in preview_columns %}
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        {{ col.name }}
-                                        <span class="block text-gray-400 font-normal normal-case">{{ col.dtype }}</span>
+                                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider whitespace-nowrap border-b border-white/5">
+                                        <div class="flex flex-col gap-0.5">
+                                            <span class="text-gray-300">{{ col.name }}</span>
+                                            <span class="text-[10px] font-normal normal-case text-gray-600 font-mono">{{ col.dtype }}</span>
+                                        </div>
                                     </th>
                                     {% endfor %}
                                 </tr>
                             </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
+                            <tbody class="divide-y divide-white/[0.03]">
                                 {% for row in preview_data %}
-                                <tr class="hover:bg-gray-50">
+                                <tr class="transition-colors duration-150">
                                     {% for col in preview_columns %}
-                                    <td class="px-4 py-2 text-sm text-gray-900 whitespace-nowrap max-w-xs overflow-hidden text-ellipsis">
+                                    <td class="px-4 py-2.5 text-sm text-gray-400 whitespace-nowrap max-w-[200px] overflow-hidden text-ellipsis font-mono text-xs">
                                         {{ row[col.name] }}
                                     </td>
                                     {% endfor %}
@@ -56,146 +141,133 @@
                     </div>
                 </div>
 
-                <div class="bg-white shadow rounded-lg overflow-hidden">
-                    <div class="px-4 py-3 border-b border-gray-200 bg-gray-50">
-                        <h2 class="text-lg font-medium text-gray-900">Data Profile</h2>
+                <!-- Data Profile Card -->
+                <div class="glass-card gradient-border rounded-2xl overflow-hidden animate-slide-up" style="animation-delay: 0.1s;">
+                    <div class="px-5 py-4 border-b border-white/5 flex items-center space-x-3">
+                        <div class="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center">
+                            <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h2 class="text-sm font-semibold text-white">Data Profile</h2>
+                            <p class="text-xs text-gray-500">{{ column_profile|length }} columns analyzed</p>
+                        </div>
                     </div>
-                    <div class="p-4 grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    <div class="p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                         {% for col_profile in column_profile %}
-                        <div class="border rounded-lg p-3">
-                            <h3 class="font-medium text-gray-900 text-sm truncate">{{ col_profile.name }}</h3>
-                            <p class="text-xs text-gray-500 mt-1">{{ col_profile.dtype }}</p>
-                            {% if col_profile.null_count is defined %}
-                            <p class="text-xs text-gray-500">{{ col_profile.null_count }} nulls</p>
-                            {% endif %}
-                            {% if col_profile.unique_count is defined %}
-                            <p class="text-xs text-gray-500">{{ col_profile.unique_count }} unique</p>
-                            {% endif %}
-                            {% if col_profile.min is defined %}
-                            <p class="text-xs text-gray-500">Min: {{ col_profile.min }}</p>
-                            {% endif %}
-                            {% if col_profile.max is defined %}
-                            <p class="text-xs text-gray-500">Max: {{ col_profile.max }}</p>
-                            {% endif %}
+                        <div class="group bg-surface-300/40 hover:bg-surface-300/70 border border-white/[0.04] hover:border-indigo-500/20 rounded-xl p-3.5 transition-all duration-200 hover-lift">
+                            <!-- Column name + type badge -->
+                            <div class="flex items-start justify-between mb-2">
+                                <h3 class="font-medium text-gray-200 text-sm truncate max-w-[140px]" title="{{ col_profile.name }}">{{ col_profile.name }}</h3>
+                                <span class="dtype-{{ col_profile.dtype|lower|replace(' ', '') }} text-[10px] font-mono font-medium px-1.5 py-0.5 rounded-md whitespace-nowrap ml-2">{{ col_profile.dtype }}</span>
+                            </div>
+                            <!-- Stats -->
+                            <div class="space-y-1.5">
+                                {% if col_profile.missing_count is defined %}
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="text-gray-500">Nulls</span>
+                                    <span class="text-gray-400 font-mono">{{ col_profile.missing_count }}</span>
+                                </div>
+                                {% endif %}
+                                {% if col_profile.unique_count is defined %}
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="text-gray-500">Unique</span>
+                                    <span class="text-gray-400 font-mono">{{ col_profile.unique_count }}</span>
+                                </div>
+                                {% endif %}
+                                {% if col_profile.min is defined %}
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="text-gray-500">Min</span>
+                                    <span class="text-gray-400 font-mono">{{ col_profile.min }}</span>
+                                </div>
+                                {% endif %}
+                                {% if col_profile.max is defined %}
+                                <div class="flex items-center justify-between text-xs">
+                                    <span class="text-gray-500">Max</span>
+                                    <span class="text-gray-400 font-mono">{{ col_profile.max }}</span>
+                                </div>
+                                {% endif %}
+                            </div>
                         </div>
                         {% endfor %}
                     </div>
                 </div>
             </div>
 
-            <div class="space-y-6">
-                <div class="bg-white shadow rounded-lg">
-                    <div class="px-4 py-3 border-b border-gray-200 bg-gray-50">
-                        <h2 class="text-lg font-medium text-gray-900">Ask Questions</h2>
-                        <p class="text-sm text-gray-500">Ask questions about your data in natural language</p>
+            <!-- ========== RIGHT PANEL: Query Interface ========== -->
+            <div class="xl:col-span-5 space-y-6">
+
+                <!-- Query Input Card -->
+                <div class="glass-card gradient-border rounded-2xl overflow-hidden animate-slide-up sticky top-20" style="animation-delay: 0.15s;">
+                    <div class="px-5 py-4 border-b border-white/5 flex items-center space-x-3">
+                        <div class="w-8 h-8 rounded-lg bg-cyan-500/10 flex items-center justify-center">
+                            <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h2 class="text-sm font-semibold text-white">Ask Questions</h2>
+                            <p class="text-xs text-gray-500">Natural language queries about your data</p>
+                        </div>
                     </div>
                     <div class="p-4">
-                        <form 
-                            hx-post="/workspace/{{ dataset.id }}/query" 
+                        <form
+                            hx-post="/workspace/{{ dataset.id }}/query"
                             hx-target="#query-results"
                             hx-swap="beforeend"
                             hx-indicator=".query-loading"
                         >
-                            <div class="relative">
-                                <input 
-                                    type="text" 
-                                    name="question" 
-                                    placeholder="e.g., Show me the top 10 values in column X" 
-                                    class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                            <input type="hidden" name="api_key" id="api-key-hidden" value="">
+                            <div class="query-input-wrapper flex items-center bg-surface-300/50 border border-white/[0.06] rounded-xl transition-all duration-200">
+                                <input
+                                    type="text"
+                                    name="question"
+                                    placeholder="e.g., Show me the top 10 values in column X"
+                                    class="flex-1 bg-transparent px-4 py-3.5 text-sm text-gray-200 placeholder-gray-600 focus:outline-none"
                                     required
+                                    autocomplete="off"
                                 >
-                                <button 
-                                    type="submit" 
-                                    class="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 text-indigo-600 hover:text-indigo-800"
+                                <button
+                                    type="submit"
+                                    class="flex-shrink-0 m-1.5 p-2.5 rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white shadow-lg shadow-indigo-500/20 transition-all duration-200 hover:scale-105"
                                 >
-                                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
                                     </svg>
                                 </button>
                             </div>
-                            <div class="query-loading htmx-indicator mt-2">
-                                <div class="flex items-center space-x-2">
-                                    <svg class="animate-spin h-4 w-4 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                    </svg>
-                                    <span class="text-sm text-gray-500">Processing your question...</span>
+                            <!-- Loading indicator -->
+                            <div class="query-loading htmx-indicator mt-4">
+                                <div class="flex items-center space-x-3 p-3 bg-indigo-500/5 border border-indigo-500/10 rounded-xl">
+                                    <div class="relative">
+                                        <svg class="animate-spin h-5 w-5 text-indigo-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <span class="text-sm text-indigo-300 font-medium">Analyzing your data...</span>
+                                        <p class="text-xs text-gray-500 mt-0.5">This may take a few seconds</p>
+                                    </div>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
 
+                <!-- Query Results Container -->
                 <div id="query-results" class="space-y-4">
-                    {% for query in queries reversed %}
-                    {% if query.status == 'success' %}
-                    <div class="bg-white shadow rounded-lg overflow-hidden">
-                        <div class="px-4 py-3 bg-gray-50 border-b">
-                            <p class="font-medium text-gray-900">{{ query.question }}</p>
-                            <p class="text-xs text-gray-500 mt-1">{{ query.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
-                        </div>
-                        <div class="p-4">
-                            {% if query.result %}
-                            <div class="result-table overflow-x-auto mb-4">
-                                <table class="min-w-full divide-y divide-gray-200 text-sm">
-                                    {% if query.result.type == 'table' and query.result.value is mapping and 'columns' in query.result.value %}
-                                    <thead class="bg-gray-50">
-                                        <tr>
-                                            {% for col in query.result.value.columns %}
-                                            <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">{{ col }}</th>
-                                            {% endfor %}
-                                        </tr>
-                                    </thead>
-                                    <tbody class="divide-y divide-gray-200">
-                                        {% for row in query.result.value.data[:10] %}
-                                        <tr>
-                                            {% for cell in row.values() %}
-                                            <td class="px-3 py-2 whitespace-nowrap">{{ cell }}</td>
-                                            {% endfor %}
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                    {% elif query.result.type == 'number' %}
-                                    <div class="text-2xl font-bold text-gray-900">{{ query.result.value }}</div>
-                                    {% elif query.result.type == 'text' %}
-                                    <div class="text-gray-700">{{ query.result.value }}</div>
-                                    {% endif %}
-                                </table>
-                            </div>
-                            {% if query.result.chart_type %}
-                            <div class="chart-container mb-4" data-chart='{{ query.result.chart | tojson }}'></div>
-                            <button class="export-chart-btn text-sm text-indigo-600 hover:text-indigo-800" data-chart-id="{{ query.id }}">
-                                Export chart as PNG
-                            </button>
-                            {% endif %}
-                            {% if query.result.type == 'table' %}
-                            <button class="export-csv-btn text-sm text-indigo-600 hover:text-indigo-800" data-query-id="{{ query.id }}">
-                                Export results as CSV
-                            </button>
-                            {% endif %}
-                            {% endif %}
-                            {% if query.error %}
-                            <div class="text-red-600 text-sm">{{ query.error }}</div>
-                            {% endif %}
-                        </div>
-                    </div>
-                    {% elif query.status == 'error' %}
-                    <div class="bg-red-50 border-l-4 border-red-400 p-4">
-                        <p class="font-medium text-red-800">{{ query.question }}</p>
-                        <p class="text-sm text-red-600 mt-1">{{ query.error }}</p>
-                    </div>
-                    {% elif query.status == 'processing' %}
-                    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
-                        <p class="font-medium text-yellow-800">{{ query.question }}</p>
-                        <p class="text-sm text-yellow-600 mt-1">Processing...</p>
-                    </div>
-                    {% endif %}
+                    {% for query in queries|reverse %}
+                    {% include "components/query-result.html" %}
                     {% endfor %}
                 </div>
             </div>
         </div>
     </main>
 </div>
+{% endblock %}
 
 {% block scripts %}
 <script>
@@ -206,7 +278,29 @@
             if (chartData) {
                 try {
                     const config = JSON.parse(chartData);
-                    Plotly.newPlot(container, config.data, config.layout);
+                    // Apply dark theme to Plotly charts
+                    const darkLayout = Object.assign({}, config.layout || {}, {
+                        paper_bgcolor: 'rgba(0,0,0,0)',
+                        plot_bgcolor: 'rgba(0,0,0,0)',
+                        font: { color: '#9ca3af', family: 'Inter, sans-serif', size: 12 },
+                        xaxis: Object.assign({}, (config.layout || {}).xaxis || {}, {
+                            gridcolor: 'rgba(255,255,255,0.04)',
+                            linecolor: 'rgba(255,255,255,0.06)',
+                            tickfont: { color: '#6b7280' }
+                        }),
+                        yaxis: Object.assign({}, (config.layout || {}).yaxis || {}, {
+                            gridcolor: 'rgba(255,255,255,0.04)',
+                            linecolor: 'rgba(255,255,255,0.06)',
+                            tickfont: { color: '#6b7280' }
+                        }),
+                        margin: { t: 30, r: 20, b: 40, l: 50 }
+                    });
+                    Plotly.newPlot(container, config.data, darkLayout, {
+                        displayModeBar: true,
+                        displaylogo: false,
+                        responsive: true,
+                        modeBarButtonsToRemove: ['sendDataToCloud']
+                    });
                     container.removeAttribute('data-chart');
                 } catch (e) {
                     console.error('Error parsing chart data:', e);
@@ -222,14 +316,42 @@
                 Plotly.downloadImage(chartContainer, {format: 'png', width: 800, height: 600, filename: 'chart-' + chartId});
             });
         });
+
+        // Animate new results in
+        const newResults = event.target.querySelectorAll('.glass-card');
+        newResults.forEach(function(card) {
+            card.classList.add('animate-slide-up');
+        });
     });
 
+    // Initialize existing charts on page load
     document.querySelectorAll('.chart-container').forEach(function(container) {
         const chartData = container.getAttribute('data-chart');
         if (chartData) {
             try {
                 const config = JSON.parse(chartData);
-                Plotly.newPlot(container, config.data, config.layout);
+                const darkLayout = Object.assign({}, config.layout || {}, {
+                    paper_bgcolor: 'rgba(0,0,0,0)',
+                    plot_bgcolor: 'rgba(0,0,0,0)',
+                    font: { color: '#9ca3af', family: 'Inter, sans-serif', size: 12 },
+                    xaxis: Object.assign({}, (config.layout || {}).xaxis || {}, {
+                        gridcolor: 'rgba(255,255,255,0.04)',
+                        linecolor: 'rgba(255,255,255,0.06)',
+                        tickfont: { color: '#6b7280' }
+                    }),
+                    yaxis: Object.assign({}, (config.layout || {}).yaxis || {}, {
+                        gridcolor: 'rgba(255,255,255,0.04)',
+                        linecolor: 'rgba(255,255,255,0.06)',
+                        tickfont: { color: '#6b7280' }
+                    }),
+                    margin: { t: 30, r: 20, b: 40, l: 50 }
+                });
+                Plotly.newPlot(container, config.data, darkLayout, {
+                    displayModeBar: true,
+                    displaylogo: false,
+                    responsive: true,
+                    modeBarButtonsToRemove: ['sendDataToCloud']
+                });
                 container.removeAttribute('data-chart');
             } catch (e) {
                 console.error('Error parsing chart data:', e);
@@ -244,6 +366,42 @@
             Plotly.downloadImage(chartContainer, {format: 'png', width: 800, height: 600, filename: 'chart-' + chartId});
         });
     });
+
+    // Load API key from localStorage into hidden form field
+    (function() {
+        const key = localStorage.getItem('datapilot_api_key') || '';
+        const hidden = document.getElementById('api-key-hidden');
+        if (hidden) hidden.value = key;
+    })();
+
+    // CSV export from table
+    function exportResultCSV(btn) {
+        const card = btn.closest('.glass-card');
+        if (!card) return;
+        const table = card.querySelector('table');
+        if (!table) return;
+
+        const rows = [];
+        table.querySelectorAll('tr').forEach(function(tr) {
+            const cells = [];
+            tr.querySelectorAll('th, td').forEach(function(cell) {
+                let text = cell.textContent.trim();
+                if (text.includes(',') || text.includes('"')) {
+                    text = '"' + text.replace(/"/g, '""') + '"';
+                }
+                cells.push(text);
+            });
+            if (cells.length > 0) rows.push(cells.join(','));
+        });
+
+        const csv = rows.join('\n');
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'query-result.csv';
+        a.click();
+        URL.revokeObjectURL(url);
+    }
 </script>
-{% endblock %}
 {% endblock %}

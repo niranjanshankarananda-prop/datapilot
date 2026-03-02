@@ -1,104 +1,156 @@
 {% if query.status == 'success' %}
-<div class="bg-white shadow rounded-lg overflow-hidden">
-    <div class="px-4 py-3 bg-gray-50 border-b">
-        <p class="font-medium text-gray-900">{{ query.question }}</p>
-        <p class="text-xs text-gray-500 mt-1">{{ query.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+<div class="glass-card rounded-2xl overflow-hidden animate-slide-up">
+    <!-- Question bubble -->
+    <div class="px-5 py-3.5 border-b border-white/5 flex items-start gap-3">
+        <div class="flex-shrink-0 w-7 h-7 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center mt-0.5">
+            <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0" />
+            </svg>
+        </div>
+        <div class="min-w-0">
+            <p class="font-medium text-gray-200 text-sm">{{ query.question }}</p>
+            <p class="text-[10px] text-gray-600 mt-1 font-mono">{{ query.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+        </div>
     </div>
-    <div class="p-4">
+    <!-- Answer body -->
+    <div class="p-5">
         {% if query.result %}
+
+        {% if query.result.type == 'table' and query.result.columns is defined %}
+        <!-- DataFrame table result -->
         <div class="result-table overflow-x-auto mb-4">
-            <table class="min-w-full divide-y divide-gray-200 text-sm">
-                {% if query.result.type == 'table' and query.result.value is mapping and 'columns' in query.result.value %}
-                <thead class="bg-gray-50">
-                    <tr>
-                        {% for col in query.result.value.columns %}
-                        <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">{{ col }}</th>
+            <table class="min-w-full text-sm">
+                <thead>
+                    <tr class="border-b border-white/5">
+                        {% for col in query.result.columns %}
+                        <th class="px-3 py-2.5 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider whitespace-nowrap">{{ col }}</th>
                         {% endfor %}
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-200">
-                    {% for row in query.result.value.data[:10] %}
-                    <tr>
-                        {% for cell in row.values() %}
-                        <td class="px-3 py-2 whitespace-nowrap">{{ cell }}</td>
+                <tbody class="divide-y divide-white/[0.03]">
+                    {% for row in query.result.value[:20] %}
+                    <tr class="hover:bg-white/[0.02] transition-colors">
+                        {% for col in query.result.columns %}
+                        <td class="px-3 py-2 text-gray-400 whitespace-nowrap font-mono text-xs">{{ row[col] }}</td>
                         {% endfor %}
                     </tr>
                     {% endfor %}
                 </tbody>
-                {% elif query.result.type == 'number' %}
-                <div class="text-2xl font-bold text-gray-900 py-2">{{ query.result.value }}</div>
-                {% elif query.result.type == 'text' %}
-                <div class="text-gray-700 py-2">{{ query.result.value }}</div>
-                {% endif %}
             </table>
         </div>
-        {% if query.result.chart_type %}
-        <div class="chart-container mb-4" id="chart-{{ query.id }}" data-chart='{{ query.result.chart | tojson }}'></div>
-        <button class="export-chart-btn text-sm text-indigo-600 hover:text-indigo-800 mr-4" data-chart-id="{{ query.id }}">
-            Export chart as PNG
-        </button>
+        {% if query.result.value|length > 20 %}
+        <p class="text-xs text-gray-600 mb-3">Showing 20 of {{ query.result.value|length }} rows</p>
         {% endif %}
+
+        {% elif query.result.type == 'table' and query.result.value is mapping %}
+        <!-- Dict/Series result -->
+        <div class="result-table overflow-x-auto mb-4">
+            <table class="min-w-full text-sm">
+                <thead>
+                    <tr class="border-b border-white/5">
+                        <th class="px-3 py-2.5 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Key</th>
+                        <th class="px-3 py-2.5 text-left text-xs font-semibold text-gray-400 uppercase tracking-wider">Value</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-white/[0.03]">
+                    {% for k, v in query.result.value.items() %}
+                    <tr class="hover:bg-white/[0.02] transition-colors">
+                        <td class="px-3 py-2 text-gray-300 whitespace-nowrap font-medium text-xs">{{ k }}</td>
+                        <td class="px-3 py-2 text-gray-400 whitespace-nowrap font-mono text-xs">{{ v }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% elif query.result.type == 'table' and query.result.value is iterable and query.result.value is not string %}
+        <!-- List result -->
+        <div class="result-table overflow-x-auto mb-4">
+            <table class="min-w-full text-sm">
+                <tbody class="divide-y divide-white/[0.03]">
+                    {% for item in query.result.value[:20] %}
+                    <tr class="hover:bg-white/[0.02] transition-colors">
+                        {% if item is mapping %}
+                            {% for v in item.values() %}
+                            <td class="px-3 py-2 text-gray-400 whitespace-nowrap font-mono text-xs">{{ v }}</td>
+                            {% endfor %}
+                        {% else %}
+                        <td class="px-3 py-2 text-gray-400 whitespace-nowrap font-mono text-xs">{{ item }}</td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% elif query.result.type == 'number' %}
+        <div class="flex items-baseline gap-2 py-2">
+            <span class="text-3xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">{{ query.result.value }}</span>
+        </div>
+
+        {% elif query.result.type == 'text' %}
+        <div class="text-gray-300 text-sm leading-relaxed py-2">{{ query.result.value }}</div>
+
+        {% else %}
+        <div class="text-gray-300 text-sm leading-relaxed py-2">{{ query.result.value }}</div>
+        {% endif %}
+
         {% if query.result.type == 'table' %}
-        <button class="export-csv-btn text-sm text-indigo-600 hover:text-indigo-800" data-query-id="{{ query.id }}">
-            Export results as CSV
+        <button class="export-csv-btn inline-flex items-center gap-1.5 text-xs text-emerald-400 hover:text-emerald-300 font-medium transition-colors cursor-pointer" onclick="exportResultCSV(this)">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m.75 12l3 3m0 0l3-3m-3 3v-6m-1.5-9H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+            </svg>
+            Export as CSV
         </button>
         {% endif %}
+
         {% endif %}
-        {% if query.error %}
-        <div class="text-red-600 text-sm">{{ query.error }}</div>
+
+        {% if query.generated_code %}
+        <details class="mt-3">
+            <summary class="text-xs text-gray-600 hover:text-gray-400 cursor-pointer transition-colors">View generated code</summary>
+            <pre class="mt-2 p-3 bg-surface-300/50 border border-white/[0.04] rounded-lg text-xs text-gray-400 font-mono overflow-x-auto"><code>{{ query.generated_code }}</code></pre>
+        </details>
         {% endif %}
     </div>
 </div>
 {% elif query.status == 'error' %}
-<div class="bg-red-50 border-l-4 border-red-400 p-4">
-    <p class="font-medium text-red-800">{{ query.question }}</p>
-    <p class="text-sm text-red-600 mt-1">{{ query.error }}</p>
-</div>
-{% elif query.status == 'processing' %}
-<div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
-    <p class="font-medium text-yellow-800">{{ query.question }}</p>
-    <div class="flex items-center mt-2">
-        <svg class="animate-spin h-4 w-4 text-yellow-600 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-        </svg>
-        <span class="text-sm text-yellow-600">Processing...</span>
-    </div>
-</div>
-{% endif %}
-            </table>
+<div class="glass-card rounded-2xl overflow-hidden border-l-2 border-red-500/50 animate-slide-up">
+    <div class="p-5">
+        <div class="flex items-start gap-3">
+            <div class="flex-shrink-0 w-7 h-7 rounded-full bg-red-500/10 flex items-center justify-center">
+                <svg class="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126z" />
+                </svg>
+            </div>
+            <div>
+                <p class="font-medium text-gray-200 text-sm">{{ query.question }}</p>
+                <p class="text-sm text-red-400/80 mt-2">{{ query.error }}</p>
+                {% if query.generated_code %}
+                <details class="mt-2">
+                    <summary class="text-xs text-gray-600 hover:text-gray-400 cursor-pointer transition-colors">View generated code</summary>
+                    <pre class="mt-2 p-3 bg-surface-300/50 border border-white/[0.04] rounded-lg text-xs text-gray-400 font-mono overflow-x-auto"><code>{{ query.generated_code }}</code></pre>
+                </details>
+                {% endif %}
+            </div>
         </div>
-        {% if query.result.chart_type %}
-        <div class="chart-container mb-4" id="chart-{{ query.id }}" data-chart='{{ query.result.chart | tojson }}'></div>
-        <button class="export-chart-btn text-sm text-indigo-600 hover:text-indigo-800 mr-4" data-chart-id="{{ query.id }}">
-            Export chart as PNG
-        </button>
-        {% endif %}
-        {% if query.result.type == 'dataframe' %}
-        <button class="export-csv-btn text-sm text-indigo-600 hover:text-indigo-800" data-query-id="{{ query.id }}">
-            Export results as CSV
-        </button>
-        {% endif %}
-        {% endif %}
-        {% if query.error %}
-        <div class="text-red-600 text-sm">{{ query.error }}</div>
-        {% endif %}
     </div>
 </div>
-{% elif query.status == 'error' %}
-<div class="bg-red-50 border-l-4 border-red-400 p-4">
-    <p class="font-medium text-red-800">{{ query.question }}</p>
-    <p class="text-sm text-red-600 mt-1">{{ query.error }}</p>
-</div>
 {% elif query.status == 'processing' %}
-<div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
-    <p class="font-medium text-yellow-800">{{ query.question }}</p>
-    <div class="flex items-center mt-2">
-        <svg class="animate-spin h-4 w-4 text-yellow-600 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-        </svg>
-        <span class="text-sm text-yellow-600">Processing...</span>
+<div class="glass-card rounded-2xl overflow-hidden border-l-2 border-amber-500/50 animate-pulse-glow animate-slide-up">
+    <div class="p-5">
+        <div class="flex items-start gap-3">
+            <div class="flex-shrink-0 w-7 h-7 rounded-full bg-amber-500/10 flex items-center justify-center">
+                <svg class="animate-spin h-4 w-4 text-amber-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+            </div>
+            <div>
+                <p class="font-medium text-gray-200 text-sm">{{ query.question }}</p>
+                <p class="text-sm text-amber-400/80 mt-1">Processing...</p>
+            </div>
+        </div>
     </div>
 </div>
 {% endif %}

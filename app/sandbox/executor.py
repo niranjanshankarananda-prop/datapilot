@@ -42,14 +42,55 @@ def _import_wrapper(name):
     raise ImportError(f"Module '{name}' is not allowed")
 
 
+def _getitem_wrapper(obj, key):
+    return obj[key]
+
+
+def _getiter_wrapper(obj):
+    return iter(obj)
+
+
+def _inplacevar_wrapper(op, x, y):
+    if op == "+=":
+        return x + y
+    elif op == "-=":
+        return x - y
+    elif op == "*=":
+        return x * y
+    elif op == "/=":
+        return x / y
+    raise ValueError(f"Unsupported in-place operator: {op}")
+
+
 SAFE_GLOBALS = safe_globals.copy()
 SAFE_GLOBALS["_write_"] = _write_wrapper
 SAFE_GLOBALS["_getattr_"] = _getattr_wrapper
+SAFE_GLOBALS["_getitem_"] = _getitem_wrapper
+SAFE_GLOBALS["_getiter_"] = _getiter_wrapper
+SAFE_GLOBALS["_inplacevar_"] = _inplacevar_wrapper
 SAFE_GLOBALS["_import_"] = _import_wrapper
 SAFE_GLOBALS["__builtins__"] = {}
 SAFE_GLOBALS["pd"] = pd
 SAFE_GLOBALS["np"] = np
 SAFE_GLOBALS["datetime"] = datetime
+SAFE_GLOBALS["len"] = len
+SAFE_GLOBALS["range"] = range
+SAFE_GLOBALS["list"] = list
+SAFE_GLOBALS["dict"] = dict
+SAFE_GLOBALS["str"] = str
+SAFE_GLOBALS["int"] = int
+SAFE_GLOBALS["float"] = float
+SAFE_GLOBALS["bool"] = bool
+SAFE_GLOBALS["tuple"] = tuple
+SAFE_GLOBALS["sorted"] = sorted
+SAFE_GLOBALS["sum"] = sum
+SAFE_GLOBALS["min"] = min
+SAFE_GLOBALS["max"] = max
+SAFE_GLOBALS["abs"] = abs
+SAFE_GLOBALS["round"] = round
+SAFE_GLOBALS["enumerate"] = enumerate
+SAFE_GLOBALS["zip"] = zip
+SAFE_GLOBALS["print"] = lambda *a, **k: None
 
 
 def execute_pandas_code(code: str, df: pd.DataFrame) -> any:

@@ -1,8 +1,9 @@
-@import url('https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css');
+/* DataPilot - Custom styles (Tailwind v3 loaded via CDN script in base.html) */
 
+/* HTMX loading indicators */
 .htmx-indicator {
     opacity: 0;
-    transition: opacity 200ms ease-in;
+    transition: opacity 300ms ease-in;
 }
 
 .htmx-indicator.htmx-request {
@@ -14,12 +15,8 @@
 }
 
 @keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
 .animate-spin {

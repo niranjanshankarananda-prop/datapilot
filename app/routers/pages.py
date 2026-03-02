@@ -3,7 +3,7 @@ import uuid
 from datetime import datetime, timedelta
 
 import pandas as pd
-from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Request
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
@@ -15,10 +15,13 @@ from app.models.dataset import Dataset
 from app.models.query import Query
 from app.services import file_parser, schema_detector, data_profiler
 from app.schemas.query import QueryRequest, QueryResult
-from app.services.nl_to_pandas import nl_to_pandas
+from app.services.nl_to_pandas import nl_to_pandas, PROVIDERS
 from app.services.result_formatter import format_result
 from app.sandbox.executor import execute_pandas_code, ExecutionError
 from app.sandbox.validators import SecurityViolationError
+from starlette.responses import StreamingResponse
+import io
+import csv
 
 
 router = APIRouter(tags=["pages"])
@@ -99,7 +102,12 @@ async def workspace(request: Request, dataset_id: int, db: Session = Depends(get
     preview_data = preview_df.to_dict(orient="records")
     preview_columns = [{"name": col, "dtype": str(df[col].dtype)} for col in df.columns]
 
-    column_profile = dataset.data_profile.get("columns", [])
+    raw_profile = dataset.data_profile.get("columns", {})
+    column_profile = [
+        {"name": col_name, "dtype": str(df[col_name].dtype), **col_data}
+        for col_name, col_data in raw_profile.items()
+        if col_name in df.columns
+    ]
 
     queries = (
         db.query(Query)
@@ -125,7 +133,8 @@ async def workspace(request: Request, dataset_id: int, db: Session = Depends(get
 async def submit_query(
     request: Request,
     dataset_id: int,
-    question: str,
+    question: str = Form(...),
+    api_key: str = Form(""),
     db: Session = Depends(get_db),
 ):
     dataset = get_dataset_or_404(dataset_id, db)
@@ -153,7 +162,7 @@ async def submit_query(
     db.refresh(query)
 
     try:
-        generated_code = nl_to_pandas(question, schema)
+        generated_code = nl_to_pandas(question, schema, api_key=api_key or None)
         query.generated_code = generated_code
 
         result = execute_pandas_code(generated_code, df)
@@ -211,4 +220,24 @@ async def get_preview(
             "preview_data": preview_data,
             "preview_columns": preview_columns,
         },
+    )
+
+
+@router.get("/workspace/{dataset_id}/export")
+async def export_csv(
+    dataset_id: int,
+    db: Session = Depends(get_db),
+):
+    df = get_dataset_data(dataset_id, db)
+    dataset = get_dataset_or_404(dataset_id, db)
+
+    output = io.StringIO()
+    df.to_csv(output, index=False)
+    output.seek(0)
+
+    filename = dataset.filename.rsplit(".", 1)[0] + "_export.csv"
+    return StreamingResponse(
+        iter([output.getvalue()]),
+        media_type="text/csv",
+        headers={"Content-Disposition": f"attachment; filename={filename}"},
     )

@@ -1,4 +1,4 @@
-from groq import Groq
+import httpx
 
 from app.config import settings
 
@@ -20,6 +20,37 @@ IMPORTANT RULES:
 Return ONLY the Python code, no explanations or markdown.
 """
 
+PROVIDERS = {
+    "groq": {
+        "name": "Groq",
+        "base_url": "https://api.groq.com/openai/v1",
+        "model": "llama-3.3-70b-versatile",
+        "key_prefix": "gsk_",
+    },
+    "together": {
+        "name": "Together AI",
+        "base_url": "https://api.together.xyz/v1",
+        "model": "meta-llama/Llama-3.3-70B-Instruct-Turbo",
+        "key_prefix": "",
+    },
+    "openrouter": {
+        "name": "OpenRouter",
+        "base_url": "https://openrouter.ai/api/v1",
+        "model": "meta-llama/llama-3.3-70b-instruct:free",
+        "key_prefix": "sk-or-",
+    },
+}
+
+
+def detect_provider(api_key: str) -> str:
+    """Auto-detect provider from API key prefix."""
+    if api_key.startswith("gsk_"):
+        return "groq"
+    if api_key.startswith("sk-or-"):
+        return "openrouter"
+    # Together keys don't have a standard prefix, default to together for unknown
+    return "together"
+
 
 def generate_schema_info(columns: list[dict]) -> str:
     schema_parts = []
@@ -31,8 +62,15 @@ def generate_schema_info(columns: list[dict]) -> str:
     return "\n".join(schema_parts)
 
 
-def nl_to_pandas(question: str, dataset_schema: list[dict]) -> str:
-    client = Groq(api_key=settings.GROQ_API_KEY)
+def nl_to_pandas(question: str, dataset_schema: list[dict], api_key: str | None = None) -> str:
+    key = api_key or settings.GROQ_API_KEY
+    if not key:
+        raise ValueError(
+            "No API key provided. Enter your API key in Settings (Groq, Together AI, or OpenRouter)."
+        )
+
+    provider_id = detect_provider(key)
+    provider = PROVIDERS[provider_id]
 
     schema_info = generate_schema_info(dataset_schema)
 
@@ -43,19 +81,34 @@ Question: {question}
 
 Generate the Pandas code to answer this question:"""
 
-    response = client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
-        messages=[
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": user_prompt},
-        ],
-        temperature=0.1,
-        max_tokens=1024,
-    )
+    with httpx.Client(timeout=30.0) as client:
+        response = client.post(
+            f"{provider['base_url']}/chat/completions",
+            headers={
+                "Authorization": f"Bearer {key}",
+                "Content-Type": "application/json",
+            },
+            json={
+                "model": provider["model"],
+                "messages": [
+                    {"role": "system", "content": SYSTEM_PROMPT},
+                    {"role": "user", "content": user_prompt},
+                ],
+                "temperature": 0.1,
+                "max_tokens": 1024,
+            },
+        )
 
-    code = response.choices[0].message.content
+    if response.status_code == 401:
+        raise ValueError(f"Invalid {provider['name']} API key. Please check your key and try again.")
+    if response.status_code == 429:
+        raise ValueError(f"{provider['name']} rate limit exceeded. Please wait a moment and try again.")
+    response.raise_for_status()
+
+    data = response.json()
+    code = data["choices"][0]["message"]["content"]
     if not code:
-        raise ValueError("Empty response from Groq")
+        raise ValueError(f"Empty response from {provider['name']}")
 
     code = code.strip()
 
