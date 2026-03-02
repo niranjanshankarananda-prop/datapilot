@@ -1,9 +1,12 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 
 from app.routers import charts
 from app.routers import datasets
+from app.routers import pages
 from app.routers import query
 
 
@@ -30,6 +33,9 @@ app.add_middleware(
 app.include_router(datasets.router)
 app.include_router(query.router)
 app.include_router(charts.router)
+app.include_router(pages.router)
+
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 
 @app.get("/health")

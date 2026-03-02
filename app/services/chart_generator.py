@@ -29,23 +29,7 @@ THEME_COLORS = [
     "#FECB52",
 ]
 
-pio.templates["datapilot"] = go.Layout(
-    font={"family": "Inter, sans-serif", "color": "#2c3e50"},
-    plot_bgcolor="#ffffff",
-    paper_bgcolor="#ffffff",
-    xaxis={
-        "showgrid": True,
-        "gridcolor": "#f0f0f0",
-        "linecolor": "#e0e0e0",
-    },
-    yaxis={
-        "showgrid": True,
-        "gridcolor": "#f0f0f0",
-        "linecolor": "#e0e0e0",
-    },
-    colorscale=THEME_COLORS,
-)
-pio.templates.default = "plotly+datapilot"
+pio.templates.default = "plotly_white"
 
 
 def _convert_to_dataframe(data: dict[str, Any]) -> pd.DataFrame:

@@ -1,0 +1,104 @@
+{% if query.status == 'success' %}
+<div class="bg-white shadow rounded-lg overflow-hidden">
+    <div class="px-4 py-3 bg-gray-50 border-b">
+        <p class="font-medium text-gray-900">{{ query.question }}</p>
+        <p class="text-xs text-gray-500 mt-1">{{ query.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+    </div>
+    <div class="p-4">
+        {% if query.result %}
+        <div class="result-table overflow-x-auto mb-4">
+            <table class="min-w-full divide-y divide-gray-200 text-sm">
+                {% if query.result.type == 'table' and query.result.value is mapping and 'columns' in query.result.value %}
+                <thead class="bg-gray-50">
+                    <tr>
+                        {% for col in query.result.value.columns %}
+                        <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">{{ col }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    {% for row in query.result.value.data[:10] %}
+                    <tr>
+                        {% for cell in row.values() %}
+                        <td class="px-3 py-2 whitespace-nowrap">{{ cell }}</td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                {% elif query.result.type == 'number' %}
+                <div class="text-2xl font-bold text-gray-900 py-2">{{ query.result.value }}</div>
+                {% elif query.result.type == 'text' %}
+                <div class="text-gray-700 py-2">{{ query.result.value }}</div>
+                {% endif %}
+            </table>
+        </div>
+        {% if query.result.chart_type %}
+        <div class="chart-container mb-4" id="chart-{{ query.id }}" data-chart='{{ query.result.chart | tojson }}'></div>
+        <button class="export-chart-btn text-sm text-indigo-600 hover:text-indigo-800 mr-4" data-chart-id="{{ query.id }}">
+            Export chart as PNG
+        </button>
+        {% endif %}
+        {% if query.result.type == 'table' %}
+        <button class="export-csv-btn text-sm text-indigo-600 hover:text-indigo-800" data-query-id="{{ query.id }}">
+            Export results as CSV
+        </button>
+        {% endif %}
+        {% endif %}
+        {% if query.error %}
+        <div class="text-red-600 text-sm">{{ query.error }}</div>
+        {% endif %}
+    </div>
+</div>
+{% elif query.status == 'error' %}
+<div class="bg-red-50 border-l-4 border-red-400 p-4">
+    <p class="font-medium text-red-800">{{ query.question }}</p>
+    <p class="text-sm text-red-600 mt-1">{{ query.error }}</p>
+</div>
+{% elif query.status == 'processing' %}
+<div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+    <p class="font-medium text-yellow-800">{{ query.question }}</p>
+    <div class="flex items-center mt-2">
+        <svg class="animate-spin h-4 w-4 text-yellow-600 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span class="text-sm text-yellow-600">Processing...</span>
+    </div>
+</div>
+{% endif %}
+            </table>
+        </div>
+        {% if query.result.chart_type %}
+        <div class="chart-container mb-4" id="chart-{{ query.id }}" data-chart='{{ query.result.chart | tojson }}'></div>
+        <button class="export-chart-btn text-sm text-indigo-600 hover:text-indigo-800 mr-4" data-chart-id="{{ query.id }}">
+            Export chart as PNG
+        </button>
+        {% endif %}
+        {% if query.result.type == 'dataframe' %}
+        <button class="export-csv-btn text-sm text-indigo-600 hover:text-indigo-800" data-query-id="{{ query.id }}">
+            Export results as CSV
+        </button>
+        {% endif %}
+        {% endif %}
+        {% if query.error %}
+        <div class="text-red-600 text-sm">{{ query.error }}</div>
+        {% endif %}
+    </div>
+</div>
+{% elif query.status == 'error' %}
+<div class="bg-red-50 border-l-4 border-red-400 p-4">
+    <p class="font-medium text-red-800">{{ query.question }}</p>
+    <p class="text-sm text-red-600 mt-1">{{ query.error }}</p>
+</div>
+{% elif query.status == 'processing' %}
+<div class="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+    <p class="font-medium text-yellow-800">{{ query.question }}</p>
+    <div class="flex items-center mt-2">
+        <svg class="animate-spin h-4 w-4 text-yellow-600 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span class="text-sm text-yellow-600">Processing...</span>
+    </div>
+</div>
+{% endif %}

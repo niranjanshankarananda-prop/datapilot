@@ -1,5 +1,5 @@
 from RestrictedPython import compile_restricted, safe_globals
-from RestrictedPython.Eval import restricted_eval
+from RestrictedPython import compile_restricted_eval
 from RestrictedPython.Guards import full_write_guard
 
 import pandas as pd
