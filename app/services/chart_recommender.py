@@ -69,6 +69,23 @@ def _rule_based_recommendation(
                 reasoning="Question asks for top N or ranking comparison",
             )
 
+    # Aggregation queries: "average by", "total per", "sum by", "count by", etc.
+    has_aggregation = any(
+        word in question_lower
+        for word in ["average", "avg", "mean", "total", "sum", "count", "max", "min"]
+    )
+    has_grouping = any(
+        word in question_lower
+        for word in [" by ", " per ", " each ", " group", " for each ", " across "]
+    )
+    if has_aggregation and has_grouping:
+        if has_numeric:
+            return ChartRecommendationResponse(
+                chart_type=ChartType.BAR,
+                confidence=0.85,
+                reasoning="Aggregation query grouped by category",
+            )
+
     if any(
         word in question_lower
         for word in [
@@ -113,6 +130,15 @@ def _rule_based_recommendation(
             chart_type=ChartType.HEATMAP,
             confidence=0.8,
             reasoning="Multiple numeric columns suggest correlation matrix",
+        )
+
+    # General fallback: if there are both categorical and numeric columns,
+    # a bar chart is usually a reasonable default for tabular results
+    if has_categorical and has_numeric:
+        return ChartRecommendationResponse(
+            chart_type=ChartType.BAR,
+            confidence=0.7,
+            reasoning="Default bar chart for categorical + numeric data",
         )
 
     return None

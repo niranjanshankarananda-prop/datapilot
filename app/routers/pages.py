@@ -23,7 +23,9 @@ from app.sandbox.validators import SecurityViolationError
 from app.services.chart_generator import generate_chart
 from app.services.chart_recommender import _rule_based_recommendation
 from app.models.feedback import Feedback
+from app.models.visitor import PageView
 from starlette.responses import StreamingResponse
+import hashlib
 import io
 import csv
 import re
@@ -94,7 +96,8 @@ def get_dataset_data(dataset_id: int, db: Session) -> pd.DataFrame:
 
 
 @router.get("/", response_class=HTMLResponse)
-async def index(request: Request):
+async def index(request: Request, db: Session = Depends(get_db)):
+    _track_page_view(request, "/", db)
     return templates.TemplateResponse("pages/index.html", {"request": request})
 
 
@@ -209,6 +212,7 @@ async def download_sample(name: str):
 
 @router.get("/workspace/{dataset_id}", response_class=HTMLResponse)
 async def workspace(request: Request, dataset_id: int, db: Session = Depends(get_db)):
+    _track_page_view(request, f"/workspace/{dataset_id}", db)
     dataset = get_dataset_or_404(dataset_id, db)
 
     storage_key = str(dataset.storage_key)
@@ -482,6 +486,33 @@ async def export_csv(
     )
 
 
+def _hash_ip(ip: str) -> str:
+    """Hash IP address for privacy-safe tracking."""
+    salt = "datapilot-analytics-salt"
+    return hashlib.sha256(f"{salt}:{ip}".encode()).hexdigest()[:16]
+
+
+def _get_client_ip(request: Request) -> str:
+    """Get real client IP, respecting proxy headers."""
+    forwarded = request.headers.get("x-forwarded-for")
+    if forwarded:
+        return forwarded.split(",")[0].strip()
+    return request.client.host if request.client else "unknown"
+
+
+def _track_page_view(request: Request, path: str, db: Session):
+    """Record a page view."""
+    ip = _get_client_ip(request)
+    page_view = PageView(
+        path=path,
+        ip_hash=_hash_ip(ip),
+        user_agent=request.headers.get("user-agent", "")[:500],
+        referrer=request.headers.get("referer", "")[:500],
+    )
+    db.add(page_view)
+    db.commit()
+
+
 @router.post("/api/feedback")
 async def submit_feedback(
     request: Request,
@@ -497,15 +528,65 @@ async def submit_feedback(
     return {"status": "ok"}
 
 
-@router.get("/api/feedback")
-async def view_feedback(db: Session = Depends(get_db)):
-    feedbacks = db.query(Feedback).order_by(Feedback.created_at.desc()).all()
-    return [
-        {
-            "id": f.id,
-            "rating": f.rating,
-            "text": f.text,
-            "created_at": f.created_at.isoformat() if f.created_at else None,
-        }
-        for f in feedbacks
-    ]
+@router.get("/api/analytics")
+async def view_analytics(
+    request: Request,
+    key: str = "",
+    db: Session = Depends(get_db),
+):
+    """View visitor analytics. Requires ANALYTICS_KEY env var as ?key= param."""
+    from app.config import settings
+    analytics_key = getattr(settings, "ANALYTICS_KEY", "")
+    if not analytics_key or key != analytics_key:
+        raise HTTPException(status_code=404, detail="Not found")
+
+    from sqlalchemy import func, distinct
+
+    total_views = db.query(func.count(PageView.id)).scalar() or 0
+    unique_visitors = db.query(func.count(distinct(PageView.ip_hash))).scalar() or 0
+
+    # Views per page
+    page_stats = (
+        db.query(PageView.path, func.count(PageView.id).label("views"))
+        .group_by(PageView.path)
+        .order_by(func.count(PageView.id).desc())
+        .limit(20)
+        .all()
+    )
+
+    # Recent visitors (last 50)
+    recent = (
+        db.query(PageView)
+        .order_by(PageView.created_at.desc())
+        .limit(50)
+        .all()
+    )
+
+    # Feedback summary
+    feedbacks = db.query(Feedback).order_by(Feedback.created_at.desc()).limit(50).all()
+    avg_rating = db.query(func.avg(Feedback.rating)).scalar()
+
+    return {
+        "total_page_views": total_views,
+        "unique_visitors": unique_visitors,
+        "avg_feedback_rating": round(float(avg_rating), 1) if avg_rating else None,
+        "pages": [{"path": p, "views": v} for p, v in page_stats],
+        "recent_visits": [
+            {
+                "path": v.path,
+                "visitor": v.ip_hash,
+                "user_agent": v.user_agent[:80] if v.user_agent else "",
+                "referrer": v.referrer or "",
+                "time": v.created_at.isoformat() if v.created_at else "",
+            }
+            for v in recent
+        ],
+        "feedback": [
+            {
+                "rating": f.rating,
+                "text": f.text,
+                "time": f.created_at.isoformat() if f.created_at else "",
+            }
+            for f in feedbacks
+        ],
+    }

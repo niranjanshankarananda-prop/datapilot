@@ -80,6 +80,49 @@
     .ws-reveal-row { animation: wsRevealRow 0.3s ease-out both; }
     .ws-twinkle { animation: wsTwinkle 2.5s ease-in-out infinite; }
     .ws-glow { animation: wsGlow 3s ease-in-out infinite; }
+
+    /* Chart Animation */
+    @keyframes chartGrow {
+        from { 
+            opacity: 0; 
+            transform: scaleY(0.8) translateY(20px);
+        }
+        to { 
+            opacity: 1; 
+            transform: scaleY(1) translateY(0);
+        }
+    }
+    .chart-animate {
+        animation: chartGrow 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        transform-origin: bottom;
+    }
+    
+    /* Chart container glow on hover */
+    .chart-container-wrapper {
+        transition: all 0.3s ease;
+    }
+    .chart-container-wrapper:hover {
+        box-shadow: 0 0 30px rgba(99, 102, 241, 0.15);
+        border-color: rgba(99, 102, 241, 0.3);
+    }
+    
+    /* Query result card enhanced glow */
+    .glass-card:has(.chart-container) {
+        position: relative;
+    }
+    .glass-card:has(.chart-container)::after {
+        content: '';
+        position: absolute;
+        inset: -1px;
+        border-radius: inherit;
+        background: linear-gradient(135deg, rgba(99,102,241,0.1), transparent, rgba(139,92,246,0.1));
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    .glass-card:has(.chart-container):hover::after {
+        opacity: 1;
+    }
 </style>
 {% endblock %}
 
@@ -87,7 +130,7 @@
 <div class="min-h-screen flex flex-col">
 
     <!-- Top Navigation Bar -->
-    <header class="sticky top-0 z-50 glass-card border-b border-white/5 ws-slide-down">
+    <header class="sticky top-0 z-50 glass-card border-b border-white/5 ws-slide-down" style="backdrop-filter: blur(20px);">
         <div class="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <!-- Left: Back + Branding -->
@@ -313,7 +356,7 @@
                                 >
                                 <button
                                     type="submit"
-                                    class="flex-shrink-0 m-1.5 p-2.5 rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white shadow-lg shadow-indigo-500/20 transition-all duration-200 hover:scale-105 ws-glow"
+                                    class="flex-shrink-0 m-1.5 p-2.5 rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white shadow-lg shadow-indigo-500/20 transition-all duration-200 hover:scale-110 ws-glow"
                                 >
                                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
