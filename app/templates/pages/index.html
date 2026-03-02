@@ -48,6 +48,18 @@
         60% { transform: translateX(-5px); }
         80% { transform: translateX(5px); }
     }
+
+    /* Prevent horizontal overflow from decorative orbs */
+    .min-h-screen { overflow-x: hidden; }
+
+    @media (max-width: 640px) {
+        /* Hide large orbs on mobile to save GPU */
+        .blur-3xl { display: none; }
+        /* Tighter hero text */
+        h1 { font-size: 1.75rem !important; }
+        /* Compact sample cards */
+        .sample-card { padding: 0.5rem 0.75rem !important; }
+    }
 </style>
 {% endblock %}
 
