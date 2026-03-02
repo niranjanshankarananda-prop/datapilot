@@ -1,0 +1,21 @@
+respondent_id,age_group,gender,satisfaction_rating,recommend_likelihood,category,feedback_date,nps_score
+R001,25-34,Female,5,9,Product Quality,2024-01-15,9
+R002,35-44,Male,4,8,Customer Service,2024-01-15,8
+R003,18-24,Female,5,10,Product Quality,2024-01-16,10
+R004,45-54,Male,3,5,User Experience,2024-01-16,5
+R005,25-34,Female,4,7,Pricing,2024-01-17,7
+R006,55-64,Male,5,9,Product Quality,2024-01-17,9
+R007,35-44,Female,2,3,User Experience,2024-01-18,3
+R008,25-34,Male,4,8,Customer Service,2024-01-18,8
+R009,18-24,Female,5,10,Product Quality,2024-01-19,10
+R010,45-54,Male,3,6,Pricing,2024-01-19,6
+R011,55-64,Female,4,8,Customer Service,2024-01-20,8
+R012,25-34,Male,5,9,Product Quality,2024-01-20,9
+R013,35-44,Female,4,7,User Experience,2024-01-21,7
+R014,18-24,Male,5,10,Product Quality,2024-01-21,10
+R015,45-54,Female,3,5,Pricing,2024-01-22,5
+R016,25-34,Male,4,8,Customer Service,2024-01-22,8
+R017,55-64,Female,5,9,Product Quality,2024-01-23,9
+R018,35-44,Male,2,4,User Experience,2024-01-23,4
+R019,25-34,Female,4,7,Pricing,2024-01-24,7
+R020,45-54,Male,5,9,Customer Service,2024-01-24,9

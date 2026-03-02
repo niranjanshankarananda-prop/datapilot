@@ -1,0 +1,21 @@
+product_id,product_name,category,revenue,units_sold,date
+P001,Laptop Pro,Electronics,1299.99,150,2024-01-15
+P002,Wireless Mouse,Electronics,29.99,500,2024-01-16
+P003,Office Chair,Furniture,199.99,75,2024-01-17
+P004,Standing Desk,Furniture,449.99,45,2024-01-18
+P005,USB-C Cable,Electronics,12.99,1200,2024-01-19
+P006,Monitor 27",Electronics,349.99,200,2024-01-20
+P007,Mechanical Keyboard,Electronics,89.99,300,2024-01-21
+P008,Desk Lamp,Furniture,39.99,250,2024-01-22
+P009,Webcam HD,Electronics,59.99,180,2024-01-23
+P010,Headphones Pro,Electronics,149.99,220,2024-01-24
+P001,Laptop Pro,Electronics,1299.99,175,2024-02-15
+P002,Wireless Mouse,Electronics,29.99,550,2024-02-16
+P003,Office Chair,Furniture,199.99,90,2024-02-17
+P004,Standing Desk,Furniture,449.99,55,2024-02-18
+P005,USB-C Cable,Electronics,12.99,1350,2024-02-19
+P006,Monitor 27",Electronics,349.99,230,2024-02-20
+P007,Mechanical Keyboard,Electronics,89.99,340,2024-02-21
+P008,Desk Lamp,Furniture,39.99,280,2024-02-22
+P009,Webcam HD,Electronics,59.99,195,2024-02-23
+P010,Headphones Pro,Electronics,149.99,250,2024-02-24

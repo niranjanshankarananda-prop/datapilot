@@ -1,0 +1,16 @@
+customer_id,first_name,last_name,email,segment,signup_date,total_purchases,lifetime_value
+C001,John,Smith,john.smith@email.com,Enterprise,2023-01-15,45,12500.00
+C002,Sarah,Johnson,sarah.j@company.org,Premium,2023-02-20,32,8400.50
+C003,Michael,Brown,m.brown@email.com,Regular,2023-03-10,18,2100.25
+C004,Emily,Davis,emily.davis@company.org,Enterprise,2023-04-05,58,18200.00
+C005,David,Wilson,d.wilson@email.com,Premium,2023-05-12,28,7200.75
+C006,Jennifer,Martinez,j.martinez@company.org,Regular,2023-06-18,12,1450.00
+C007,Robert,Taylor,r.taylor@email.com,Enterprise,2023-07-22,52,15600.50
+C008,Lisa,Anderson,l.anderson@company.org,Premium,2023-08-30,35,9800.25
+C009,James,Thomas,j.thomas@email.com,Regular,2023-09-14,8,920.00
+C010,Maria,Garcia,m.garcia@company.org,Enterprise,2023-10-25,48,14400.75
+C011,William,Lee,w.lee@email.com,Premium,2023-11-08,30,8100.00
+C012,Patricia,White,p.white@company.org,Regular,2023-12-01,15,1800.50
+C013,Christopher,Harris,c.harris@email.com,Enterprise,2024-01-10,42,12600.25
+C014,Nancy,Clark,n.clark@company.org,Premium,2024-02-15,26,6900.00
+C015,Daniel,Lewis,d.lewis@email.com,Regular,2024-03-20,10,1150.75
