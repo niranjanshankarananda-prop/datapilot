@@ -2,16 +2,66 @@
 
 {% block title %}DataPilot - Upload Data{% endblock %}
 
+{% block extra_head %}
+<style>
+    @keyframes slideInLeft {
+        from { opacity: 0; transform: translateX(-40px); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes slideInRight {
+        from { opacity: 0; transform: translateX(40px); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes floatUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes shimmer {
+        0% { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
+    }
+    .anim-slide-left { animation: slideInLeft 0.6s ease-out both; }
+    .anim-slide-right { animation: slideInRight 0.6s ease-out both; }
+    .anim-float-up { animation: floatUp 0.5s ease-out both; }
+    .step-connector {
+        position: relative;
+    }
+    .step-connector::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: -8px;
+        width: 1px;
+        height: 16px;
+        background: linear-gradient(to bottom, rgba(99,102,241,0.3), transparent);
+    }
+    .step-connector:last-child::after {
+        display: none;
+    }
+    .sample-card {
+        position: relative;
+    }
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        20% { transform: translateX(-8px); }
+        40% { transform: translateX(8px); }
+        60% { transform: translateX(-5px); }
+        80% { transform: translateX(5px); }
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="min-h-screen flex flex-col py-12 px-4 sm:px-6 lg:px-8 relative">
+<div class="min-h-screen flex flex-col py-8 px-4 sm:px-6 lg:px-8 relative">
 
     <!-- Decorative background orbs -->
-    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute top-20 left-10 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-20 right-10 w-80 h-80 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>
     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-600/5 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute top-40 right-1/4 w-64 h-64 bg-emerald-600/5 rounded-full blur-3xl pointer-events-none"></div>
 
     <!-- Top Bar: API Key Settings -->
-    <div class="relative z-10 max-w-4xl w-full mx-auto mb-6">
+    <div class="relative z-10 max-w-5xl w-full mx-auto mb-6">
         <div class="glass-card rounded-xl px-4 py-3 flex items-center justify-between animate-fade-in">
             <div class="flex items-center gap-3">
                 <div class="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center">
@@ -47,260 +97,281 @@
         </div>
     </div>
 
-    <div class="max-w-2xl w-full space-y-8 relative z-10 animate-fade-in mx-auto flex-1 flex flex-col items-center justify-center">
-        <!-- Logo and Header -->
-        <div class="text-center space-y-4">
-            <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-500 to-cyan-400 shadow-lg shadow-indigo-500/25 mb-2 animate-bounce" style="animation-duration: 2s;">
-                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+    <!-- Hero + Upload (compact top section) -->
+    <div class="max-w-2xl w-full mx-auto relative z-10 animate-fade-in text-center mb-6">
+        <div class="flex items-center justify-center gap-3 mb-3">
+            <div class="inline-flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-cyan-400 shadow-lg shadow-indigo-500/25 animate-bounce" style="animation-duration: 2s;">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-1.5M12 12l3-1.5M12 12l-3-1.5M12 12V9.75M12 9.75L9 8.25M12 9.75l3-1.5" />
                 </svg>
             </div>
-            <h1 class="text-5xl font-extrabold tracking-tight">
+            <h1 class="text-4xl font-extrabold tracking-tight">
                 <span class="bg-gradient-to-r from-white via-gray-100 to-gray-300 bg-clip-text text-transparent">Data</span><span class="bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">Pilot</span>
             </h1>
-            <p class="text-lg text-gray-400 font-light max-w-md mx-auto">Upload your data and get AI-powered insights in seconds</p>
-
-            <!-- Animated demo queries -->
-            <div class="mt-2 h-8 flex items-center justify-center">
-                <span class="text-sm text-gray-600 mr-1.5">Try:</span>
-                <span id="typing-demo" class="text-sm text-indigo-400 font-mono"></span>
-                <span class="animate-pulse text-indigo-400">|</span>
-            </div>
         </div>
+        <p class="text-sm text-gray-400 font-light max-w-md mx-auto">Upload your data and get AI-powered insights in seconds</p>
+        <div class="mt-1.5 h-7 flex items-center justify-center">
+            <span class="text-xs text-gray-600 mr-1.5">Try:</span>
+            <span id="typing-demo" class="text-xs text-indigo-400 font-mono"></span>
+            <span class="animate-pulse text-indigo-400 text-xs">|</span>
+        </div>
+    </div>
 
-        <!-- Main Upload Card -->
-        <div class="glass-card gradient-border rounded-2xl p-8 shadow-2xl shadow-black/20 hover-lift animate-slide-up">
-            <form
-                action="/upload"
-                method="post"
-                enctype="multipart/form-data"
-                class="space-y-6"
-            >
-                <!-- File Upload Zone -->
-                <div>
-                    <span class="block text-sm font-medium text-gray-300 mb-2">Upload File</span>
-                    <div class="relative mt-1 flex justify-center px-6 pt-8 pb-8 border-2 border-dashed border-gray-600/50 rounded-xl hover:border-indigo-500/60 hover:bg-indigo-500/5 transition-all duration-300 cursor-pointer group" id="drop-zone">
-                        <!-- Invisible file input covering entire zone -->
-                        <input id="file-upload" name="file" type="file"
-                            class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                            accept=".csv,.tsv,.xlsx,.xls">
-                        <div class="space-y-3 text-center">
-                            <div class="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-surface-300/50 group-hover:bg-indigo-500/10 transition-colors duration-300">
-                                <svg class="h-7 w-7 text-gray-500 group-hover:text-indigo-400 transition-colors duration-300" stroke="currentColor" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
-                                </svg>
-                            </div>
-                            <div class="flex text-sm text-gray-400 justify-center">
+    <!-- Upload Card (top, compact) -->
+    <div class="max-w-xl w-full mx-auto relative z-10 mb-6">
+        <div class="glass-card gradient-border rounded-2xl p-5 shadow-2xl shadow-black/20 hover-lift animate-slide-up">
+            <form action="/upload" method="post" enctype="multipart/form-data" class="space-y-4">
+                <!-- Drop zone -->
+                <div class="relative flex justify-center px-5 py-5 border-2 border-dashed border-gray-600/50 rounded-xl hover:border-indigo-500/60 hover:bg-indigo-500/5 transition-all duration-300 cursor-pointer group" id="drop-zone">
+                    <input id="file-upload" name="file" type="file"
+                        class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                        accept=".csv,.tsv,.xlsx,.xls">
+                    <div class="flex items-center gap-4">
+                        <div class="flex-shrink-0 w-11 h-11 rounded-xl bg-surface-300/50 group-hover:bg-indigo-500/10 flex items-center justify-center transition-colors duration-300">
+                            <svg class="h-6 w-6 text-gray-500 group-hover:text-indigo-400 transition-colors duration-300" stroke="currentColor" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                            </svg>
+                        </div>
+                        <div class="text-left">
+                            <div class="flex text-sm text-gray-400">
                                 <span class="font-semibold text-indigo-400">Choose a file</span>
                                 <p class="pl-1.5">or drag and drop</p>
                             </div>
-                            <p class="text-xs text-gray-500">CSV, TSV, Excel up to 100MB</p>
+                            <p class="text-[11px] text-gray-500 mt-0.5">CSV, TSV, Excel up to 100MB</p>
                         </div>
+                    </div>
+                </div>
+
+                <!-- No file selected error -->
+                <div id="upload-error" class="hidden animate-slide-down">
+                    <div class="flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-2.5">
+                        <svg class="w-4 h-4 text-red-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+                        </svg>
+                        <span class="text-sm text-red-300">Please select a file first</span>
                     </div>
                 </div>
 
                 <!-- File Info (shown after selection) -->
                 <div id="file-info" class="hidden animate-slide-down">
-                    <div class="flex items-center justify-between bg-indigo-500/10 border border-indigo-500/20 rounded-xl p-4">
+                    <div class="flex items-center justify-between bg-indigo-500/10 border border-indigo-500/20 rounded-xl px-4 py-3">
                         <div class="flex items-center space-x-3">
-                            <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-indigo-500/20 flex items-center justify-center">
-                                <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                            <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-indigo-500/20 flex items-center justify-center">
+                                <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
                                 </svg>
                             </div>
                             <span id="filename" class="text-sm font-medium text-indigo-300"></span>
                         </div>
-                        <button type="button" id="remove-file" class="p-1.5 rounded-lg text-gray-500 hover:text-red-400 hover:bg-red-500/10 transition-all duration-200">
-                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                        <button type="button" id="remove-file" class="p-1 rounded-lg text-gray-500 hover:text-red-400 hover:bg-red-500/10 transition-all duration-200">
+                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                         </button>
                     </div>
                 </div>
 
-                <!-- Divider -->
-                <div class="relative py-2">
-                    <div class="absolute inset-0 flex items-center">
-                        <div class="w-full border-t border-gray-700/50"></div>
-                    </div>
-                    <div class="relative flex justify-center">
-                        <span class="bg-surface-200/80 backdrop-blur px-4 text-xs text-gray-500 uppercase tracking-widest">or paste data</span>
-                    </div>
-                </div>
-
-                <!-- Paste Area -->
-                <div>
-                    <textarea
-                        name="pasted-data"
-                        placeholder="Paste your data here (tab or comma separated)..."
-                        class="w-full h-36 p-4 bg-surface-300/40 border border-gray-700/40 rounded-xl text-gray-300 placeholder-gray-600 font-mono text-sm focus:ring-2 focus:ring-indigo-500/40 focus:border-indigo-500/50 transition-all duration-200 resize-none"
-                    ></textarea>
-                </div>
-
                 <!-- Submit Button -->
-                <div>
-                    <button
-                        type="submit"
-                        class="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 via-indigo-500 to-purple-600 hover:from-indigo-500 hover:via-indigo-400 hover:to-purple-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:ring-offset-2 focus:ring-offset-surface shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30 transition-all duration-300 transform hover:scale-[1.01]"
-                    >
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" />
-                        </svg>
-                        Analyze Data
-                    </button>
-                </div>
-            </form>
-        </div>
-
-        <!-- Sample Datasets -->
-        <div class="glass-card rounded-2xl p-6 animate-slide-up" style="animation-delay: 0.1s;">
-            <div class="text-center mb-4">
-                <h3 class="text-sm font-semibold text-white mb-1">Try With Sample Data</h3>
-                <p class="text-[11px] text-gray-500">Tested and verified on these datasets. Download, explore, and upload to try it yourself.</p>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                <div class="flex items-center justify-between bg-surface-300/40 border border-white/[0.04] rounded-xl px-3.5 py-2.5 hover:border-indigo-500/20 hover:bg-indigo-500/5 transition-all group">
-                    <div class="min-w-0">
-                        <p class="text-xs font-medium text-gray-300 group-hover:text-white transition-colors">sales_data.csv <span class="text-[9px] text-indigo-500 font-normal">5K rows</span></p>
-                        <p class="text-[10px] text-gray-600">Product sales, revenue, units, regions</p>
-                    </div>
-                    <a href="/sample/sales_data/download" class="flex-shrink-0 ml-2 p-1.5 rounded-lg text-gray-600 hover:text-indigo-400 hover:bg-indigo-500/10 transition-all" title="Download">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
-                    </a>
-                </div>
-                <div class="flex items-center justify-between bg-surface-300/40 border border-white/[0.04] rounded-xl px-3.5 py-2.5 hover:border-purple-500/20 hover:bg-purple-500/5 transition-all group">
-                    <div class="min-w-0">
-                        <p class="text-xs font-medium text-gray-300 group-hover:text-white transition-colors">customer_data.csv <span class="text-[9px] text-purple-500 font-normal">2K rows</span></p>
-                        <p class="text-[10px] text-gray-600">Segments, purchases, churn risk, lifetime value</p>
-                    </div>
-                    <a href="/sample/customer_data/download" class="flex-shrink-0 ml-2 p-1.5 rounded-lg text-gray-600 hover:text-purple-400 hover:bg-purple-500/10 transition-all" title="Download">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
-                    </a>
-                </div>
-                <div class="flex items-center justify-between bg-surface-300/40 border border-white/[0.04] rounded-xl px-3.5 py-2.5 hover:border-emerald-500/20 hover:bg-emerald-500/5 transition-all group">
-                    <div class="min-w-0">
-                        <p class="text-xs font-medium text-gray-300 group-hover:text-white transition-colors">financial_data.csv <span class="text-[9px] text-emerald-500 font-normal">3K rows</span></p>
-                        <p class="text-[10px] text-gray-600">Transactions, payment methods, merchants</p>
-                    </div>
-                    <a href="/sample/financial_data/download" class="flex-shrink-0 ml-2 p-1.5 rounded-lg text-gray-600 hover:text-emerald-400 hover:bg-emerald-500/10 transition-all" title="Download">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
-                    </a>
-                </div>
-                <div class="flex items-center justify-between bg-surface-300/40 border border-white/[0.04] rounded-xl px-3.5 py-2.5 hover:border-cyan-500/20 hover:bg-cyan-500/5 transition-all group">
-                    <div class="min-w-0">
-                        <p class="text-xs font-medium text-gray-300 group-hover:text-white transition-colors">web_analytics.csv <span class="text-[9px] text-cyan-500 font-normal">2K rows</span></p>
-                        <p class="text-[10px] text-gray-600">Page views, bounce rates, traffic sources</p>
-                    </div>
-                    <a href="/sample/web_analytics/download" class="flex-shrink-0 ml-2 p-1.5 rounded-lg text-gray-600 hover:text-cyan-400 hover:bg-cyan-500/10 transition-all" title="Download">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
-                    </a>
-                </div>
-                <div class="sm:col-span-2 flex items-center justify-between bg-surface-300/40 border border-white/[0.04] rounded-xl px-3.5 py-2.5 hover:border-amber-500/20 hover:bg-amber-500/5 transition-all group">
-                    <div class="min-w-0">
-                        <p class="text-xs font-medium text-gray-300 group-hover:text-white transition-colors">survey_results.csv <span class="text-[9px] text-amber-500 font-normal">1.5K rows</span></p>
-                        <p class="text-[10px] text-gray-600">Satisfaction ratings, NPS scores, demographics</p>
-                    </div>
-                    <a href="/sample/survey_results/download" class="flex-shrink-0 ml-2 p-1.5 rounded-lg text-gray-600 hover:text-amber-400 hover:bg-amber-500/10 transition-all" title="Download">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- How It Works -->
-        <div class="glass-card rounded-2xl p-6 animate-slide-up" style="animation-delay: 0.15s;">
-            <h3 class="text-sm font-semibold text-white mb-4 text-center">How It Works</h3>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div class="text-center space-y-2">
-                    <div class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 font-bold text-sm">1</div>
-                    <p class="text-xs text-gray-300 font-medium">Upload your CSV/Excel file</p>
-                    <p class="text-[11px] text-gray-600">Supports CSV, TSV, and Excel formats up to 100MB</p>
-                </div>
-                <div class="text-center space-y-2">
-                    <div class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 font-bold text-sm">2</div>
-                    <p class="text-xs text-gray-300 font-medium">Ask questions in plain English</p>
-                    <p class="text-[11px] text-gray-600">"Show top 10 products by revenue" or "What's the average salary?"</p>
-                </div>
-                <div class="text-center space-y-2">
-                    <div class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-400 font-bold text-sm">3</div>
-                    <p class="text-xs text-gray-300 font-medium">Get instant answers</p>
-                    <p class="text-[11px] text-gray-600">AI generates code, runs it securely, and shows results as tables or values</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Limitations -->
-        <div class="glass-card rounded-2xl p-6 animate-slide-up border border-amber-500/10" style="animation-delay: 0.2s;">
-            <div class="flex items-center gap-2 mb-3">
-                <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126z" />
-                </svg>
-                <h3 class="text-sm font-semibold text-white">Good to Know</h3>
-            </div>
-            <ul class="space-y-2 text-xs text-gray-400">
-                <li class="flex items-start gap-2">
-                    <span class="text-amber-500 mt-0.5 flex-shrink-0">*</span>
-                    <span><strong class="text-gray-300">Valid API key required</strong> — You need a free Groq, Together AI, or OpenRouter API key configured above before querying. Without it, queries will fail.</span>
-                </li>
-                <li class="flex items-start gap-2">
-                    <span class="text-amber-500 mt-0.5 flex-shrink-0">*</span>
-                    <span><strong class="text-gray-300">Use column names in queries</strong> — For best results, reference actual column names from your data (shown as clickable pills in workspace).</span>
-                </li>
-                <li class="flex items-start gap-2">
-                    <span class="text-amber-500 mt-0.5 flex-shrink-0">*</span>
-                    <span><strong class="text-gray-300">Simple queries work best</strong> — Filtering, top-N, averages, groupby, and counts are well-supported. Complex multi-step analysis may need rephrasing.</span>
-                </li>
-                <li class="flex items-start gap-2">
-                    <span class="text-amber-500 mt-0.5 flex-shrink-0">*</span>
-                    <span><strong class="text-gray-300">In-memory storage</strong> — Uploaded data is stored in server memory. If the server restarts, you'll need to re-upload your file.</span>
-                </li>
-                <li class="flex items-start gap-2">
-                    <span class="text-amber-500 mt-0.5 flex-shrink-0">*</span>
-                    <span><strong class="text-gray-300">Works with any CSV/Excel</strong> — The app adapts to any dataset structure. Column names and types are auto-detected.</span>
-                </li>
-            </ul>
-        </div>
-
-        <!-- Feedback Section -->
-        <div class="glass-card rounded-2xl p-6 animate-slide-up" style="animation-delay: 0.25s;">
-            <h3 class="text-sm font-semibold text-white mb-3 text-center">Share Your Experience</h3>
-            <form id="feedback-form" onsubmit="submitFeedback(event)">
-                <div class="flex gap-3 justify-center mb-3" id="rating-stars">
-                    <button type="button" class="rating-star text-2xl text-gray-700 hover:text-yellow-400 transition-colors" data-rating="1">&#9733;</button>
-                    <button type="button" class="rating-star text-2xl text-gray-700 hover:text-yellow-400 transition-colors" data-rating="2">&#9733;</button>
-                    <button type="button" class="rating-star text-2xl text-gray-700 hover:text-yellow-400 transition-colors" data-rating="3">&#9733;</button>
-                    <button type="button" class="rating-star text-2xl text-gray-700 hover:text-yellow-400 transition-colors" data-rating="4">&#9733;</button>
-                    <button type="button" class="rating-star text-2xl text-gray-700 hover:text-yellow-400 transition-colors" data-rating="5">&#9733;</button>
-                </div>
-                <textarea id="feedback-text" placeholder="What did you like? What can be improved?"
-                    class="w-full h-20 p-3 bg-surface-300/40 border border-gray-700/40 rounded-xl text-gray-300 placeholder-gray-600 text-sm focus:ring-1 focus:ring-indigo-500/40 focus:border-indigo-500/50 transition-all duration-200 resize-none mb-3"></textarea>
-                <button type="submit" class="w-full py-2 px-4 rounded-lg text-xs font-medium text-white bg-surface-300/60 hover:bg-indigo-600/60 border border-white/[0.06] hover:border-indigo-500/30 transition-all">
-                    Submit Feedback
+                <button type="submit"
+                    class="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 via-indigo-500 to-purple-600 hover:from-indigo-500 hover:via-indigo-400 hover:to-purple-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:ring-offset-2 focus:ring-offset-surface shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/30 transition-all duration-300 transform hover:scale-[1.01]">
+                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" />
+                    </svg>
+                    Analyze Data
                 </button>
             </form>
-            <div id="feedback-thanks" class="hidden text-center py-4">
-                <p class="text-emerald-400 text-sm font-medium">Thank you for your feedback!</p>
-            </div>
         </div>
+    </div>
 
-        <!-- Footer Info -->
-        <div class="text-center space-y-3">
-            <div class="flex items-center justify-center gap-6 text-xs text-gray-600">
-                <span class="flex items-center gap-1.5">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500/60"></span>
-                    CSV
-                </span>
-                <span class="flex items-center gap-1.5">
-                    <span class="w-2 h-2 rounded-full bg-blue-500/60"></span>
-                    TSV
-                </span>
-                <span class="flex items-center gap-1.5">
-                    <span class="w-2 h-2 rounded-full bg-purple-500/60"></span>
-                    Excel (.xlsx, .xls)
-                </span>
+    <!-- Two-column layout: How It Works (left) + Sample Data (right) -->
+    <div class="max-w-5xl w-full mx-auto relative z-10 mb-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+            <!-- LEFT: How It Works -->
+            <div class="glass-card rounded-2xl p-6 anim-slide-left" style="animation-delay: 0.2s;">
+                <div class="flex items-center gap-2.5 mb-5">
+                    <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-sm font-semibold text-white">How It Works</h3>
+                </div>
+                <div class="space-y-5">
+                    <div class="flex items-start gap-4 step-connector anim-float-up" style="animation-delay: 0.3s;">
+                        <div class="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500/20 to-indigo-600/10 border border-indigo-500/20 flex items-center justify-center">
+                            <span class="text-indigo-400 font-bold text-sm">1</span>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-200 font-medium">Upload your file</p>
+                            <p class="text-xs text-gray-500 mt-0.5">CSV, TSV, or Excel — up to 100MB. Drag & drop or click to browse.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 step-connector anim-float-up" style="animation-delay: 0.4s;">
+                        <div class="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-600/10 border border-purple-500/20 flex items-center justify-center">
+                            <span class="text-purple-400 font-bold text-sm">2</span>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-200 font-medium">Ask in plain English</p>
+                            <p class="text-xs text-gray-500 mt-0.5">"Top 10 products by revenue" or "Average salary by department"</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-4 anim-float-up" style="animation-delay: 0.5s;">
+                        <div class="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500/20 to-cyan-600/10 border border-cyan-500/20 flex items-center justify-center">
+                            <span class="text-cyan-400 font-bold text-sm">3</span>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-200 font-medium">Get instant answers</p>
+                            <p class="text-xs text-gray-500 mt-0.5">AI generates code, runs it securely, and returns tables, charts, or values.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 pt-4 border-t border-white/[0.04]">
+                    <div class="flex items-center justify-center gap-5 text-[11px] text-gray-500">
+                        <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500/60"></span> CSV</span>
+                        <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-blue-500/60"></span> TSV</span>
+                        <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-purple-500/60"></span> Excel (.xlsx, .xls)</span>
+                    </div>
+                </div>
             </div>
-            <p class="text-[10px] text-gray-700">Built with FastAPI, Pandas, and AI</p>
+
+            <!-- RIGHT: Try With Sample Data -->
+            <div class="glass-card rounded-2xl p-6 anim-slide-right" style="animation-delay: 0.2s;">
+                <div class="flex items-center gap-2.5 mb-4">
+                    <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-semibold text-white">Try With Sample Data</h3>
+                        <p class="text-[10px] text-gray-600">Download, explore, and upload to try it yourself</p>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <a href="/sample/sales_data/download" class="sample-card flex items-center gap-3 bg-surface-300/40 border border-white/[0.04] rounded-xl px-4 py-3 hover:border-indigo-500/30 hover:bg-indigo-500/5 transition-all duration-300 group anim-float-up" style="animation-delay: 0.3s;">
+                        <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-indigo-500/10 border border-indigo-500/15 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" /></svg>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <p class="text-xs font-medium text-gray-300 group-hover:text-white transition-colors">sales_data.csv</p>
+                            <p class="text-[10px] text-gray-600">Revenue, units, regions</p>
+                        </div>
+                        <span class="text-[9px] font-medium text-indigo-400/70 bg-indigo-500/10 px-2 py-0.5 rounded-full">5K rows</span>
+                    </a>
+                    <a href="/sample/customer_data/download" class="sample-card flex items-center gap-3 bg-surface-300/40 border border-white/[0.04] rounded-xl px-4 py-3 hover:border-purple-500/30 hover:bg-purple-500/5 transition-all duration-300 group anim-float-up" style="animation-delay: 0.35s;">
+                        <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-purple-500/10 border border-purple-500/15 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" /></svg>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <p class="text-xs font-medium text-gray-300 group-hover:text-white transition-colors">customer_data.csv</p>
+                            <p class="text-[10px] text-gray-600">Segments, churn risk, lifetime value</p>
+                        </div>
+                        <span class="text-[9px] font-medium text-purple-400/70 bg-purple-500/10 px-2 py-0.5 rounded-full">2K rows</span>
+                    </a>
+                    <a href="/sample/financial_data/download" class="sample-card flex items-center gap-3 bg-surface-300/40 border border-white/[0.04] rounded-xl px-4 py-3 hover:border-emerald-500/30 hover:bg-emerald-500/5 transition-all duration-300 group anim-float-up" style="animation-delay: 0.4s;">
+                        <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-emerald-500/10 border border-emerald-500/15 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <p class="text-xs font-medium text-gray-300 group-hover:text-white transition-colors">financial_data.csv</p>
+                            <p class="text-[10px] text-gray-600">Transactions, payment methods</p>
+                        </div>
+                        <span class="text-[9px] font-medium text-emerald-400/70 bg-emerald-500/10 px-2 py-0.5 rounded-full">3K rows</span>
+                    </a>
+                    <a href="/sample/web_analytics/download" class="sample-card flex items-center gap-3 bg-surface-300/40 border border-white/[0.04] rounded-xl px-4 py-3 hover:border-cyan-500/30 hover:bg-cyan-500/5 transition-all duration-300 group anim-float-up" style="animation-delay: 0.45s;">
+                        <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-cyan-500/10 border border-cyan-500/15 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" /></svg>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <p class="text-xs font-medium text-gray-300 group-hover:text-white transition-colors">web_analytics.csv</p>
+                            <p class="text-[10px] text-gray-600">Page views, bounce rates, sources</p>
+                        </div>
+                        <span class="text-[9px] font-medium text-cyan-400/70 bg-cyan-500/10 px-2 py-0.5 rounded-full">2K rows</span>
+                    </a>
+                    <a href="/sample/survey_results/download" class="sample-card flex items-center gap-3 bg-surface-300/40 border border-white/[0.04] rounded-xl px-4 py-3 hover:border-amber-500/30 hover:bg-amber-500/5 transition-all duration-300 group anim-float-up" style="animation-delay: 0.5s;">
+                        <div class="flex-shrink-0 w-9 h-9 rounded-lg bg-amber-500/10 border border-amber-500/15 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z" /></svg>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <p class="text-xs font-medium text-gray-300 group-hover:text-white transition-colors">survey_results.csv</p>
+                            <p class="text-[10px] text-gray-600">Satisfaction, NPS, demographics</p>
+                        </div>
+                        <span class="text-[9px] font-medium text-amber-400/70 bg-amber-500/10 px-2 py-0.5 rounded-full">1.5K rows</span>
+                    </a>
+                </div>
+            </div>
         </div>
+    </div>
+
+    <!-- Bottom row: Good to Know + Feedback side-by-side -->
+    <div class="max-w-5xl w-full mx-auto relative z-10 mb-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+            <!-- Limitations -->
+            <div class="glass-card rounded-2xl p-6 anim-slide-left border border-amber-500/10" style="animation-delay: 0.55s;">
+                <div class="flex items-center gap-2.5 mb-4">
+                    <div class="w-8 h-8 rounded-xl bg-amber-500/10 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-sm font-semibold text-white">Good to Know</h3>
+                </div>
+                <ul class="space-y-2.5 text-xs text-gray-400">
+                    <li class="flex items-start gap-2.5">
+                        <span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-amber-500/50 mt-1.5"></span>
+                        <span><strong class="text-gray-300">API key required</strong> — Free Groq, Together AI, or OpenRouter key needed for queries.</span>
+                    </li>
+                    <li class="flex items-start gap-2.5">
+                        <span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-amber-500/50 mt-1.5"></span>
+                        <span><strong class="text-gray-300">Use column names</strong> — Reference actual column names for best results.</span>
+                    </li>
+                    <li class="flex items-start gap-2.5">
+                        <span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-amber-500/50 mt-1.5"></span>
+                        <span><strong class="text-gray-300">Simple queries work best</strong> — Top-N, averages, groupby, and filters are well-supported.</span>
+                    </li>
+                    <li class="flex items-start gap-2.5">
+                        <span class="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-amber-500/50 mt-1.5"></span>
+                        <span><strong class="text-gray-300">In-memory storage</strong> — Data resets on server restart; re-upload if needed.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Feedback Section -->
+            <div class="glass-card rounded-2xl p-6 anim-slide-right" style="animation-delay: 0.55s;">
+                <div class="flex items-center gap-2.5 mb-4">
+                    <div class="w-8 h-8 rounded-xl bg-pink-500/10 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-sm font-semibold text-white">Share Your Experience</h3>
+                </div>
+                <form id="feedback-form" onsubmit="submitFeedback(event)">
+                    <div class="flex gap-2 justify-center mb-3" id="rating-stars">
+                        <button type="button" class="rating-star text-2xl text-gray-700 hover:text-yellow-400 transition-all duration-200 hover:scale-125" data-rating="1">&#9733;</button>
+                        <button type="button" class="rating-star text-2xl text-gray-700 hover:text-yellow-400 transition-all duration-200 hover:scale-125" data-rating="2">&#9733;</button>
+                        <button type="button" class="rating-star text-2xl text-gray-700 hover:text-yellow-400 transition-all duration-200 hover:scale-125" data-rating="3">&#9733;</button>
+                        <button type="button" class="rating-star text-2xl text-gray-700 hover:text-yellow-400 transition-all duration-200 hover:scale-125" data-rating="4">&#9733;</button>
+                        <button type="button" class="rating-star text-2xl text-gray-700 hover:text-yellow-400 transition-all duration-200 hover:scale-125" data-rating="5">&#9733;</button>
+                    </div>
+                    <textarea id="feedback-text" placeholder="What did you like? What can be improved?"
+                        class="w-full h-20 p-3 bg-surface-300/40 border border-gray-700/40 rounded-xl text-gray-300 placeholder-gray-600 text-sm focus:ring-1 focus:ring-indigo-500/40 focus:border-indigo-500/50 transition-all duration-200 resize-none mb-3"></textarea>
+                    <button type="submit" class="w-full py-2 px-4 rounded-lg text-xs font-medium text-white bg-surface-300/60 hover:bg-indigo-600/60 border border-white/[0.06] hover:border-indigo-500/30 transition-all">
+                        Submit Feedback
+                    </button>
+                </form>
+                <div id="feedback-thanks" class="hidden text-center py-4">
+                    <p class="text-emerald-400 text-sm font-medium">Thank you for your feedback!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="max-w-5xl w-full mx-auto relative z-10 text-center">
+        <p class="text-[10px] text-gray-700">Built with FastAPI, Pandas, and AI</p>
     </div>
 </div>
 {% endblock %}
@@ -313,12 +384,30 @@
     const removeFileBtn = document.getElementById('remove-file');
     const dropZone = document.getElementById('drop-zone');
 
+    const uploadError = document.getElementById('upload-error');
+    const uploadForm = fileInput.closest('form');
+
     fileInput.addEventListener('change', function(e) {
         if (this.files && this.files[0]) {
             const file = this.files[0];
             filenameDisplay.textContent = file.name + ' (' + formatBytes(file.size) + ')';
             fileInfo.classList.remove('hidden');
             dropZone.classList.add('hidden');
+            uploadError.classList.add('hidden');
+            dropZone.classList.remove('border-red-500/60');
+        }
+    });
+
+    // Prevent form submission without a file
+    uploadForm.addEventListener('submit', function(e) {
+        if (!fileInput.files || fileInput.files.length === 0) {
+            e.preventDefault();
+            uploadError.classList.remove('hidden');
+            dropZone.classList.add('border-red-500/60');
+            dropZone.style.animation = 'none';
+            dropZone.offsetHeight; // reflow
+            dropZone.style.animation = 'shake 0.4s ease-out';
+            setTimeout(function() { dropZone.style.animation = ''; }, 500);
         }
     });
 
@@ -447,16 +536,21 @@
         });
     });
 
-    // Feedback submit
+    // Feedback submit — saves to server
     function submitFeedback(e) {
         e.preventDefault();
         const text = document.getElementById('feedback-text').value;
-        // Store in localStorage for now
-        const feedbacks = JSON.parse(localStorage.getItem('datapilot_feedback') || '[]');
-        feedbacks.push({ rating: selectedRating, text: text, date: new Date().toISOString() });
-        localStorage.setItem('datapilot_feedback', JSON.stringify(feedbacks));
-        document.getElementById('feedback-form').classList.add('hidden');
-        document.getElementById('feedback-thanks').classList.remove('hidden');
+        fetch('/api/feedback', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ rating: selectedRating, text: text })
+        }).then(function() {
+            document.getElementById('feedback-form').classList.add('hidden');
+            document.getElementById('feedback-thanks').classList.remove('hidden');
+        }).catch(function() {
+            document.getElementById('feedback-form').classList.add('hidden');
+            document.getElementById('feedback-thanks').classList.remove('hidden');
+        });
     }
 </script>
 {% endblock %}

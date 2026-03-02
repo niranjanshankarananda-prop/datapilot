@@ -20,6 +20,9 @@ from app.services.nl_to_pandas import nl_to_pandas, PROVIDERS
 from app.services.result_formatter import format_result
 from app.sandbox.executor import execute_pandas_code, ExecutionError
 from app.sandbox.validators import SecurityViolationError
+from app.services.chart_generator import generate_chart
+from app.services.chart_recommender import _rule_based_recommendation
+from app.models.feedback import Feedback
 from starlette.responses import StreamingResponse
 import io
 import csv
@@ -101,7 +104,12 @@ async def upload_dataset(
     file: UploadFile = File(...),
     db: Session = Depends(get_db),
 ) -> RedirectResponse:
+    if not file.filename:
+        raise HTTPException(status_code=400, detail="No file selected. Please choose a CSV, TSV, or Excel file.")
+
     content = await file.read()
+    if len(content) == 0:
+        raise HTTPException(status_code=400, detail="The uploaded file is empty.")
 
     try:
         df = file_parser.parse_file(content, file.filename)
@@ -297,6 +305,32 @@ async def submit_query(
             result = execute_pandas_code(generated_code, df)
         except ExecutionError as e:
             err_str = str(e)
+            # Auto-fix nlargest/nsmallest on string columns by replacing with sort_values
+            if "nlargest" in err_str or "nsmallest" in err_str:
+                method = "nlargest" if "nlargest" in generated_code else "nsmallest"
+                ascending = "True" if method == "nsmallest" else "False"
+                fixed_code = re.sub(
+                    r'\.n(?:largest|smallest)\((\d+),\s*([\'"][^\'"]+[\'"])\)',
+                    rf'.sort_values(\2, ascending={ascending}).head(\1)',
+                    generated_code,
+                )
+                if fixed_code != generated_code:
+                    try:
+                        result = execute_pandas_code(fixed_code, df)
+                        query.generated_code = fixed_code
+                    except ExecutionError:
+                        pass  # Fall through to original error handling
+                    else:
+                        # Success with fixed code — skip the error block
+                        formatted_result = format_result(result)
+                        query.result = formatted_result
+                        query.status = "success"
+                        db.commit()
+                        db.refresh(query)
+                        return templates.TemplateResponse(
+                            "components/query-result.html",
+                            {"request": request, "query": query},
+                        )
             # Detect column mismatch errors and provide helpful feedback
             if "KeyError" in err_str or "not in index" in err_str:
                 query.error = (
@@ -339,6 +373,32 @@ async def submit_query(
             }
         else:
             query.result = formatted_result
+
+            # Auto-generate chart for table results with 2+ rows
+            if formatted_result.get("type") == "table" and not is_empty:
+                try:
+                    col_types = []
+                    for col_info in schema:
+                        dtype = col_info["dtype"]
+                        if "int" in dtype or "float" in dtype:
+                            ct = "numeric"
+                        elif "datetime" in dtype:
+                            ct = "datetime"
+                        else:
+                            ct = "categorical"
+                        col_types.append({"name": col_info["name"], "type": ct})
+
+                    recommendation = _rule_based_recommendation(question, col_types)
+                    if recommendation and recommendation.confidence >= 0.7:
+                        chart_json = generate_chart(
+                            formatted_result,
+                            recommendation.chart_type.value,
+                            title=question[:60],
+                        )
+                        query.result["chart"] = chart_json
+                        query.result["chart_type"] = recommendation.chart_type.value
+                except Exception:
+                    pass  # Chart generation is optional, don't fail the query
 
         query.status = "success"
 
@@ -420,3 +480,32 @@ async def export_csv(
         media_type="text/csv",
         headers={"Content-Disposition": f"attachment; filename={filename}"},
     )
+
+
+@router.post("/api/feedback")
+async def submit_feedback(
+    request: Request,
+    db: Session = Depends(get_db),
+):
+    body = await request.json()
+    rating = body.get("rating", 0)
+    text = body.get("text", "")
+
+    feedback = Feedback(rating=rating, text=text)
+    db.add(feedback)
+    db.commit()
+    return {"status": "ok"}
+
+
+@router.get("/api/feedback")
+async def view_feedback(db: Session = Depends(get_db)):
+    feedbacks = db.query(Feedback).order_by(Feedback.created_at.desc()).all()
+    return [
+        {
+            "id": f.id,
+            "rating": f.rating,
+            "text": f.text,
+            "created_at": f.created_at.isoformat() if f.created_at else None,
+        }
+        for f in feedbacks
+    ]

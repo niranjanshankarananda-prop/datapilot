@@ -36,6 +36,50 @@
 
     /* Workspace panel scrolling */
     .workspace-panel { scrollbar-gutter: stable; }
+
+    /* === Workspace Entrance Animations === */
+    @keyframes wsSlideDown {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes wsSlideLeft {
+        from { opacity: 0; transform: translateX(-35px); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes wsSlideRight {
+        from { opacity: 0; transform: translateX(35px); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes wsFloatUp {
+        from { opacity: 0; transform: translateY(20px) scale(0.97); }
+        to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes wsPopIn {
+        0% { opacity: 0; transform: scale(0.8); }
+        70% { transform: scale(1.04); }
+        100% { opacity: 1; transform: scale(1); }
+    }
+    @keyframes wsRevealRow {
+        from { opacity: 0; transform: translateX(-10px); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes wsTwinkle {
+        0%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
+        50% { opacity: 0.6; transform: scale(1.15) rotate(12deg); }
+    }
+    @keyframes wsGlow {
+        0%, 100% { box-shadow: 0 0 12px rgba(99, 102, 241, 0.15), 0 4px 15px rgba(99, 102, 241, 0.1); }
+        50% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.3), 0 4px 25px rgba(99, 102, 241, 0.15); }
+    }
+
+    .ws-slide-down { animation: wsSlideDown 0.5s ease-out both; }
+    .ws-slide-left { animation: wsSlideLeft 0.6s ease-out both; }
+    .ws-slide-right { animation: wsSlideRight 0.6s ease-out both; }
+    .ws-float-up { animation: wsFloatUp 0.45s ease-out both; }
+    .ws-pop-in { animation: wsPopIn 0.3s ease-out both; }
+    .ws-reveal-row { animation: wsRevealRow 0.3s ease-out both; }
+    .ws-twinkle { animation: wsTwinkle 2.5s ease-in-out infinite; }
+    .ws-glow { animation: wsGlow 3s ease-in-out infinite; }
 </style>
 {% endblock %}
 
@@ -43,7 +87,7 @@
 <div class="min-h-screen flex flex-col">
 
     <!-- Top Navigation Bar -->
-    <header class="sticky top-0 z-50 glass-card border-b border-white/5">
+    <header class="sticky top-0 z-50 glass-card border-b border-white/5 ws-slide-down">
         <div class="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <!-- Left: Back + Branding -->
@@ -73,13 +117,13 @@
                         <svg class="w-3.5 h-3.5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 01-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-7.5A1.125 1.125 0 0112 18.375m9.75-12.75c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125m19.5 0v1.5c0 .621-.504 1.125-1.125 1.125M2.25 5.625v1.5c0 .621.504 1.125 1.125 1.125m0 0h17.25m-17.25 0h7.5c.621 0 1.125.504 1.125 1.125M3.375 8.25c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m17.25-3.75h-7.5c-.621 0-1.125.504-1.125 1.125m8.625-1.125c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125M12 10.875v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125M12 12h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125M21.375 12c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125M12 14.625v-1.5m0 1.5c0 .621.504 1.125 1.125 1.125M12 14.625c0 .621-.504 1.125-1.125 1.125m1.125 0c-.621 0-1.125-.504-1.125-1.125" />
                         </svg>
-                        {{ dataset.row_count }} rows
+                        <span class="count-up" data-target="{{ dataset.row_count }}">{{ dataset.row_count }}</span> rows
                     </span>
                     <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-surface-300/60 border border-white/5 text-xs text-gray-400">
                         <svg class="w-3.5 h-3.5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9 4.5v15m6-15v15m-10.875 0h15.75c.621 0 1.125-.504 1.125-1.125V5.625c0-.621-.504-1.125-1.125-1.125H4.125C3.504 4.5 3 5.004 3 5.625v12.75c0 .621.504 1.125 1.125 1.125z" />
                         </svg>
-                        {{ dataset.column_count }} cols
+                        <span class="count-up" data-target="{{ dataset.column_count }}">{{ dataset.column_count }}</span> cols
                     </span>
                     <span class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-surface-300/60 border border-white/5 text-xs text-gray-400 uppercase font-mono">
                         {{ dataset.file_type|upper }}
@@ -94,7 +138,7 @@
         <div class="grid grid-cols-1 xl:grid-cols-12 gap-6">
 
             <!-- ========== LEFT PANEL: Data Preview + Profile ========== -->
-            <div class="xl:col-span-7 space-y-6">
+            <div class="xl:col-span-7 space-y-6 ws-slide-left" style="animation-delay: 0.1s;">
 
                 <!-- Data Preview Card -->
                 <div class="glass-card gradient-border rounded-2xl overflow-hidden animate-slide-up">
@@ -155,7 +199,7 @@
                             <p class="text-xs text-gray-500">{{ column_profile|length }} columns analyzed</p>
                         </div>
                     </div>
-                    <div class="p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                    <div class="p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 stagger-up">
                         {% for col_profile in column_profile %}
                         <div class="group bg-surface-300/40 hover:bg-surface-300/70 border border-white/[0.04] hover:border-indigo-500/20 rounded-xl p-3.5 transition-all duration-200 hover-lift">
                             <!-- Column name + type badge -->
@@ -197,13 +241,13 @@
             </div>
 
             <!-- ========== RIGHT PANEL: Query Interface ========== -->
-            <div class="xl:col-span-5 space-y-6">
+            <div class="xl:col-span-5 space-y-6 ws-slide-right" style="animation-delay: 0.2s;">
 
                 <!-- Query Input Card -->
                 <div class="glass-card gradient-border rounded-2xl overflow-hidden animate-slide-up sticky top-20" style="animation-delay: 0.15s;">
                     <div class="px-5 py-4 border-b border-white/5 flex items-center space-x-3">
                         <div class="w-8 h-8 rounded-lg bg-cyan-500/10 flex items-center justify-center">
-                            <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                            <svg class="w-4 h-4 text-cyan-400 ws-twinkle" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" />
                             </svg>
                         </div>
@@ -216,7 +260,7 @@
                         <!-- Available data points -->
                         <div class="mb-3">
                             <p class="text-[10px] uppercase tracking-wider text-gray-600 font-semibold mb-1.5">Available data points <span class="text-gray-700">(click to insert)</span></p>
-                            <div class="flex flex-wrap gap-1.5" id="column-pills">
+                            <div class="flex flex-wrap gap-1.5 stagger-pop" id="column-pills">
                                 {% for col in preview_columns %}
                                 <button type="button" onclick="insertColumnName('{{ col.name }}')"
                                     class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-surface-300/60 border border-white/[0.06] hover:border-indigo-500/30 hover:bg-indigo-500/10 text-xs text-gray-400 hover:text-indigo-300 font-mono transition-all duration-150 cursor-pointer">
@@ -230,7 +274,7 @@
                         <!-- Sample queries -->
                         <div class="mb-3">
                             <p class="text-[10px] uppercase tracking-wider text-gray-600 font-semibold mb-1.5">Try asking</p>
-                            <div class="flex flex-wrap gap-1.5" id="sample-queries">
+                            <div class="flex flex-wrap gap-1.5 stagger-pop" id="sample-queries">
                                 <button type="button" onclick="insertSampleQuery('Show me top 5 rows by {{ preview_columns[0].name }}')"
                                     class="px-2.5 py-1 rounded-lg bg-surface-300/40 border border-white/[0.04] hover:border-purple-500/30 hover:bg-purple-500/10 text-xs text-gray-500 hover:text-purple-300 transition-all duration-150 cursor-pointer">
                                     Top 5 rows by {{ preview_columns[0].name }}
@@ -269,7 +313,7 @@
                                 >
                                 <button
                                     type="submit"
-                                    class="flex-shrink-0 m-1.5 p-2.5 rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white shadow-lg shadow-indigo-500/20 transition-all duration-200 hover:scale-105"
+                                    class="flex-shrink-0 m-1.5 p-2.5 rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white shadow-lg shadow-indigo-500/20 transition-all duration-200 hover:scale-105 ws-glow"
                                 >
                                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
@@ -334,7 +378,7 @@
                         margin: { t: 30, r: 20, b: 40, l: 50 }
                     });
                     Plotly.newPlot(container, config.data, darkLayout, {
-                        displayModeBar: true,
+                        displayModeBar: false,
                         displaylogo: false,
                         responsive: true,
                         modeBarButtonsToRemove: ['sendDataToCloud']
@@ -385,7 +429,7 @@
                     margin: { t: 30, r: 20, b: 40, l: 50 }
                 });
                 Plotly.newPlot(container, config.data, darkLayout, {
-                    displayModeBar: true,
+                    displayModeBar: false,
                     displaylogo: false,
                     responsive: true,
                     modeBarButtonsToRemove: ['sendDataToCloud']
@@ -463,5 +507,116 @@
         a.click();
         URL.revokeObjectURL(url);
     }
+
+    // ============================================================
+    // === Entrance Animations (run once on page load) ===
+    // ============================================================
+
+    (function initWorkspaceAnimations() {
+
+        // 1. Staggered float-up for data profile cards
+        document.querySelectorAll('.stagger-up > div').forEach(function(el, i) {
+            el.style.opacity = '0';
+            el.style.animation = 'wsFloatUp 0.45s ease-out both';
+            el.style.animationDelay = (0.35 + i * 0.06) + 's';
+        });
+
+        // 2. Staggered pop-in for column pills & sample query buttons
+        document.querySelectorAll('.stagger-pop > button').forEach(function(el, i) {
+            el.style.opacity = '0';
+            el.style.animation = 'wsPopIn 0.3s ease-out both';
+            el.style.animationDelay = (0.5 + i * 0.04) + 's';
+        });
+
+        // 3. Count-up animation for row/column stats
+        document.querySelectorAll('.count-up').forEach(function(el) {
+            var target = parseInt(el.getAttribute('data-target'), 10);
+            if (isNaN(target) || target === 0) return;
+            var duration = Math.min(1400, 600 + target * 0.15);
+            el.textContent = '0';
+            var startTime = null;
+            function step(ts) {
+                if (!startTime) startTime = ts;
+                var progress = Math.min((ts - startTime) / duration, 1);
+                var eased = 1 - Math.pow(1 - progress, 3);
+                el.textContent = Math.floor(eased * target).toLocaleString();
+                if (progress < 1) {
+                    requestAnimationFrame(step);
+                } else {
+                    el.textContent = target.toLocaleString();
+                }
+            }
+            setTimeout(function() { requestAnimationFrame(step); }, 350);
+        });
+
+        // 4. Staggered table row reveal
+        document.querySelectorAll('.data-table-wrapper tbody tr').forEach(function(row, i) {
+            if (i < 20) {
+                row.style.opacity = '0';
+                row.style.animation = 'wsRevealRow 0.3s ease-out both';
+                row.style.animationDelay = (0.25 + i * 0.03) + 's';
+            }
+        });
+
+        // 5. Typing placeholder effect on the query input
+        var input = document.getElementById('query-input');
+        if (input) {
+            var suggestions = [
+                'Show me the top 10 rows...',
+                'What is the average revenue?',
+                'Count unique categories...',
+                'Filter where amount > 1000...',
+                'Show distribution of values...'
+            ];
+            var defaultPlaceholder = input.placeholder;
+            var currentIdx = 0;
+            var charPos = 0;
+            var isDeleting = false;
+            var stopped = false;
+
+            function typeStep() {
+                if (stopped) return;
+                if (input === document.activeElement || input.value.length > 0) {
+                    input.placeholder = defaultPlaceholder;
+                    return;
+                }
+                var text = suggestions[currentIdx];
+                if (!isDeleting) {
+                    charPos++;
+                    input.placeholder = text.substring(0, charPos);
+                    if (charPos === text.length) {
+                        setTimeout(function() { isDeleting = true; typeStep(); }, 2000);
+                        return;
+                    }
+                    setTimeout(typeStep, 55);
+                } else {
+                    charPos--;
+                    input.placeholder = text.substring(0, charPos);
+                    if (charPos === 0) {
+                        isDeleting = false;
+                        currentIdx = (currentIdx + 1) % suggestions.length;
+                        setTimeout(typeStep, 300);
+                        return;
+                    }
+                    setTimeout(typeStep, 25);
+                }
+            }
+
+            // Start after entrance animations settle
+            setTimeout(typeStep, 1800);
+
+            input.addEventListener('focus', function() {
+                stopped = true;
+                input.placeholder = defaultPlaceholder;
+            });
+            input.addEventListener('blur', function() {
+                if (input.value.length === 0) {
+                    stopped = false;
+                    setTimeout(typeStep, 1200);
+                }
+            });
+        }
+
+    })();
 </script>
 {% endblock %}

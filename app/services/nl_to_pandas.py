@@ -26,12 +26,16 @@ COLUMN MATCHING:
 
 RESULT GUIDELINES:
 - When filtering rows, return the full filtered DataFrame with all columns
-- When asked for "top N", use .head(N) or .nlargest(N, column)
+- When asked for "top N":
+  - For NUMERIC columns: use .nlargest(N, column) or .sort_values(column, ascending=False).head(N)
+  - For STRING/OBJECT columns: NEVER use .nlargest() — use .sort_values(column, ascending=False).head(N) instead
+  - .nlargest() and .nsmallest() ONLY work on numeric dtypes (int, float). They WILL FAIL on str/object columns.
 - When asked about specific columns, still include other useful context columns
 - Always use parentheses around conditions in boolean filtering:
   df[(df['A'] > 10) & (df['B'] < 20)]  -- correct
   df[df['A'] > 10 & df['B'] < 20]  -- WRONG, operator precedence issue
 - For groupby operations, use .reset_index() to return a clean DataFrame
+- Check the dtype in the schema before choosing a method. If dtype is "object" or "str", it's a string column.
 
 EXAMPLES:
 
@@ -47,6 +51,10 @@ result = df[(df['BOUNCE_RATE'] > 40) & (df['PAGE_VIEWS'] > 2000)]
 Question: "top 5 pages by sessions"
 Code:
 result = df.nlargest(5, 'SESSIONS')
+
+Question: "top 5 rows by transaction_id" (transaction_id is str/object type)
+Code:
+result = df.sort_values('TRANSACTION_ID', ascending=False).head(5)
 
 Question: "average bounce rate by page"
 Code:

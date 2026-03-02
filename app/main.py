@@ -10,8 +10,15 @@ from app.routers import pages
 from app.routers import query
 
 
+from app.db.session import Base, engine
+import app.models.dataset  # noqa: F401 — register models with Base
+import app.models.query  # noqa: F401
+import app.models.feedback  # noqa: F401
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    Base.metadata.create_all(bind=engine)
     yield
 
 

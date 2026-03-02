@@ -1,67 +1,85 @@
 const PlotlyConfig = {
     defaultLayout: {
         font: {
-            family: 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
+            family: 'Inter, ui-sans-serif, system-ui, -apple-system, sans-serif',
+            color: '#9ca3af',
+            size: 12
         },
         paper_bgcolor: 'rgba(0,0,0,0)',
         plot_bgcolor: 'rgba(0,0,0,0)',
-        margin: { t: 40, r: 40, b: 40, l: 60 }
+        margin: { t: 40, r: 20, b: 40, l: 50 },
+        xaxis: {
+            gridcolor: 'rgba(255,255,255,0.04)',
+            linecolor: 'rgba(255,255,255,0.06)',
+            tickfont: { size: 11 }
+        },
+        yaxis: {
+            gridcolor: 'rgba(255,255,255,0.04)',
+            linecolor: 'rgba(255,255,255,0.06)',
+            tickfont: { size: 11 }
+        }
     },
     defaultConfig: {
-        displayModeBar: true,
+        displayModeBar: false,
         displaylogo: false,
-        modeBarButtonsToRemove: ['sendDataToCloud'],
-        responsive: true
+        responsive: true,
+        staticPlot: false,
+        scrollZoom: false
     },
     chartColors: [
-        '#4F46E5',
-        '#10B981',
-        '#F59E0B',
-        '#EF4444',
-        '#8B5CF6',
-        '#EC4899',
-        '#06B6D4',
-        '#84CC16'
+        '#636EFA', '#EF553B', '#00CC96', '#AB63FA', '#FFA15A',
+        '#19D3F3', '#FF6692', '#B6E880', '#FF97FF', '#FECB52'
     ]
 };
 
-function renderChart(containerId, chartData, layout = {}) {
-    const container = document.getElementById(containerId);
-    if (!container) {
-        console.error('Chart container not found:', containerId);
-        return;
-    }
+function renderChart(containerId, chartData, layout) {
+    var container = document.getElementById(containerId);
+    if (!container) return;
 
-    const mergedLayout = {
-        ...PlotlyConfig.defaultLayout,
-        ...layout
-    };
+    var mergedLayout = Object.assign({}, PlotlyConfig.defaultLayout, chartData.layout || {}, layout || {});
+    // Force our dark theme overrides
+    mergedLayout.paper_bgcolor = 'rgba(0,0,0,0)';
+    mergedLayout.plot_bgcolor = 'rgba(0,0,0,0)';
+    mergedLayout.font = Object.assign({}, PlotlyConfig.defaultLayout.font, mergedLayout.font || {});
+    mergedLayout.xaxis = Object.assign({}, PlotlyConfig.defaultLayout.xaxis, mergedLayout.xaxis || {});
+    mergedLayout.yaxis = Object.assign({}, PlotlyConfig.defaultLayout.yaxis, mergedLayout.yaxis || {});
 
-    Plotly.newPlot(container, chartData.data, mergedLayout, PlotlyConfig.defaultConfig);
-}
-
-function exportChartAsPNG(containerId, filename = 'chart') {
-    const container = document.getElementById(containerId);
-    if (!container) {
-        console.error('Chart container not found:', containerId);
-        return;
-    }
-
-    Plotly.downloadImage(container, {
-        format: 'png',
-        width: 800,
-        height: 600,
-        filename: filename
+    // Apply distinct colors to bar chart traces
+    var traces = chartData.data || [];
+    traces.forEach(function(trace, i) {
+        if (trace.type === 'bar' && !trace.marker) {
+            trace.marker = {};
+        }
+        if (trace.type === 'bar' && trace.marker) {
+            // If there are multiple x values, give each bar a different color
+            if (trace.x && trace.x.length > 1 && !trace.marker.color) {
+                trace.marker.color = trace.x.map(function(_, j) {
+                    return PlotlyConfig.chartColors[j % PlotlyConfig.chartColors.length];
+                });
+            } else if (!trace.marker.color) {
+                trace.marker.color = PlotlyConfig.chartColors[i % PlotlyConfig.chartColors.length];
+            }
+            // Add rounded corners effect and slight opacity
+            if (!trace.marker.line) {
+                trace.marker.line = { width: 0 };
+            }
+            trace.marker.opacity = 0.9;
+        }
+        if (trace.type === 'scatter' && !trace.marker) {
+            trace.marker = { color: PlotlyConfig.chartColors[i % PlotlyConfig.chartColors.length], size: 8 };
+        }
     });
+
+    Plotly.newPlot(container, traces, mergedLayout, PlotlyConfig.defaultConfig);
 }
 
 function initCharts() {
     document.querySelectorAll('.chart-container').forEach(function(container) {
-        const chartDataAttr = container.getAttribute('data-chart');
+        var chartDataAttr = container.getAttribute('data-chart');
         if (chartDataAttr) {
             try {
-                const chartData = JSON.parse(chartDataAttr);
-                const id = container.id || 'chart-' + Math.random().toString(36).substr(2, 9);
+                var chartData = JSON.parse(chartDataAttr);
+                var id = container.id || 'chart-' + Math.random().toString(36).substr(2, 9);
                 container.id = id;
                 renderChart(id, chartData);
                 container.removeAttribute('data-chart');
@@ -69,16 +87,6 @@ function initCharts() {
                 console.error('Error parsing chart data:', e);
             }
         }
-    });
-
-    document.querySelectorAll('.export-chart-btn').forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            const chartId = btn.getAttribute('data-chart-id');
-            const chartContainer = document.getElementById('chart-' + chartId);
-            if (chartContainer) {
-                exportChartAsPNG('chart-' + chartId, 'chart-' + chartId);
-            }
-        });
     });
 }
 
@@ -88,6 +96,6 @@ if (document.readyState === 'loading') {
     initCharts();
 }
 
-document.addEventListener('htmx:afterSwap', function(event) {
+document.addEventListener('htmx:afterSwap', function() {
     setTimeout(initCharts, 100);
 });

@@ -29,7 +29,7 @@ THEME_COLORS = [
     "#FECB52",
 ]
 
-pio.templates.default = "plotly_white"
+pio.templates.default = "plotly_dark"
 
 
 def _convert_to_dataframe(data: dict[str, Any]) -> pd.DataFrame:
@@ -98,7 +98,14 @@ def generate_chart(
     x_col, y_col, color_col = _extract_columns_for_chart(df, chart_type_enum)
 
     if chart_type_enum == ChartType.BAR:
-        fig = px.bar(df, x=x_col, y=y_col, color=color_col, title=title)
+        # Color each bar differently when no grouping column
+        if color_col is None and x_col:
+            fig = px.bar(df, x=x_col, y=y_col, color=x_col, title=title,
+                         color_discrete_sequence=THEME_COLORS)
+            fig.update_layout(showlegend=False)
+        else:
+            fig = px.bar(df, x=x_col, y=y_col, color=color_col, title=title,
+                         color_discrete_sequence=THEME_COLORS)
     elif chart_type_enum == ChartType.LINE:
         fig = px.line(df, x=x_col, y=y_col, color=color_col, title=title, markers=True)
     elif chart_type_enum == ChartType.PIE:
@@ -123,9 +130,18 @@ def generate_chart(
     else:
         fig = px.bar(df, x=x_col, y=y_col, title=title)
 
-    fig.update_layout(template="plotly+datapilot")
+    fig.update_layout(
+        template="plotly_dark",
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(color="#9ca3af", family="Inter, sans-serif", size=12),
+        margin=dict(t=40, r=20, b=40, l=50),
+        xaxis=dict(gridcolor="rgba(255,255,255,0.04)", linecolor="rgba(255,255,255,0.06)"),
+        yaxis=dict(gridcolor="rgba(255,255,255,0.04)", linecolor="rgba(255,255,255,0.06)"),
+        colorway=THEME_COLORS,
+    )
 
-    return fig.to_dict(format="conv")
+    return fig.to_json()
 
 
 def export_chart_as_image(

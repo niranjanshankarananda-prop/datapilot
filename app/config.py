@@ -3,7 +3,7 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     GROQ_API_KEY: str = ""
-    DATABASE_URL: str = "postgresql://postgres:postgres@localhost:5432/datapilot"
+    DATABASE_URL: str = "sqlite:///./datapilot.db"
     REDIS_URL: str = "redis://localhost:6379/0"
 
     class Config:
