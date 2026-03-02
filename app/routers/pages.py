@@ -528,13 +528,13 @@ async def submit_feedback(
     return {"status": "ok"}
 
 
-@router.get("/api/analytics")
+@router.get("/api/analytics", response_class=HTMLResponse)
 async def view_analytics(
     request: Request,
     key: str = "",
     db: Session = Depends(get_db),
 ):
-    """View visitor analytics. Requires ANALYTICS_KEY env var as ?key= param."""
+    """View visitor analytics dashboard. Requires ANALYTICS_KEY env var as ?key= param."""
     from app.config import settings
     analytics_key = getattr(settings, "ANALYTICS_KEY", "")
     if not analytics_key or key != analytics_key:
@@ -544,6 +544,7 @@ async def view_analytics(
 
     total_views = db.query(func.count(PageView.id)).scalar() or 0
     unique_visitors = db.query(func.count(distinct(PageView.ip_hash))).scalar() or 0
+    total_feedback = db.query(func.count(Feedback.id)).scalar() or 0
 
     # Views per page
     page_stats = (
@@ -565,28 +566,171 @@ async def view_analytics(
     # Feedback summary
     feedbacks = db.query(Feedback).order_by(Feedback.created_at.desc()).limit(50).all()
     avg_rating = db.query(func.avg(Feedback.rating)).scalar()
+    avg_rating_str = f"{float(avg_rating):.1f}" if avg_rating else "—"
 
-    return {
-        "total_page_views": total_views,
-        "unique_visitors": unique_visitors,
-        "avg_feedback_rating": round(float(avg_rating), 1) if avg_rating else None,
-        "pages": [{"path": p, "views": v} for p, v in page_stats],
-        "recent_visits": [
-            {
-                "path": v.path,
-                "visitor": v.ip_hash,
-                "user_agent": v.user_agent[:80] if v.user_agent else "",
-                "referrer": v.referrer or "",
-                "time": v.created_at.isoformat() if v.created_at else "",
-            }
-            for v in recent
-        ],
-        "feedback": [
-            {
-                "rating": f.rating,
-                "text": f.text,
-                "time": f.created_at.isoformat() if f.created_at else "",
-            }
-            for f in feedbacks
-        ],
-    }
+    # Build page stats rows
+    page_rows = ""
+    for path, views in page_stats:
+        page_rows += f'<tr><td class="px-4 py-2.5 text-sm text-gray-300 font-mono">{path}</td><td class="px-4 py-2.5 text-sm text-gray-400 text-right font-semibold">{views}</td></tr>'
+    if not page_rows:
+        page_rows = '<tr><td colspan="2" class="px-4 py-4 text-sm text-gray-600 text-center">No page views yet</td></tr>'
+
+    # Build recent visits rows
+    visit_rows = ""
+    for v in recent:
+        ua_short = (v.user_agent or "")[:60]
+        if len(v.user_agent or "") > 60:
+            ua_short += "..."
+        ref = v.referrer or "—"
+        if len(ref) > 40:
+            ref = ref[:40] + "..."
+        time_str = v.created_at.strftime("%b %d, %H:%M") if v.created_at else ""
+        visit_rows += f'''<tr class="border-b border-white/[0.03] hover:bg-white/[0.02]">
+            <td class="px-3 py-2 text-xs text-gray-400 font-mono whitespace-nowrap">{time_str}</td>
+            <td class="px-3 py-2 text-xs text-indigo-400 font-mono">{v.path}</td>
+            <td class="px-3 py-2 text-xs text-gray-500 font-mono">{v.ip_hash[:8]}...</td>
+            <td class="px-3 py-2 text-xs text-gray-500 max-w-[200px] truncate">{ua_short}</td>
+            <td class="px-3 py-2 text-xs text-gray-500 max-w-[150px] truncate">{ref}</td>
+        </tr>'''
+    if not visit_rows:
+        visit_rows = '<tr><td colspan="5" class="px-4 py-4 text-sm text-gray-600 text-center">No visits yet</td></tr>'
+
+    # Build feedback rows
+    feedback_rows = ""
+    for f in feedbacks:
+        stars = "★" * f.rating + "☆" * (5 - f.rating)
+        time_str = f.created_at.strftime("%b %d, %H:%M") if f.created_at else ""
+        text = f.text or "—"
+        if len(text) > 80:
+            text = text[:80] + "..."
+        feedback_rows += f'''<tr class="border-b border-white/[0.03] hover:bg-white/[0.02]">
+            <td class="px-3 py-2 text-xs text-gray-400 whitespace-nowrap">{time_str}</td>
+            <td class="px-3 py-2 text-sm text-yellow-400 whitespace-nowrap tracking-wider">{stars}</td>
+            <td class="px-3 py-2 text-xs text-gray-400">{text}</td>
+        </tr>'''
+    if not feedback_rows:
+        feedback_rows = '<tr><td colspan="3" class="px-4 py-4 text-sm text-gray-600 text-center">No feedback yet</td></tr>'
+
+    html = f'''<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataPilot Analytics</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {{ font-family: 'Inter', sans-serif; background: #0f1117; }}
+        .glass {{ background: rgba(30, 34, 53, 0.6); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.06); }}
+    </style>
+</head>
+<body class="text-gray-200 min-h-screen p-6">
+    <div class="max-w-6xl mx-auto">
+
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-8">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-white">DataPilot Analytics</h1>
+                    <p class="text-xs text-gray-500">Visitor tracking &amp; feedback dashboard</p>
+                </div>
+            </div>
+            <a href="/" class="text-xs text-gray-500 hover:text-indigo-400 transition-colors">&larr; Back to app</a>
+        </div>
+
+        <!-- Stat Cards -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="glass rounded-xl p-5">
+                <p class="text-[10px] uppercase tracking-wider text-gray-500 font-semibold mb-1">Page Views</p>
+                <p class="text-3xl font-bold text-white">{total_views}</p>
+            </div>
+            <div class="glass rounded-xl p-5">
+                <p class="text-[10px] uppercase tracking-wider text-gray-500 font-semibold mb-1">Unique Visitors</p>
+                <p class="text-3xl font-bold text-indigo-400">{unique_visitors}</p>
+            </div>
+            <div class="glass rounded-xl p-5">
+                <p class="text-[10px] uppercase tracking-wider text-gray-500 font-semibold mb-1">Avg Rating</p>
+                <p class="text-3xl font-bold text-yellow-400">{avg_rating_str}<span class="text-lg text-gray-600">/5</span></p>
+            </div>
+            <div class="glass rounded-xl p-5">
+                <p class="text-[10px] uppercase tracking-wider text-gray-500 font-semibold mb-1">Feedback Count</p>
+                <p class="text-3xl font-bold text-emerald-400">{total_feedback}</p>
+            </div>
+        </div>
+
+        <!-- Two-column: Pages + Feedback -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+
+            <!-- Pages Breakdown -->
+            <div class="glass rounded-xl overflow-hidden">
+                <div class="px-5 py-3.5 border-b border-white/5 flex items-center gap-2">
+                    <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
+                    </svg>
+                    <h2 class="text-sm font-semibold text-white">Pages</h2>
+                </div>
+                <table class="w-full">
+                    <thead><tr class="border-b border-white/5">
+                        <th class="px-4 py-2 text-left text-[10px] uppercase tracking-wider text-gray-500 font-semibold">Path</th>
+                        <th class="px-4 py-2 text-right text-[10px] uppercase tracking-wider text-gray-500 font-semibold">Views</th>
+                    </tr></thead>
+                    <tbody class="divide-y divide-white/[0.03]">{page_rows}</tbody>
+                </table>
+            </div>
+
+            <!-- Feedback -->
+            <div class="glass rounded-xl overflow-hidden">
+                <div class="px-5 py-3.5 border-b border-white/5 flex items-center gap-2">
+                    <svg class="w-4 h-4 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+                    </svg>
+                    <h2 class="text-sm font-semibold text-white">Feedback</h2>
+                </div>
+                <div class="max-h-[300px] overflow-y-auto">
+                    <table class="w-full">
+                        <thead><tr class="border-b border-white/5">
+                            <th class="px-3 py-2 text-left text-[10px] uppercase tracking-wider text-gray-500 font-semibold">Time</th>
+                            <th class="px-3 py-2 text-left text-[10px] uppercase tracking-wider text-gray-500 font-semibold">Rating</th>
+                            <th class="px-3 py-2 text-left text-[10px] uppercase tracking-wider text-gray-500 font-semibold">Comment</th>
+                        </tr></thead>
+                        <tbody>{feedback_rows}</tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Visits -->
+        <div class="glass rounded-xl overflow-hidden mb-8">
+            <div class="px-5 py-3.5 border-b border-white/5 flex items-center gap-2">
+                <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                </svg>
+                <h2 class="text-sm font-semibold text-white">Recent Visits</h2>
+                <span class="text-[10px] text-gray-600 ml-auto">Last 50</span>
+            </div>
+            <div class="overflow-x-auto max-h-[400px] overflow-y-auto">
+                <table class="w-full">
+                    <thead class="sticky top-0 bg-[#1e2235]"><tr class="border-b border-white/5">
+                        <th class="px-3 py-2 text-left text-[10px] uppercase tracking-wider text-gray-500 font-semibold whitespace-nowrap">Time</th>
+                        <th class="px-3 py-2 text-left text-[10px] uppercase tracking-wider text-gray-500 font-semibold">Page</th>
+                        <th class="px-3 py-2 text-left text-[10px] uppercase tracking-wider text-gray-500 font-semibold">Visitor</th>
+                        <th class="px-3 py-2 text-left text-[10px] uppercase tracking-wider text-gray-500 font-semibold">Device</th>
+                        <th class="px-3 py-2 text-left text-[10px] uppercase tracking-wider text-gray-500 font-semibold">Referrer</th>
+                    </tr></thead>
+                    <tbody>{visit_rows}</tbody>
+                </table>
+            </div>
+        </div>
+
+        <p class="text-center text-[10px] text-gray-700">DataPilot Analytics — private dashboard</p>
+    </div>
+</body>
+</html>'''
+
+    return HTMLResponse(content=html)
