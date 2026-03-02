@@ -110,16 +110,6 @@
             pointer-events: none;
         }
 
-        /* Subtle noise texture overlay */
-        .noise-bg::after {
-            content: '';
-            position: fixed;
-            inset: 0;
-            opacity: 0.015;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-            pointer-events: none;
-            z-index: 0;
-        }
 
         /* HTMX loading indicator refinements */
         .htmx-indicator { opacity: 0; transition: opacity 300ms ease-in; }
@@ -161,7 +151,7 @@
 
     {% block extra_head %}{% endblock %}
 </head>
-<body class="bg-surface text-gray-200 min-h-screen noise-bg bg-gradient-animated font-sans">
+<body class="bg-surface text-gray-200 min-h-screen bg-gradient-animated font-sans">
     <div class="relative z-10">
         {% block content %}{% endblock %}
     </div>
