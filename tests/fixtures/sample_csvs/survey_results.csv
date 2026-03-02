@@ -1,21 +1,1501 @@
-respondent_id,age_group,gender,satisfaction_rating,recommend_likelihood,category,feedback_date,nps_score
-R001,25-34,Female,5,9,Product Quality,2024-01-15,9
-R002,35-44,Male,4,8,Customer Service,2024-01-15,8
-R003,18-24,Female,5,10,Product Quality,2024-01-16,10
-R004,45-54,Male,3,5,User Experience,2024-01-16,5
-R005,25-34,Female,4,7,Pricing,2024-01-17,7
-R006,55-64,Male,5,9,Product Quality,2024-01-17,9
-R007,35-44,Female,2,3,User Experience,2024-01-18,3
-R008,25-34,Male,4,8,Customer Service,2024-01-18,8
-R009,18-24,Female,5,10,Product Quality,2024-01-19,10
-R010,45-54,Male,3,6,Pricing,2024-01-19,6
-R011,55-64,Female,4,8,Customer Service,2024-01-20,8
-R012,25-34,Male,5,9,Product Quality,2024-01-20,9
-R013,35-44,Female,4,7,User Experience,2024-01-21,7
-R014,18-24,Male,5,10,Product Quality,2024-01-21,10
-R015,45-54,Female,3,5,Pricing,2024-01-22,5
-R016,25-34,Male,4,8,Customer Service,2024-01-22,8
-R017,55-64,Female,5,9,Product Quality,2024-01-23,9
-R018,35-44,Male,2,4,User Experience,2024-01-23,4
-R019,25-34,Female,4,7,Pricing,2024-01-24,7
-R020,45-54,Male,5,9,Customer Service,2024-01-24,9
+respondent_id,age_group,gender,satisfaction_rating,recommend_likelihood,category,feedback_date,nps_score,country,response_channel
+R0001,65+,Female,4,3,User Experience,2023-06-13,3,Brazil,In-App
+R0002,65+,Male,4,9,Product Quality,2023-10-03,9,Mexico,Social Media
+R0003,25-34,Male,5,7,Delivery,2024-02-11,7,UK,Phone
+R0004,55-64,Male,1,10,User Experience,2023-09-10,10,Australia,Email
+R0005,18-24,Non-binary,5,0,Mobile App,2024-01-01,0,Japan,In-App
+R0006,35-44,Prefer not to say,3,3,Website,2023-07-23,3,USA,Email
+R0007,55-64,Prefer not to say,2,5,Product Quality,2024-04-09,5,Japan,Email
+R0008,65+,Non-binary,1,0,Pricing,2023-09-04,0,Australia,Email
+R0009,45-54,Male,1,8,Product Quality,2024-04-30,8,Australia,In-App
+R0010,25-34,Female,5,4,Customer Service,2024-03-28,4,Australia,Website
+R0011,65+,Female,3,3,Pricing,2024-05-05,3,Mexico,In-App
+R0012,65+,Male,2,2,Customer Service,2024-05-17,2,France,In-App
+R0013,55-64,Female,2,5,Customer Service,2023-06-04,5,USA,In-App
+R0014,25-34,Female,1,3,User Experience,2023-12-22,3,India,Social Media
+R0015,65+,Prefer not to say,3,10,Website,2023-06-08,10,France,Website
+R0016,55-64,Male,2,0,Product Quality,2024-02-10,0,USA,Phone
+R0017,65+,Prefer not to say,5,0,User Experience,2024-04-23,0,India,Phone
+R0018,25-34,Female,3,5,Pricing,2024-02-26,5,Germany,In-App
+R0019,35-44,Female,4,8,User Experience,2023-11-27,8,USA,Email
+R0020,65+,Male,1,8,Customer Service,2024-05-13,8,Germany,Phone
+R0021,25-34,Prefer not to say,2,6,Website,2023-07-13,6,Australia,Email
+R0022,18-24,Female,1,5,Customer Service,2024-01-02,5,Australia,Email
+R0023,65+,Prefer not to say,4,3,Delivery,2023-07-28,3,France,Website
+R0024,25-34,Prefer not to say,4,10,Mobile App,2024-05-14,10,Canada,Website
+R0025,35-44,Female,1,3,Mobile App,2023-10-02,3,India,Email
+R0026,25-34,Female,4,3,User Experience,2023-08-26,3,Mexico,Social Media
+R0027,65+,Prefer not to say,4,2,Product Quality,2023-08-06,2,Canada,In-App
+R0028,18-24,Prefer not to say,3,0,Pricing,2024-04-05,0,UK,Email
+R0029,25-34,Non-binary,2,9,Product Quality,2023-06-02,9,Mexico,Social Media
+R0030,45-54,Non-binary,3,6,Website,2023-12-29,6,India,Website
+R0031,55-64,Male,5,10,Mobile App,2023-11-29,10,Japan,Email
+R0032,25-34,Female,1,3,Mobile App,2023-09-16,3,Brazil,Website
+R0033,18-24,Female,2,2,Delivery,2023-10-31,2,France,In-App
+R0034,25-34,Female,2,1,Mobile App,2023-09-20,1,USA,Email
+R0035,65+,Female,1,4,Delivery,2024-04-27,4,Australia,Phone
+R0036,25-34,Female,2,0,Website,2023-06-01,0,USA,Social Media
+R0037,65+,Female,5,7,Product Quality,2023-11-21,7,Canada,Email
+R0038,18-24,Male,3,2,Mobile App,2024-01-18,2,Canada,Website
+R0039,25-34,Male,4,9,Delivery,2023-11-30,9,India,Email
+R0040,65+,Male,2,3,Pricing,2024-01-09,3,Germany,Social Media
+R0041,25-34,Prefer not to say,3,4,Mobile App,2024-02-01,4,Germany,Email
+R0042,55-64,Prefer not to say,2,5,Customer Service,2023-11-27,5,Japan,Phone
+R0043,65+,Prefer not to say,1,0,User Experience,2023-09-29,0,Germany,In-App
+R0044,65+,Female,2,7,Delivery,2023-11-14,7,Japan,Phone
+R0045,55-64,Male,3,8,Customer Service,2024-02-04,8,Mexico,Email
+R0046,25-34,Prefer not to say,2,0,Pricing,2023-10-19,0,India,Social Media
+R0047,25-34,Male,1,4,Mobile App,2023-11-06,4,France,Email
+R0048,55-64,Prefer not to say,2,9,Website,2023-07-23,9,Brazil,Website
+R0049,25-34,Female,5,5,Website,2023-08-22,5,Japan,Email
+R0050,25-34,Non-binary,5,4,Product Quality,2024-02-19,4,Brazil,Social Media
+R0051,65+,Female,3,6,Delivery,2024-02-15,6,USA,In-App
+R0052,25-34,Male,5,5,Customer Service,2024-05-03,5,USA,Email
+R0053,35-44,Non-binary,1,6,Website,2023-10-25,6,UK,Website
+R0054,35-44,Prefer not to say,5,6,Mobile App,2023-11-28,6,USA,In-App
+R0055,45-54,Male,1,8,Customer Service,2023-08-09,8,Mexico,Website
+R0056,55-64,Non-binary,5,8,Customer Service,2023-06-21,8,Germany,Website
+R0057,25-34,Male,3,0,User Experience,2024-04-12,0,Mexico,Social Media
+R0058,55-64,Male,1,6,Customer Service,2024-05-21,6,Australia,Phone
+R0059,25-34,Non-binary,4,2,Website,2023-09-13,2,France,Phone
+R0060,35-44,Prefer not to say,4,5,Product Quality,2023-09-03,5,Australia,Phone
+R0061,25-34,Non-binary,4,2,Website,2024-05-02,2,Australia,Email
+R0062,35-44,Non-binary,2,7,User Experience,2024-02-01,7,Mexico,In-App
+R0063,55-64,Non-binary,1,5,Pricing,2024-01-26,5,India,Email
+R0064,25-34,Prefer not to say,2,5,Product Quality,2024-01-17,5,India,Social Media
+R0065,65+,Male,3,7,User Experience,2023-10-25,7,Japan,Website
+R0066,65+,Female,5,1,User Experience,2023-06-03,1,USA,In-App
+R0067,65+,Male,5,7,Product Quality,2024-04-21,7,Japan,Email
+R0068,35-44,Male,1,6,Mobile App,2023-07-26,6,Canada,In-App
+R0069,55-64,Prefer not to say,3,10,Delivery,2023-08-14,10,Mexico,Social Media
+R0070,55-64,Male,1,8,Pricing,2023-06-09,8,Brazil,Website
+R0071,45-54,Non-binary,5,4,Pricing,2024-03-04,4,UK,Email
+R0072,25-34,Prefer not to say,3,2,Product Quality,2023-09-01,2,India,Social Media
+R0073,25-34,Male,2,8,User Experience,2023-07-13,8,Canada,Social Media
+R0074,55-64,Prefer not to say,2,1,User Experience,2023-11-08,1,Japan,Social Media
+R0075,55-64,Prefer not to say,2,10,User Experience,2023-08-13,10,Australia,Phone
+R0076,55-64,Non-binary,4,5,Website,2024-01-19,5,Brazil,Phone
+R0077,45-54,Non-binary,4,8,Pricing,2023-09-23,8,Mexico,Phone
+R0078,55-64,Prefer not to say,1,8,Website,2023-07-27,8,Canada,Website
+R0079,65+,Prefer not to say,1,8,Product Quality,2024-02-21,8,India,In-App
+R0080,55-64,Prefer not to say,4,10,Pricing,2023-09-20,10,Japan,In-App
+R0081,65+,Female,4,7,Customer Service,2024-05-28,7,India,Social Media
+R0082,18-24,Non-binary,2,6,Website,2023-07-27,6,Mexico,In-App
+R0083,45-54,Prefer not to say,3,0,Customer Service,2023-12-22,0,USA,In-App
+R0084,65+,Male,5,2,User Experience,2024-05-10,2,France,Social Media
+R0085,25-34,Non-binary,5,6,Product Quality,2023-11-12,6,Germany,In-App
+R0086,65+,Male,3,9,Website,2023-10-22,9,Canada,In-App
+R0087,65+,Male,1,4,Pricing,2024-05-12,4,Canada,Email
+R0088,35-44,Non-binary,5,2,Mobile App,2023-11-27,2,Australia,Email
+R0089,25-34,Female,2,4,Pricing,2023-10-07,4,USA,Email
+R0090,55-64,Female,4,10,Product Quality,2024-02-25,10,Australia,Email
+R0091,65+,Male,2,4,Pricing,2023-07-01,4,Mexico,Website
+R0092,25-34,Non-binary,2,8,Delivery,2024-04-13,8,France,In-App
+R0093,25-34,Prefer not to say,2,5,Product Quality,2024-02-20,5,India,Email
+R0094,65+,Male,4,10,Pricing,2024-01-15,10,Mexico,Phone
+R0095,25-34,Prefer not to say,3,2,Delivery,2023-12-20,2,UK,Phone
+R0096,25-34,Non-binary,1,3,Customer Service,2024-04-25,3,Canada,In-App
+R0097,65+,Prefer not to say,1,7,Delivery,2023-10-23,7,Canada,Email
+R0098,18-24,Male,1,7,Pricing,2024-05-11,7,Canada,Website
+R0099,18-24,Male,5,6,Product Quality,2023-11-08,6,Canada,Phone
+R0100,18-24,Non-binary,4,2,Product Quality,2023-08-01,2,Canada,Phone
+R0101,25-34,Male,5,4,Pricing,2023-06-18,4,Canada,Email
+R0102,45-54,Male,5,9,User Experience,2023-07-18,9,Brazil,Phone
+R0103,45-54,Male,3,10,Pricing,2023-09-02,10,India,In-App
+R0104,45-54,Non-binary,5,8,Website,2024-01-03,8,India,Website
+R0105,35-44,Prefer not to say,1,4,Delivery,2024-04-27,4,India,Email
+R0106,35-44,Female,2,8,User Experience,2023-12-30,8,Japan,Website
+R0107,65+,Male,2,8,Delivery,2024-04-05,8,Japan,Email
+R0108,25-34,Non-binary,2,6,Mobile App,2023-07-08,6,France,In-App
+R0109,18-24,Male,2,3,Website,2023-07-31,3,Canada,Phone
+R0110,35-44,Non-binary,4,4,User Experience,2023-06-27,4,Brazil,In-App
+R0111,35-44,Prefer not to say,5,0,Delivery,2024-03-19,0,UK,Email
+R0112,25-34,Prefer not to say,1,3,Delivery,2023-10-01,3,Mexico,Email
+R0113,35-44,Male,1,8,Customer Service,2023-12-25,8,Mexico,Phone
+R0114,45-54,Non-binary,4,0,Pricing,2023-12-22,0,USA,Social Media
+R0115,45-54,Prefer not to say,1,5,User Experience,2023-09-16,5,UK,Website
+R0116,65+,Female,4,9,User Experience,2023-06-07,9,USA,Email
+R0117,55-64,Prefer not to say,3,2,Customer Service,2023-11-24,2,Australia,Phone
+R0118,55-64,Non-binary,1,8,Product Quality,2023-10-22,8,Japan,Website
+R0119,18-24,Female,3,4,Mobile App,2023-10-14,4,Brazil,Social Media
+R0120,65+,Female,3,8,Website,2023-08-06,8,Germany,Website
+R0121,25-34,Prefer not to say,2,6,Customer Service,2023-11-23,6,Germany,Social Media
+R0122,45-54,Prefer not to say,4,1,Delivery,2023-07-01,1,Mexico,Social Media
+R0123,25-34,Male,1,4,Product Quality,2024-03-15,4,USA,Phone
+R0124,35-44,Non-binary,1,0,Product Quality,2023-09-19,0,Japan,Phone
+R0125,65+,Non-binary,3,0,Delivery,2023-08-03,0,India,Social Media
+R0126,45-54,Male,1,10,User Experience,2024-01-26,10,Germany,In-App
+R0127,18-24,Female,2,1,Product Quality,2024-03-11,1,USA,Social Media
+R0128,55-64,Female,1,4,Product Quality,2023-07-26,4,India,Social Media
+R0129,55-64,Non-binary,1,9,User Experience,2023-11-26,9,Mexico,In-App
+R0130,25-34,Prefer not to say,5,10,Pricing,2024-04-10,10,India,Social Media
+R0131,18-24,Male,4,10,Delivery,2023-06-06,10,India,Email
+R0132,65+,Female,2,8,Mobile App,2023-09-22,8,Canada,In-App
+R0133,25-34,Non-binary,2,2,Customer Service,2024-03-09,2,Japan,Website
+R0134,45-54,Male,4,2,Pricing,2023-11-14,2,Mexico,In-App
+R0135,65+,Male,3,0,Delivery,2024-04-22,0,Brazil,Phone
+R0136,55-64,Prefer not to say,1,6,Pricing,2023-08-17,6,Japan,Phone
+R0137,55-64,Prefer not to say,4,7,Product Quality,2023-12-25,7,Germany,Email
+R0138,25-34,Prefer not to say,3,8,Customer Service,2024-02-18,8,USA,Email
+R0139,25-34,Non-binary,4,3,User Experience,2023-12-18,3,Brazil,Social Media
+R0140,45-54,Non-binary,4,5,Delivery,2024-03-03,5,Mexico,In-App
+R0141,18-24,Prefer not to say,4,10,Website,2023-12-23,10,UK,Social Media
+R0142,18-24,Male,4,5,Customer Service,2024-05-24,5,Brazil,Email
+R0143,25-34,Male,1,4,Product Quality,2023-10-31,4,Australia,In-App
+R0144,18-24,Non-binary,3,0,Website,2023-07-06,0,Brazil,In-App
+R0145,65+,Non-binary,2,4,Website,2023-12-07,4,Brazil,Website
+R0146,45-54,Male,3,5,Pricing,2023-09-03,5,UK,Phone
+R0147,45-54,Prefer not to say,3,3,Product Quality,2024-02-22,3,UK,Social Media
+R0148,45-54,Male,2,5,Website,2023-09-10,5,India,Social Media
+R0149,35-44,Female,2,10,Pricing,2023-11-29,10,India,Social Media
+R0150,35-44,Female,4,0,Pricing,2023-09-06,0,Mexico,Social Media
+R0151,65+,Male,3,10,Product Quality,2023-06-11,10,Mexico,In-App
+R0152,55-64,Male,3,8,Website,2024-03-20,8,Brazil,Website
+R0153,35-44,Non-binary,2,4,User Experience,2023-09-29,4,France,In-App
+R0154,55-64,Non-binary,2,5,Website,2023-11-07,5,UK,In-App
+R0155,55-64,Non-binary,5,6,Customer Service,2023-08-19,6,Mexico,In-App
+R0156,18-24,Male,5,2,User Experience,2024-04-18,2,Canada,Social Media
+R0157,25-34,Male,5,5,Website,2023-12-13,5,USA,Email
+R0158,35-44,Male,4,3,Product Quality,2024-05-26,3,Germany,In-App
+R0159,18-24,Non-binary,3,7,Pricing,2024-04-23,7,UK,Website
+R0160,35-44,Female,2,2,Mobile App,2024-02-16,2,USA,In-App
+R0161,55-64,Non-binary,5,5,Mobile App,2023-11-21,5,Australia,Phone
+R0162,55-64,Prefer not to say,5,3,Pricing,2023-09-15,3,Canada,Phone
+R0163,35-44,Male,5,5,Customer Service,2023-06-04,5,India,In-App
+R0164,18-24,Non-binary,5,9,Mobile App,2023-12-09,9,Germany,Website
+R0165,55-64,Non-binary,5,5,User Experience,2023-09-20,5,Mexico,Email
+R0166,45-54,Male,2,0,Customer Service,2024-01-25,0,India,Phone
+R0167,55-64,Female,5,8,User Experience,2024-04-12,8,Germany,Phone
+R0168,35-44,Female,1,1,User Experience,2023-09-21,1,Japan,In-App
+R0169,18-24,Male,3,8,Delivery,2024-01-26,8,France,Website
+R0170,55-64,Male,4,8,Pricing,2024-03-06,8,Canada,Social Media
+R0171,35-44,Male,5,4,Delivery,2023-07-22,4,USA,Email
+R0172,55-64,Prefer not to say,3,5,Delivery,2023-08-25,5,Canada,Website
+R0173,25-34,Male,2,1,Customer Service,2024-01-24,1,Canada,Email
+R0174,65+,Non-binary,4,3,Pricing,2023-09-27,3,USA,Website
+R0175,65+,Non-binary,2,3,Mobile App,2024-04-23,3,USA,Email
+R0176,45-54,Non-binary,3,10,Website,2023-12-31,10,USA,Phone
+R0177,25-34,Prefer not to say,5,3,Product Quality,2023-06-17,3,Mexico,Social Media
+R0178,35-44,Male,3,8,Product Quality,2023-12-12,8,Canada,Email
+R0179,35-44,Male,4,5,Delivery,2023-10-26,5,Germany,In-App
+R0180,18-24,Non-binary,1,6,Customer Service,2023-08-25,6,Australia,Email
+R0181,45-54,Prefer not to say,5,1,Delivery,2023-07-11,1,Brazil,Phone
+R0182,35-44,Prefer not to say,3,0,Website,2024-03-15,0,USA,Email
+R0183,35-44,Male,2,2,Product Quality,2023-12-22,2,Japan,Phone
+R0184,45-54,Non-binary,5,1,Mobile App,2023-11-18,1,Brazil,Social Media
+R0185,25-34,Female,5,2,User Experience,2023-06-20,2,USA,Website
+R0186,18-24,Prefer not to say,3,7,Website,2024-04-24,7,USA,Phone
+R0187,45-54,Prefer not to say,1,5,Pricing,2024-01-08,5,Canada,Phone
+R0188,25-34,Male,5,8,Website,2023-09-14,8,UK,In-App
+R0189,25-34,Female,5,8,Mobile App,2023-11-14,8,UK,Social Media
+R0190,45-54,Male,5,8,Product Quality,2024-05-27,8,India,In-App
+R0191,35-44,Non-binary,3,10,Pricing,2024-05-15,10,UK,Phone
+R0192,25-34,Prefer not to say,4,1,Product Quality,2024-04-07,1,Germany,Website
+R0193,35-44,Prefer not to say,5,10,Delivery,2023-06-16,10,Australia,In-App
+R0194,25-34,Prefer not to say,3,0,Website,2023-08-02,0,France,In-App
+R0195,65+,Male,2,9,Mobile App,2024-03-15,9,Mexico,Email
+R0196,35-44,Non-binary,4,5,Delivery,2024-05-16,5,France,Social Media
+R0197,18-24,Non-binary,4,2,Mobile App,2023-06-13,2,Canada,Phone
+R0198,65+,Prefer not to say,3,8,Product Quality,2024-04-10,8,Japan,In-App
+R0199,25-34,Female,1,9,Website,2023-11-29,9,Germany,Email
+R0200,55-64,Female,1,6,Mobile App,2023-08-15,6,Canada,Email
+R0201,35-44,Non-binary,2,8,Mobile App,2023-11-12,8,Canada,Social Media
+R0202,55-64,Prefer not to say,2,4,Delivery,2023-07-28,4,Australia,Phone
+R0203,25-34,Prefer not to say,2,3,User Experience,2023-11-11,3,UK,Email
+R0204,18-24,Male,5,2,Delivery,2023-09-16,2,India,In-App
+R0205,65+,Female,3,0,Pricing,2023-06-04,0,Australia,Email
+R0206,65+,Prefer not to say,1,9,Mobile App,2023-10-03,9,Canada,Social Media
+R0207,45-54,Non-binary,2,10,Website,2023-10-31,10,Mexico,Phone
+R0208,18-24,Female,1,7,Pricing,2024-02-07,7,Australia,Phone
+R0209,35-44,Non-binary,1,5,Customer Service,2023-08-29,5,Japan,Website
+R0210,55-64,Male,1,6,Delivery,2023-08-18,6,Australia,Phone
+R0211,18-24,Male,5,4,Pricing,2023-11-29,4,Australia,Website
+R0212,35-44,Non-binary,1,6,Website,2024-03-21,6,Japan,Social Media
+R0213,35-44,Male,5,2,Website,2023-08-15,2,Mexico,Social Media
+R0214,45-54,Male,4,6,Mobile App,2024-02-23,6,UK,Social Media
+R0215,45-54,Non-binary,1,0,Delivery,2024-01-14,0,Brazil,Social Media
+R0216,18-24,Male,1,6,Customer Service,2023-06-07,6,USA,In-App
+R0217,45-54,Prefer not to say,3,5,User Experience,2023-07-29,5,Australia,In-App
+R0218,35-44,Female,4,3,Website,2023-07-29,3,France,Website
+R0219,45-54,Prefer not to say,3,0,Pricing,2023-11-02,0,France,Phone
+R0220,18-24,Non-binary,5,9,Mobile App,2024-02-26,9,Australia,Social Media
+R0221,55-64,Prefer not to say,5,8,User Experience,2023-10-02,8,Australia,Email
+R0222,65+,Male,2,5,User Experience,2023-11-05,5,France,In-App
+R0223,18-24,Female,1,2,Mobile App,2023-08-21,2,Japan,In-App
+R0224,18-24,Non-binary,1,0,Pricing,2023-12-29,0,Canada,In-App
+R0225,55-64,Male,2,2,Mobile App,2023-08-30,2,France,In-App
+R0226,18-24,Prefer not to say,1,4,Delivery,2024-04-22,4,Germany,Social Media
+R0227,35-44,Female,2,8,Product Quality,2023-11-15,8,Japan,Email
+R0228,45-54,Prefer not to say,5,4,Product Quality,2024-05-19,4,Mexico,Email
+R0229,65+,Non-binary,3,1,Delivery,2023-10-03,1,USA,In-App
+R0230,25-34,Female,2,1,User Experience,2023-09-20,1,USA,Website
+R0231,65+,Male,4,2,Website,2024-05-23,2,Japan,In-App
+R0232,65+,Prefer not to say,1,5,User Experience,2023-07-16,5,India,In-App
+R0233,35-44,Female,5,6,User Experience,2023-09-30,6,Germany,Email
+R0234,55-64,Male,4,1,Customer Service,2023-07-20,1,USA,In-App
+R0235,35-44,Female,4,9,User Experience,2024-02-24,9,Germany,Website
+R0236,45-54,Non-binary,3,4,Pricing,2023-06-04,4,UK,Website
+R0237,55-64,Female,4,9,Customer Service,2024-05-05,9,Canada,Social Media
+R0238,18-24,Female,1,8,Delivery,2024-03-23,8,USA,Social Media
+R0239,45-54,Prefer not to say,5,1,Website,2023-07-05,1,USA,Email
+R0240,45-54,Prefer not to say,5,2,Website,2024-03-21,2,UK,Phone
+R0241,45-54,Non-binary,3,6,Website,2024-03-29,6,Brazil,Phone
+R0242,25-34,Male,4,1,Website,2023-12-21,1,Japan,Phone
+R0243,35-44,Male,3,4,Pricing,2024-05-31,4,India,Website
+R0244,45-54,Non-binary,3,3,Mobile App,2024-01-17,3,Mexico,Social Media
+R0245,18-24,Female,3,8,Customer Service,2023-09-03,8,Brazil,Email
+R0246,25-34,Non-binary,1,1,Pricing,2024-02-14,1,Brazil,Website
+R0247,45-54,Female,3,5,Pricing,2024-05-07,5,Canada,Phone
+R0248,18-24,Non-binary,1,7,Mobile App,2023-10-13,7,Mexico,Email
+R0249,35-44,Prefer not to say,1,0,Website,2023-09-10,0,Australia,In-App
+R0250,65+,Non-binary,3,0,Pricing,2024-02-11,0,India,Website
+R0251,18-24,Female,3,3,Delivery,2023-11-12,3,USA,In-App
+R0252,35-44,Male,2,6,Customer Service,2024-02-26,6,Mexico,Website
+R0253,55-64,Female,2,9,User Experience,2024-01-17,9,Germany,In-App
+R0254,18-24,Non-binary,1,10,Product Quality,2024-01-17,10,UK,In-App
+R0255,65+,Female,5,1,Mobile App,2024-05-15,1,Canada,In-App
+R0256,35-44,Non-binary,4,1,Mobile App,2024-01-12,1,Canada,Website
+R0257,55-64,Prefer not to say,1,1,Website,2024-05-23,1,France,In-App
+R0258,55-64,Non-binary,2,1,Delivery,2023-08-20,1,Germany,Email
+R0259,55-64,Prefer not to say,2,2,Pricing,2024-05-23,2,Japan,Email
+R0260,55-64,Prefer not to say,3,0,Mobile App,2023-09-11,0,UK,Social Media
+R0261,35-44,Non-binary,3,8,Customer Service,2023-07-18,8,India,In-App
+R0262,35-44,Male,4,10,Delivery,2024-04-22,10,Japan,In-App
+R0263,35-44,Female,4,8,Delivery,2023-07-30,8,Japan,Phone
+R0264,35-44,Prefer not to say,2,8,Delivery,2023-10-27,8,Australia,Email
+R0265,18-24,Prefer not to say,2,6,Website,2024-03-29,6,Australia,Social Media
+R0266,45-54,Non-binary,5,2,Customer Service,2023-12-22,2,Mexico,Email
+R0267,55-64,Male,1,3,User Experience,2024-04-25,3,UK,Email
+R0268,18-24,Male,5,1,Product Quality,2023-08-10,1,Japan,Email
+R0269,65+,Prefer not to say,1,4,Delivery,2023-11-01,4,Japan,In-App
+R0270,18-24,Non-binary,3,8,Customer Service,2024-01-30,8,UK,Phone
+R0271,45-54,Female,2,0,Delivery,2023-06-02,0,Japan,Email
+R0272,65+,Female,1,6,Product Quality,2024-04-17,6,India,In-App
+R0273,18-24,Male,3,8,Mobile App,2024-03-23,8,Japan,Phone
+R0274,65+,Prefer not to say,5,6,User Experience,2023-07-28,6,Japan,Website
+R0275,18-24,Prefer not to say,4,6,Pricing,2023-07-04,6,Brazil,Website
+R0276,65+,Non-binary,5,8,Mobile App,2024-03-08,8,France,Website
+R0277,35-44,Male,2,4,Pricing,2024-05-06,4,Mexico,Social Media
+R0278,35-44,Female,4,4,Delivery,2024-02-17,4,India,Social Media
+R0279,25-34,Prefer not to say,3,1,Pricing,2023-10-28,1,Canada,Phone
+R0280,25-34,Male,4,7,Pricing,2023-12-30,7,Australia,In-App
+R0281,65+,Prefer not to say,3,1,Mobile App,2023-11-09,1,Brazil,In-App
+R0282,25-34,Prefer not to say,1,1,Delivery,2023-09-02,1,UK,Social Media
+R0283,18-24,Prefer not to say,5,5,Customer Service,2023-12-29,5,France,Website
+R0284,65+,Prefer not to say,3,6,User Experience,2024-02-25,6,UK,Email
+R0285,45-54,Female,3,10,User Experience,2023-10-26,10,Germany,Website
+R0286,25-34,Non-binary,3,2,Delivery,2023-08-30,2,Canada,Social Media
+R0287,18-24,Non-binary,4,0,Customer Service,2024-02-22,0,Australia,Email
+R0288,45-54,Female,4,2,Pricing,2023-09-16,2,Brazil,Phone
+R0289,18-24,Male,5,2,Website,2023-07-31,2,France,Email
+R0290,65+,Prefer not to say,5,4,Pricing,2024-05-29,4,Canada,Phone
+R0291,35-44,Prefer not to say,3,10,Product Quality,2023-07-29,10,Canada,Email
+R0292,35-44,Prefer not to say,2,7,Website,2023-12-10,7,Germany,In-App
+R0293,18-24,Prefer not to say,2,0,Product Quality,2024-05-29,0,UK,Social Media
+R0294,55-64,Non-binary,4,8,Customer Service,2023-09-23,8,Mexico,Phone
+R0295,25-34,Female,5,0,Customer Service,2023-10-24,0,Australia,In-App
+R0296,65+,Non-binary,3,8,Website,2023-10-01,8,Australia,Social Media
+R0297,25-34,Non-binary,2,8,User Experience,2024-01-08,8,USA,Phone
+R0298,45-54,Male,5,1,Pricing,2023-10-26,1,Australia,Website
+R0299,55-64,Prefer not to say,1,3,Mobile App,2024-01-10,3,USA,Website
+R0300,65+,Male,3,1,Pricing,2024-01-28,1,Canada,Website
+R0301,35-44,Prefer not to say,3,8,Pricing,2023-08-10,8,Brazil,Social Media
+R0302,25-34,Non-binary,2,3,User Experience,2024-03-24,3,UK,Phone
+R0303,25-34,Non-binary,5,5,Delivery,2024-01-08,5,Mexico,Website
+R0304,65+,Prefer not to say,5,4,User Experience,2023-06-12,4,Canada,Phone
+R0305,55-64,Male,4,2,Delivery,2024-04-10,2,Canada,Phone
+R0306,18-24,Male,1,4,Mobile App,2024-01-21,4,France,Phone
+R0307,45-54,Male,1,8,User Experience,2023-10-10,8,Germany,Phone
+R0308,35-44,Prefer not to say,5,8,Website,2023-07-27,8,Australia,In-App
+R0309,18-24,Prefer not to say,3,2,Pricing,2023-10-17,2,Canada,Email
+R0310,65+,Male,1,1,Delivery,2024-05-20,1,Canada,Social Media
+R0311,55-64,Non-binary,3,10,Customer Service,2023-11-14,10,UK,Email
+R0312,65+,Non-binary,2,1,Delivery,2024-04-29,1,France,Phone
+R0313,55-64,Male,2,3,Mobile App,2023-10-04,3,Japan,Social Media
+R0314,25-34,Prefer not to say,5,4,User Experience,2024-05-09,4,Mexico,Email
+R0315,18-24,Prefer not to say,4,7,Delivery,2023-07-22,7,USA,Website
+R0316,18-24,Male,2,7,Delivery,2023-09-26,7,Germany,Phone
+R0317,55-64,Prefer not to say,5,9,Website,2023-09-25,9,Australia,Email
+R0318,35-44,Prefer not to say,2,6,Customer Service,2023-10-11,6,Mexico,Phone
+R0319,35-44,Non-binary,5,0,Website,2024-05-31,0,Australia,In-App
+R0320,55-64,Female,5,0,User Experience,2023-07-09,0,Japan,Email
+R0321,35-44,Male,3,8,Pricing,2023-09-04,8,Japan,Phone
+R0322,25-34,Male,5,10,User Experience,2023-06-30,10,Germany,Website
+R0323,18-24,Prefer not to say,4,0,Delivery,2023-10-21,0,Japan,Website
+R0324,55-64,Non-binary,4,6,Mobile App,2023-07-01,6,India,Website
+R0325,35-44,Non-binary,5,2,Delivery,2023-10-11,2,Germany,In-App
+R0326,45-54,Non-binary,5,8,Pricing,2023-10-08,8,India,Social Media
+R0327,25-34,Male,1,2,Website,2023-07-01,2,Mexico,Phone
+R0328,35-44,Female,3,6,Product Quality,2024-01-03,6,Japan,Website
+R0329,55-64,Prefer not to say,5,5,Customer Service,2024-05-18,5,Japan,Website
+R0330,35-44,Male,2,3,Mobile App,2023-08-05,3,Canada,Social Media
+R0331,25-34,Prefer not to say,2,4,Product Quality,2024-05-19,4,Germany,Phone
+R0332,55-64,Prefer not to say,2,6,Delivery,2023-11-22,6,Australia,Phone
+R0333,18-24,Prefer not to say,2,9,Website,2023-11-30,9,Mexico,Email
+R0334,45-54,Female,5,4,Customer Service,2023-09-05,4,Canada,Phone
+R0335,45-54,Female,4,1,Delivery,2023-12-18,1,Brazil,Website
+R0336,45-54,Female,1,1,Mobile App,2024-02-24,1,Canada,Website
+R0337,45-54,Non-binary,2,5,Delivery,2023-07-31,5,UK,Website
+R0338,45-54,Male,2,4,Website,2023-09-15,4,India,In-App
+R0339,65+,Male,5,1,Delivery,2024-04-05,1,Australia,Website
+R0340,45-54,Male,2,0,Delivery,2023-10-18,0,Mexico,In-App
+R0341,18-24,Prefer not to say,4,0,Delivery,2024-04-08,0,Mexico,Website
+R0342,18-24,Prefer not to say,2,5,Product Quality,2024-03-22,5,Japan,Phone
+R0343,25-34,Male,2,8,User Experience,2023-09-01,8,Australia,Email
+R0344,55-64,Prefer not to say,2,4,Pricing,2023-07-28,4,Japan,Social Media
+R0345,18-24,Female,5,1,Customer Service,2024-01-01,1,USA,In-App
+R0346,18-24,Prefer not to say,3,0,Customer Service,2023-08-23,0,Canada,Social Media
+R0347,65+,Non-binary,3,9,Mobile App,2023-07-13,9,France,In-App
+R0348,65+,Prefer not to say,2,4,User Experience,2023-07-04,4,France,Email
+R0349,35-44,Male,1,9,Pricing,2024-05-24,9,Germany,Phone
+R0350,18-24,Male,1,4,Delivery,2024-03-07,4,Australia,Social Media
+R0351,18-24,Prefer not to say,2,6,Website,2024-01-26,6,Germany,Website
+R0352,25-34,Male,3,1,Product Quality,2023-06-21,1,Australia,Phone
+R0353,35-44,Female,2,9,Customer Service,2023-09-04,9,Japan,Social Media
+R0354,25-34,Female,5,2,Mobile App,2023-07-29,2,UK,Phone
+R0355,25-34,Prefer not to say,1,6,Website,2024-02-04,6,Brazil,Email
+R0356,35-44,Male,4,5,Pricing,2024-05-03,5,France,In-App
+R0357,35-44,Female,2,3,Website,2024-04-28,3,UK,Website
+R0358,25-34,Female,1,2,Pricing,2023-12-25,2,Japan,Website
+R0359,55-64,Female,5,7,User Experience,2023-12-20,7,UK,Social Media
+R0360,25-34,Prefer not to say,3,1,Product Quality,2023-11-27,1,Germany,Website
+R0361,55-64,Prefer not to say,5,7,Mobile App,2024-05-29,7,Brazil,Email
+R0362,65+,Non-binary,4,8,Product Quality,2024-03-13,8,Japan,Social Media
+R0363,65+,Female,4,9,Delivery,2024-01-01,9,Germany,Phone
+R0364,35-44,Non-binary,2,9,Mobile App,2024-04-01,9,Japan,In-App
+R0365,25-34,Non-binary,2,0,Customer Service,2023-06-16,0,UK,Email
+R0366,18-24,Non-binary,5,1,User Experience,2023-11-02,1,Brazil,Email
+R0367,65+,Female,5,9,Customer Service,2023-10-03,9,UK,In-App
+R0368,65+,Non-binary,4,3,Delivery,2024-02-24,3,Canada,In-App
+R0369,55-64,Female,2,4,User Experience,2023-11-13,4,UK,Email
+R0370,45-54,Female,1,7,Mobile App,2023-10-21,7,Brazil,Website
+R0371,25-34,Male,1,0,Mobile App,2024-05-25,0,UK,Phone
+R0372,18-24,Female,1,4,Delivery,2023-10-19,4,Japan,Phone
+R0373,55-64,Male,1,1,User Experience,2023-08-06,1,Mexico,Email
+R0374,55-64,Male,2,8,Product Quality,2023-10-20,8,France,Social Media
+R0375,55-64,Male,1,9,Customer Service,2023-08-15,9,USA,Phone
+R0376,18-24,Non-binary,3,4,Mobile App,2023-08-15,4,USA,Email
+R0377,65+,Non-binary,4,6,Website,2024-05-08,6,UK,Website
+R0378,35-44,Prefer not to say,5,9,Website,2023-06-10,9,Australia,Phone
+R0379,65+,Female,1,1,Pricing,2024-02-25,1,Germany,Email
+R0380,55-64,Female,2,2,Mobile App,2023-11-21,2,UK,Website
+R0381,25-34,Female,2,9,Mobile App,2024-03-26,9,Canada,In-App
+R0382,25-34,Non-binary,5,6,Website,2023-12-05,6,Japan,In-App
+R0383,45-54,Male,2,4,Delivery,2024-01-06,4,Germany,Social Media
+R0384,25-34,Prefer not to say,4,5,Website,2023-07-19,5,Japan,In-App
+R0385,65+,Female,5,7,Website,2023-06-03,7,France,Email
+R0386,55-64,Male,4,4,Product Quality,2023-09-28,4,Canada,Website
+R0387,45-54,Non-binary,3,0,Mobile App,2024-05-04,0,India,Phone
+R0388,45-54,Female,3,1,User Experience,2024-01-03,1,Japan,Website
+R0389,18-24,Female,2,9,Customer Service,2023-09-21,9,India,Website
+R0390,35-44,Male,4,4,Pricing,2023-11-18,4,Mexico,In-App
+R0391,65+,Non-binary,1,1,Delivery,2023-06-03,1,USA,In-App
+R0392,18-24,Female,2,4,Product Quality,2024-03-13,4,Mexico,In-App
+R0393,35-44,Female,5,3,User Experience,2023-08-10,3,France,Website
+R0394,25-34,Male,4,6,Delivery,2023-12-07,6,USA,Phone
+R0395,55-64,Male,5,5,Website,2024-01-05,5,France,Social Media
+R0396,45-54,Non-binary,1,6,Pricing,2023-10-17,6,India,Website
+R0397,18-24,Prefer not to say,3,7,Website,2023-07-05,7,Mexico,In-App
+R0398,18-24,Female,2,0,Delivery,2024-05-21,0,Brazil,In-App
+R0399,25-34,Non-binary,5,10,Mobile App,2023-10-21,10,France,Website
+R0400,35-44,Female,1,7,Mobile App,2023-11-15,7,Mexico,Social Media
+R0401,25-34,Prefer not to say,5,0,Delivery,2023-08-12,0,France,Website
+R0402,18-24,Male,1,0,Pricing,2023-06-16,0,India,Social Media
+R0403,55-64,Male,4,7,Customer Service,2024-03-22,7,India,Website
+R0404,35-44,Female,4,4,Website,2024-04-07,4,Canada,Email
+R0405,65+,Female,5,6,Website,2023-12-24,6,Brazil,Phone
+R0406,45-54,Female,4,9,Mobile App,2024-03-15,9,France,Social Media
+R0407,25-34,Non-binary,5,6,User Experience,2023-11-11,6,Canada,In-App
+R0408,35-44,Female,2,1,Mobile App,2024-05-06,1,India,Email
+R0409,35-44,Male,4,9,Pricing,2023-12-02,9,Japan,Website
+R0410,18-24,Male,1,0,Website,2024-02-27,0,Australia,Website
+R0411,18-24,Female,4,5,Pricing,2023-11-05,5,Australia,Phone
+R0412,55-64,Non-binary,4,10,Delivery,2023-09-29,10,USA,Email
+R0413,25-34,Female,1,10,Mobile App,2023-08-15,10,Brazil,Phone
+R0414,55-64,Prefer not to say,1,7,Website,2024-04-25,7,UK,Phone
+R0415,65+,Female,2,2,Pricing,2024-02-25,2,USA,Social Media
+R0416,65+,Non-binary,1,5,User Experience,2024-05-26,5,Germany,In-App
+R0417,25-34,Female,2,2,User Experience,2023-08-31,2,USA,Email
+R0418,25-34,Prefer not to say,3,4,Delivery,2024-01-19,4,Brazil,Social Media
+R0419,55-64,Male,2,0,Customer Service,2023-09-14,0,France,In-App
+R0420,25-34,Male,3,8,Website,2023-09-15,8,India,Email
+R0421,35-44,Prefer not to say,5,4,Website,2024-05-26,4,Japan,In-App
+R0422,45-54,Female,5,5,Product Quality,2024-01-11,5,Canada,In-App
+R0423,55-64,Non-binary,5,4,User Experience,2024-05-04,4,Japan,Email
+R0424,25-34,Female,4,7,Website,2023-10-16,7,Mexico,Email
+R0425,25-34,Prefer not to say,2,1,Product Quality,2024-04-14,1,UK,Social Media
+R0426,35-44,Male,2,7,Mobile App,2023-09-17,7,Germany,Email
+R0427,65+,Prefer not to say,5,4,Mobile App,2024-01-10,4,France,In-App
+R0428,55-64,Male,1,8,Mobile App,2023-10-12,8,Australia,Phone
+R0429,35-44,Male,4,10,Pricing,2024-04-29,10,USA,In-App
+R0430,35-44,Non-binary,5,6,Delivery,2023-07-20,6,Brazil,In-App
+R0431,18-24,Non-binary,5,4,Product Quality,2023-07-15,4,Japan,Phone
+R0432,18-24,Male,5,6,Delivery,2023-10-04,6,Australia,Website
+R0433,25-34,Female,2,0,Pricing,2023-06-05,0,Germany,Website
+R0434,55-64,Non-binary,3,9,Customer Service,2023-11-13,9,Mexico,Phone
+R0435,45-54,Male,1,5,Product Quality,2023-09-01,5,India,Website
+R0436,25-34,Female,1,9,Mobile App,2023-08-11,9,Australia,Social Media
+R0437,45-54,Prefer not to say,2,9,Mobile App,2024-02-07,9,USA,Phone
+R0438,65+,Male,1,6,Product Quality,2023-07-15,6,UK,In-App
+R0439,25-34,Female,1,3,Customer Service,2024-04-19,3,Canada,In-App
+R0440,25-34,Prefer not to say,3,3,Website,2023-11-29,3,France,Website
+R0441,45-54,Male,4,5,Mobile App,2023-09-15,5,Canada,Phone
+R0442,25-34,Male,3,1,Mobile App,2024-01-30,1,India,In-App
+R0443,35-44,Prefer not to say,2,4,Customer Service,2024-02-16,4,Canada,In-App
+R0444,35-44,Non-binary,4,2,Customer Service,2024-04-13,2,Mexico,Phone
+R0445,55-64,Prefer not to say,1,9,Website,2024-05-24,9,USA,Phone
+R0446,18-24,Male,2,9,Pricing,2024-03-25,9,UK,Website
+R0447,18-24,Male,1,7,Delivery,2024-04-18,7,UK,Phone
+R0448,55-64,Non-binary,2,5,Website,2023-12-07,5,UK,Website
+R0449,25-34,Male,2,10,Website,2024-04-25,10,Mexico,In-App
+R0450,35-44,Female,2,10,Pricing,2024-03-12,10,Canada,Website
+R0451,18-24,Male,5,5,Pricing,2024-04-23,5,Canada,Social Media
+R0452,35-44,Prefer not to say,1,6,Product Quality,2023-06-08,6,Australia,Phone
+R0453,55-64,Female,4,9,Mobile App,2024-05-02,9,Canada,Website
+R0454,45-54,Non-binary,5,10,Delivery,2023-12-24,10,Canada,Social Media
+R0455,55-64,Prefer not to say,4,3,Delivery,2024-03-28,3,USA,Email
+R0456,55-64,Female,4,6,Mobile App,2023-09-03,6,USA,Email
+R0457,45-54,Non-binary,3,7,Mobile App,2023-11-11,7,Canada,Website
+R0458,25-34,Female,3,4,Mobile App,2024-04-12,4,Brazil,Email
+R0459,35-44,Non-binary,2,2,Product Quality,2024-02-19,2,Canada,Phone
+R0460,45-54,Female,5,1,Mobile App,2023-12-20,1,Japan,In-App
+R0461,18-24,Female,4,2,User Experience,2024-04-06,2,Mexico,Email
+R0462,18-24,Female,4,6,Customer Service,2024-03-12,6,Mexico,Phone
+R0463,35-44,Male,1,6,Product Quality,2023-09-26,6,Canada,Website
+R0464,18-24,Female,3,10,Pricing,2023-07-01,10,UK,Phone
+R0465,65+,Prefer not to say,1,10,Product Quality,2023-12-31,10,Germany,Phone
+R0466,25-34,Prefer not to say,4,9,Pricing,2024-01-31,9,USA,Website
+R0467,25-34,Male,1,4,Website,2024-01-25,4,Brazil,Phone
+R0468,65+,Prefer not to say,3,7,Customer Service,2023-12-24,7,Australia,Social Media
+R0469,18-24,Male,3,3,Mobile App,2024-05-17,3,Canada,In-App
+R0470,18-24,Non-binary,5,4,Customer Service,2023-12-16,4,Australia,Website
+R0471,45-54,Male,1,8,Website,2023-09-10,8,Australia,Email
+R0472,25-34,Male,5,2,Mobile App,2024-04-13,2,India,In-App
+R0473,25-34,Female,5,3,Pricing,2023-12-09,3,USA,Social Media
+R0474,45-54,Non-binary,1,10,Delivery,2023-10-29,10,Germany,Social Media
+R0475,45-54,Female,3,1,Customer Service,2023-10-03,1,Canada,Website
+R0476,45-54,Non-binary,2,8,Pricing,2024-04-27,8,USA,In-App
+R0477,25-34,Female,1,3,Customer Service,2024-03-18,3,Japan,Phone
+R0478,25-34,Male,2,9,Delivery,2023-06-11,9,UK,Phone
+R0479,45-54,Non-binary,5,0,Customer Service,2023-11-15,0,Brazil,Website
+R0480,55-64,Prefer not to say,1,2,User Experience,2023-11-17,2,Germany,Email
+R0481,55-64,Female,1,5,Mobile App,2024-02-20,5,USA,Social Media
+R0482,18-24,Non-binary,4,9,User Experience,2024-01-18,9,Germany,Website
+R0483,25-34,Male,4,7,Delivery,2023-06-12,7,Brazil,Website
+R0484,45-54,Non-binary,2,7,Customer Service,2024-04-14,7,Germany,Website
+R0485,18-24,Non-binary,3,10,Website,2024-03-31,10,Germany,In-App
+R0486,65+,Female,3,10,Customer Service,2023-08-26,10,Australia,Email
+R0487,35-44,Non-binary,5,8,Customer Service,2023-12-19,8,Germany,Social Media
+R0488,35-44,Non-binary,1,2,User Experience,2024-04-13,2,UK,In-App
+R0489,45-54,Prefer not to say,5,0,Pricing,2024-01-29,0,France,Social Media
+R0490,55-64,Prefer not to say,4,7,Delivery,2023-12-04,7,Mexico,In-App
+R0491,65+,Non-binary,5,5,Product Quality,2023-12-21,5,Canada,Phone
+R0492,55-64,Female,1,1,User Experience,2023-06-28,1,USA,Phone
+R0493,65+,Non-binary,4,0,Pricing,2023-09-24,0,France,Website
+R0494,35-44,Non-binary,3,1,Website,2023-12-27,1,UK,Website
+R0495,45-54,Male,2,8,Pricing,2023-08-30,8,Australia,Email
+R0496,25-34,Female,3,1,Customer Service,2024-04-07,1,Australia,Social Media
+R0497,18-24,Male,3,0,Product Quality,2023-07-03,0,UK,Social Media
+R0498,65+,Non-binary,3,0,Website,2023-06-13,0,France,In-App
+R0499,45-54,Non-binary,5,1,Pricing,2024-05-08,1,Brazil,Email
+R0500,18-24,Prefer not to say,5,1,Website,2024-04-28,1,Germany,Website
+R0501,45-54,Female,1,9,User Experience,2023-11-30,9,Germany,Website
+R0502,35-44,Prefer not to say,3,5,Pricing,2024-05-28,5,Brazil,In-App
+R0503,55-64,Female,4,6,Website,2023-10-27,6,Australia,Social Media
+R0504,45-54,Female,3,9,Customer Service,2023-10-08,9,USA,Website
+R0505,18-24,Prefer not to say,1,10,Product Quality,2023-06-23,10,USA,In-App
+R0506,65+,Prefer not to say,5,4,User Experience,2024-01-06,4,Japan,Phone
+R0507,25-34,Male,1,9,Customer Service,2024-01-08,9,Mexico,Phone
+R0508,45-54,Non-binary,2,7,Pricing,2023-12-23,7,Australia,Phone
+R0509,18-24,Female,3,3,Mobile App,2024-04-14,3,India,Phone
+R0510,45-54,Female,1,1,Mobile App,2024-01-14,1,Australia,In-App
+R0511,55-64,Female,2,2,Mobile App,2023-11-19,2,Brazil,Phone
+R0512,18-24,Prefer not to say,5,10,Website,2023-08-25,10,Mexico,In-App
+R0513,55-64,Female,4,5,Website,2024-05-03,5,Japan,In-App
+R0514,25-34,Male,3,1,Mobile App,2024-01-31,1,Australia,Social Media
+R0515,45-54,Male,2,0,Customer Service,2023-12-12,0,Brazil,Social Media
+R0516,45-54,Non-binary,4,10,Pricing,2023-10-07,10,USA,Phone
+R0517,25-34,Female,3,5,Pricing,2024-03-26,5,UK,Email
+R0518,35-44,Prefer not to say,2,6,Website,2023-09-03,6,Canada,Social Media
+R0519,55-64,Prefer not to say,1,6,User Experience,2023-11-13,6,Canada,Email
+R0520,35-44,Male,3,7,Website,2023-12-21,7,Australia,Website
+R0521,45-54,Non-binary,1,3,Product Quality,2024-05-28,3,UK,Phone
+R0522,45-54,Male,3,5,Pricing,2023-06-01,5,Japan,Social Media
+R0523,25-34,Prefer not to say,1,2,Website,2024-01-15,2,Canada,Social Media
+R0524,45-54,Prefer not to say,2,5,Mobile App,2024-01-27,5,Brazil,Website
+R0525,55-64,Prefer not to say,3,2,Pricing,2024-01-09,2,Germany,Social Media
+R0526,55-64,Non-binary,5,0,Pricing,2024-03-23,0,Japan,Email
+R0527,65+,Male,4,4,User Experience,2024-02-10,4,Brazil,Phone
+R0528,55-64,Prefer not to say,3,4,Product Quality,2024-02-05,4,Australia,Email
+R0529,18-24,Male,4,0,Pricing,2024-05-02,0,France,In-App
+R0530,35-44,Male,5,3,Product Quality,2023-12-04,3,USA,Phone
+R0531,65+,Prefer not to say,4,0,Website,2024-05-08,0,India,Email
+R0532,25-34,Male,3,5,Product Quality,2023-10-05,5,Japan,In-App
+R0533,25-34,Prefer not to say,1,5,Pricing,2023-10-22,5,Canada,Email
+R0534,25-34,Female,5,1,Product Quality,2023-08-12,1,Mexico,Website
+R0535,18-24,Male,5,0,Delivery,2023-10-02,0,Japan,Website
+R0536,18-24,Female,4,4,Website,2023-09-05,4,India,Email
+R0537,65+,Prefer not to say,2,6,Pricing,2023-06-13,6,Australia,Social Media
+R0538,55-64,Non-binary,1,8,Customer Service,2023-12-15,8,USA,Phone
+R0539,55-64,Prefer not to say,3,8,Delivery,2023-08-17,8,Canada,Email
+R0540,35-44,Female,5,2,Mobile App,2023-08-22,2,India,Website
+R0541,18-24,Non-binary,2,2,Customer Service,2023-11-10,2,Brazil,Website
+R0542,18-24,Female,1,3,Pricing,2024-02-24,3,UK,Website
+R0543,18-24,Non-binary,1,6,Website,2024-01-25,6,France,Phone
+R0544,55-64,Male,2,3,Mobile App,2024-01-21,3,France,Website
+R0545,65+,Male,5,5,User Experience,2023-07-25,5,UK,Email
+R0546,65+,Non-binary,5,3,Product Quality,2023-09-15,3,France,Phone
+R0547,45-54,Prefer not to say,3,4,Pricing,2023-10-05,4,Brazil,Website
+R0548,35-44,Prefer not to say,5,5,User Experience,2024-03-01,5,Canada,Email
+R0549,65+,Non-binary,5,3,Mobile App,2024-01-04,3,Brazil,Phone
+R0550,18-24,Female,2,7,Product Quality,2024-02-04,7,Mexico,Phone
+R0551,35-44,Female,1,7,Customer Service,2023-12-18,7,India,Website
+R0552,65+,Female,4,2,Pricing,2023-07-13,2,Australia,Email
+R0553,55-64,Non-binary,3,8,Product Quality,2023-10-28,8,UK,Social Media
+R0554,55-64,Male,5,9,Delivery,2023-09-01,9,UK,Email
+R0555,45-54,Female,1,2,Mobile App,2023-07-26,2,Mexico,Email
+R0556,55-64,Male,1,9,User Experience,2023-06-07,9,Germany,Social Media
+R0557,25-34,Non-binary,5,8,Product Quality,2023-10-18,8,Germany,Social Media
+R0558,18-24,Prefer not to say,4,10,Website,2023-06-19,10,Japan,Email
+R0559,55-64,Prefer not to say,4,2,Product Quality,2024-02-28,2,Germany,Website
+R0560,35-44,Female,1,10,Website,2023-11-08,10,USA,In-App
+R0561,65+,Non-binary,3,6,Website,2023-10-07,6,Germany,Social Media
+R0562,25-34,Female,4,4,Pricing,2024-04-19,4,Japan,Phone
+R0563,18-24,Non-binary,5,3,Mobile App,2024-03-30,3,Canada,Email
+R0564,55-64,Female,3,3,Mobile App,2023-10-19,3,Germany,In-App
+R0565,65+,Male,1,3,Product Quality,2023-08-26,3,Mexico,In-App
+R0566,55-64,Female,4,10,Customer Service,2024-03-08,10,India,Phone
+R0567,45-54,Male,2,5,Product Quality,2023-08-28,5,Mexico,Website
+R0568,35-44,Prefer not to say,4,1,Mobile App,2023-09-07,1,Australia,Phone
+R0569,55-64,Female,5,7,Customer Service,2023-08-10,7,Australia,Website
+R0570,65+,Non-binary,1,8,Pricing,2023-09-16,8,France,Phone
+R0571,55-64,Female,1,4,Pricing,2024-04-03,4,India,In-App
+R0572,45-54,Male,4,1,Product Quality,2023-10-24,1,Japan,Phone
+R0573,65+,Prefer not to say,1,8,Delivery,2023-07-15,8,India,Website
+R0574,35-44,Male,1,6,Product Quality,2023-10-12,6,Canada,In-App
+R0575,18-24,Non-binary,4,4,Mobile App,2023-12-07,4,USA,Phone
+R0576,25-34,Male,1,4,Website,2024-01-19,4,USA,Website
+R0577,65+,Male,2,5,Customer Service,2023-11-05,5,Japan,Email
+R0578,55-64,Prefer not to say,2,4,Website,2024-02-15,4,Mexico,Social Media
+R0579,18-24,Male,2,9,Website,2023-08-16,9,Brazil,Email
+R0580,35-44,Non-binary,4,8,Delivery,2024-01-12,8,Mexico,Email
+R0581,55-64,Female,5,2,Product Quality,2024-05-13,2,Japan,Phone
+R0582,25-34,Female,4,0,Pricing,2024-03-27,0,Japan,Social Media
+R0583,35-44,Prefer not to say,2,6,Mobile App,2024-01-07,6,UK,Phone
+R0584,65+,Male,3,10,Product Quality,2023-07-31,10,Brazil,Phone
+R0585,25-34,Non-binary,3,0,Product Quality,2023-06-12,0,Mexico,Email
+R0586,45-54,Male,4,8,Mobile App,2024-05-01,8,UK,Website
+R0587,45-54,Male,4,6,Customer Service,2023-06-12,6,France,Phone
+R0588,25-34,Prefer not to say,1,8,Customer Service,2023-06-11,8,Japan,Website
+R0589,45-54,Female,4,4,Customer Service,2024-05-10,4,Australia,Email
+R0590,45-54,Prefer not to say,4,4,Customer Service,2024-04-24,4,UK,Social Media
+R0591,65+,Female,5,3,Website,2024-03-07,3,Australia,Social Media
+R0592,45-54,Non-binary,1,1,Delivery,2023-09-26,1,Japan,Email
+R0593,55-64,Female,1,9,Pricing,2024-01-13,9,Japan,Website
+R0594,18-24,Non-binary,1,7,Pricing,2023-08-01,7,USA,In-App
+R0595,45-54,Non-binary,2,8,Mobile App,2023-10-25,8,India,Phone
+R0596,18-24,Male,1,1,User Experience,2023-09-12,1,India,Phone
+R0597,55-64,Male,2,7,Website,2023-06-02,7,Canada,Phone
+R0598,18-24,Non-binary,3,4,User Experience,2023-07-09,4,Mexico,Email
+R0599,25-34,Non-binary,2,9,Delivery,2023-06-03,9,UK,Email
+R0600,35-44,Non-binary,2,3,Customer Service,2023-07-01,3,Mexico,In-App
+R0601,65+,Female,4,4,Customer Service,2023-07-27,4,UK,Phone
+R0602,18-24,Male,5,8,Pricing,2023-12-03,8,Japan,Social Media
+R0603,65+,Prefer not to say,2,6,Website,2023-07-17,6,Brazil,Social Media
+R0604,55-64,Female,2,7,Delivery,2023-11-22,7,USA,Phone
+R0605,65+,Female,5,6,Pricing,2023-10-02,6,Brazil,Email
+R0606,45-54,Male,2,9,Customer Service,2024-02-08,9,UK,Email
+R0607,25-34,Non-binary,3,8,Product Quality,2024-05-14,8,Brazil,Website
+R0608,25-34,Male,3,10,Mobile App,2023-09-17,10,UK,In-App
+R0609,55-64,Female,5,2,Delivery,2023-07-19,2,UK,Website
+R0610,18-24,Non-binary,3,7,Pricing,2023-11-27,7,Germany,In-App
+R0611,35-44,Non-binary,1,2,Website,2023-08-30,2,France,In-App
+R0612,65+,Female,3,4,Website,2023-08-12,4,Mexico,In-App
+R0613,55-64,Male,1,7,Mobile App,2023-08-29,7,USA,Website
+R0614,55-64,Non-binary,5,9,Website,2023-06-16,9,USA,Social Media
+R0615,65+,Prefer not to say,1,6,Customer Service,2024-05-18,6,Germany,In-App
+R0616,35-44,Male,5,3,Website,2023-12-23,3,USA,Phone
+R0617,18-24,Non-binary,5,5,Mobile App,2023-09-20,5,Germany,Website
+R0618,45-54,Prefer not to say,2,5,Mobile App,2024-04-17,5,Mexico,Website
+R0619,65+,Male,3,4,Delivery,2023-07-07,4,France,Phone
+R0620,35-44,Non-binary,4,4,User Experience,2023-07-19,4,Germany,Phone
+R0621,55-64,Prefer not to say,1,1,Product Quality,2024-03-11,1,Australia,Email
+R0622,45-54,Female,1,0,Pricing,2023-09-25,0,USA,Social Media
+R0623,65+,Female,1,2,User Experience,2024-01-01,2,Canada,In-App
+R0624,18-24,Non-binary,1,8,User Experience,2023-12-16,8,Mexico,Phone
+R0625,25-34,Female,4,4,User Experience,2024-01-13,4,Brazil,Social Media
+R0626,55-64,Male,1,7,Website,2023-11-09,7,France,Phone
+R0627,25-34,Male,3,2,Mobile App,2023-12-09,2,Germany,In-App
+R0628,18-24,Male,3,10,Customer Service,2024-05-20,10,Germany,In-App
+R0629,18-24,Male,1,0,Website,2024-03-18,0,Canada,Website
+R0630,18-24,Non-binary,2,4,Website,2024-04-10,4,Brazil,In-App
+R0631,18-24,Non-binary,1,2,Product Quality,2023-08-11,2,UK,Email
+R0632,65+,Non-binary,5,0,Product Quality,2024-03-09,0,India,Phone
+R0633,35-44,Prefer not to say,5,3,Mobile App,2023-12-08,3,UK,Website
+R0634,65+,Male,1,8,Pricing,2023-06-30,8,Australia,In-App
+R0635,18-24,Prefer not to say,5,6,Delivery,2024-04-24,6,Mexico,In-App
+R0636,35-44,Prefer not to say,4,4,Website,2023-07-15,4,USA,Phone
+R0637,65+,Non-binary,5,10,Customer Service,2023-10-07,10,Canada,Website
+R0638,65+,Prefer not to say,5,4,User Experience,2024-04-06,4,Germany,Social Media
+R0639,18-24,Prefer not to say,4,0,User Experience,2023-08-01,0,Mexico,Website
+R0640,65+,Prefer not to say,4,5,Product Quality,2023-07-13,5,UK,Website
+R0641,18-24,Prefer not to say,5,5,Customer Service,2023-08-04,5,Australia,Website
+R0642,55-64,Non-binary,4,7,Customer Service,2023-07-27,7,USA,Website
+R0643,45-54,Non-binary,3,6,Website,2023-11-03,6,Mexico,Social Media
+R0644,65+,Prefer not to say,1,8,Customer Service,2024-05-14,8,Canada,Website
+R0645,18-24,Non-binary,2,5,Product Quality,2023-09-16,5,UK,In-App
+R0646,65+,Male,3,8,User Experience,2024-01-24,8,Canada,Phone
+R0647,25-34,Male,5,5,Pricing,2024-04-15,5,India,Phone
+R0648,55-64,Female,3,9,Customer Service,2023-06-04,9,UK,Social Media
+R0649,35-44,Prefer not to say,3,6,Customer Service,2024-01-23,6,Brazil,In-App
+R0650,18-24,Female,4,9,Mobile App,2023-12-08,9,Brazil,Phone
+R0651,65+,Prefer not to say,4,1,Website,2024-04-22,1,India,Social Media
+R0652,55-64,Male,2,8,Product Quality,2023-07-18,8,Canada,Email
+R0653,18-24,Female,4,4,Delivery,2024-03-05,4,Mexico,Social Media
+R0654,65+,Male,4,5,Product Quality,2023-09-28,5,Germany,Email
+R0655,35-44,Prefer not to say,1,8,Delivery,2024-04-08,8,Brazil,In-App
+R0656,25-34,Female,5,4,Product Quality,2023-11-10,4,Brazil,Phone
+R0657,45-54,Prefer not to say,2,0,Pricing,2023-11-30,0,Brazil,Phone
+R0658,45-54,Female,2,5,User Experience,2023-06-25,5,Brazil,Email
+R0659,18-24,Prefer not to say,4,9,Customer Service,2023-07-16,9,Japan,In-App
+R0660,35-44,Prefer not to say,5,5,Mobile App,2023-08-28,5,Japan,Social Media
+R0661,35-44,Male,3,8,Delivery,2024-01-30,8,Australia,In-App
+R0662,18-24,Female,5,6,User Experience,2023-09-01,6,Canada,Phone
+R0663,45-54,Prefer not to say,4,5,Delivery,2023-06-04,5,Canada,Social Media
+R0664,25-34,Female,4,7,Mobile App,2024-04-03,7,France,Email
+R0665,55-64,Prefer not to say,5,7,Delivery,2024-05-23,7,USA,Website
+R0666,45-54,Female,5,8,Pricing,2023-08-26,8,Mexico,Social Media
+R0667,65+,Non-binary,4,2,Product Quality,2023-12-20,2,Mexico,Website
+R0668,35-44,Prefer not to say,1,10,Product Quality,2023-10-26,10,Japan,Phone
+R0669,45-54,Prefer not to say,4,9,Mobile App,2023-08-27,9,Canada,Social Media
+R0670,45-54,Prefer not to say,2,5,Mobile App,2024-03-16,5,Australia,Website
+R0671,45-54,Non-binary,1,4,Delivery,2023-11-20,4,Mexico,Social Media
+R0672,25-34,Male,1,4,Delivery,2023-09-26,4,Mexico,Website
+R0673,55-64,Female,2,1,Product Quality,2023-09-26,1,Australia,In-App
+R0674,55-64,Prefer not to say,3,10,Mobile App,2023-06-24,10,Australia,Website
+R0675,65+,Male,2,3,User Experience,2024-03-05,3,Japan,Email
+R0676,35-44,Female,1,7,Pricing,2024-04-05,7,UK,Social Media
+R0677,45-54,Non-binary,4,9,Website,2024-05-03,9,India,Phone
+R0678,45-54,Non-binary,4,1,Mobile App,2024-05-08,1,Canada,Website
+R0679,45-54,Non-binary,1,9,Delivery,2024-05-10,9,India,Email
+R0680,35-44,Prefer not to say,5,3,Pricing,2023-10-05,3,Mexico,Website
+R0681,35-44,Male,1,4,Delivery,2023-06-22,4,Australia,Email
+R0682,25-34,Male,4,0,User Experience,2023-06-05,0,Mexico,Social Media
+R0683,25-34,Non-binary,2,6,Delivery,2023-11-05,6,India,Email
+R0684,55-64,Prefer not to say,4,5,Delivery,2023-11-13,5,Germany,Website
+R0685,45-54,Female,3,8,Delivery,2023-06-16,8,France,Email
+R0686,45-54,Prefer not to say,4,0,Product Quality,2023-09-11,0,Germany,In-App
+R0687,18-24,Male,1,4,Delivery,2023-06-27,4,Canada,Phone
+R0688,65+,Male,1,6,Mobile App,2024-04-19,6,India,Social Media
+R0689,55-64,Prefer not to say,1,7,User Experience,2023-08-25,7,France,Phone
+R0690,45-54,Non-binary,1,5,Customer Service,2024-02-11,5,USA,Website
+R0691,18-24,Male,1,8,Product Quality,2023-06-17,8,UK,Social Media
+R0692,18-24,Prefer not to say,2,6,Customer Service,2024-04-30,6,USA,Email
+R0693,18-24,Prefer not to say,5,9,Mobile App,2023-08-02,9,Brazil,Social Media
+R0694,18-24,Male,1,9,Mobile App,2024-02-01,9,France,In-App
+R0695,65+,Prefer not to say,2,6,Customer Service,2023-10-04,6,France,Website
+R0696,18-24,Non-binary,3,5,Mobile App,2023-12-23,5,USA,Phone
+R0697,65+,Non-binary,3,2,Mobile App,2024-03-30,2,Mexico,In-App
+R0698,18-24,Female,1,2,Delivery,2023-08-04,2,Australia,In-App
+R0699,35-44,Female,4,6,Pricing,2023-06-14,6,Mexico,In-App
+R0700,18-24,Female,3,6,Website,2023-08-17,6,Japan,Email
+R0701,45-54,Non-binary,3,7,Pricing,2023-08-03,7,UK,Phone
+R0702,35-44,Non-binary,2,1,Website,2024-01-03,1,Mexico,Social Media
+R0703,35-44,Prefer not to say,5,10,Website,2023-11-04,10,UK,Phone
+R0704,45-54,Male,5,3,User Experience,2024-04-23,3,Australia,Phone
+R0705,65+,Prefer not to say,2,10,Delivery,2024-03-10,10,UK,Website
+R0706,35-44,Male,1,5,Product Quality,2024-05-08,5,France,Website
+R0707,35-44,Male,1,0,Mobile App,2024-01-20,0,UK,Phone
+R0708,35-44,Male,2,7,Product Quality,2023-09-06,7,Canada,Social Media
+R0709,25-34,Male,4,1,Mobile App,2024-04-16,1,Brazil,Social Media
+R0710,35-44,Prefer not to say,5,5,Product Quality,2023-09-16,5,UK,Phone
+R0711,18-24,Non-binary,1,6,Mobile App,2023-06-15,6,Mexico,Website
+R0712,35-44,Female,3,3,Mobile App,2023-08-26,3,Australia,In-App
+R0713,35-44,Female,1,9,Product Quality,2024-01-17,9,India,Website
+R0714,35-44,Non-binary,5,9,Pricing,2024-04-15,9,USA,Social Media
+R0715,35-44,Female,5,9,Website,2023-06-07,9,Brazil,In-App
+R0716,55-64,Prefer not to say,3,4,Customer Service,2023-07-30,4,USA,Social Media
+R0717,45-54,Female,5,7,Website,2023-09-29,7,Australia,Email
+R0718,25-34,Non-binary,5,3,Customer Service,2024-03-04,3,France,Social Media
+R0719,45-54,Female,1,2,Delivery,2023-07-11,2,Brazil,Phone
+R0720,35-44,Non-binary,5,3,Pricing,2023-10-26,3,Mexico,Social Media
+R0721,45-54,Non-binary,4,0,Mobile App,2024-04-27,0,Australia,Website
+R0722,55-64,Female,2,8,Customer Service,2023-12-03,8,Germany,Website
+R0723,45-54,Male,5,1,Mobile App,2023-06-16,1,Brazil,Social Media
+R0724,25-34,Female,4,4,User Experience,2023-11-12,4,Japan,Social Media
+R0725,45-54,Non-binary,5,2,Delivery,2023-08-16,2,Brazil,Phone
+R0726,45-54,Male,5,0,Product Quality,2023-12-10,0,Australia,Email
+R0727,35-44,Prefer not to say,2,1,Delivery,2024-05-20,1,Canada,Social Media
+R0728,65+,Prefer not to say,2,3,Website,2024-04-15,3,Germany,Website
+R0729,25-34,Female,5,7,User Experience,2023-12-01,7,Germany,Phone
+R0730,65+,Non-binary,5,5,Website,2023-08-16,5,Mexico,Social Media
+R0731,35-44,Non-binary,1,10,User Experience,2023-07-08,10,Australia,Social Media
+R0732,45-54,Male,2,8,Pricing,2024-01-22,8,USA,Phone
+R0733,18-24,Non-binary,3,1,Customer Service,2023-11-02,1,France,Phone
+R0734,65+,Male,5,7,Mobile App,2023-07-09,7,USA,Email
+R0735,18-24,Female,2,0,Pricing,2023-06-13,0,Canada,Phone
+R0736,65+,Female,1,7,Delivery,2023-11-14,7,India,In-App
+R0737,35-44,Prefer not to say,3,9,Mobile App,2023-08-05,9,Brazil,In-App
+R0738,18-24,Female,1,10,Delivery,2024-01-04,10,Brazil,Website
+R0739,35-44,Female,3,10,Mobile App,2024-04-25,10,Brazil,Email
+R0740,18-24,Prefer not to say,4,10,Mobile App,2023-10-30,10,Canada,Phone
+R0741,55-64,Male,1,8,Customer Service,2023-06-16,8,Brazil,Social Media
+R0742,45-54,Female,2,1,Website,2024-02-09,1,Brazil,In-App
+R0743,55-64,Prefer not to say,1,6,User Experience,2023-12-24,6,Brazil,Social Media
+R0744,45-54,Non-binary,3,8,Delivery,2023-10-18,8,Germany,Email
+R0745,25-34,Female,2,3,Product Quality,2024-01-18,3,India,In-App
+R0746,45-54,Female,5,0,User Experience,2023-10-21,0,France,In-App
+R0747,35-44,Prefer not to say,5,10,Delivery,2023-11-19,10,Germany,In-App
+R0748,65+,Female,4,4,Mobile App,2024-02-13,4,France,In-App
+R0749,25-34,Non-binary,3,0,Product Quality,2023-06-27,0,Mexico,Email
+R0750,65+,Female,1,8,Website,2023-11-28,8,France,Website
+R0751,25-34,Non-binary,2,7,Product Quality,2023-06-30,7,Mexico,In-App
+R0752,25-34,Non-binary,4,9,Website,2024-04-29,9,Canada,Phone
+R0753,18-24,Non-binary,4,5,Mobile App,2023-07-05,5,France,Email
+R0754,25-34,Female,5,10,Website,2024-02-23,10,Brazil,Phone
+R0755,18-24,Female,1,2,User Experience,2023-06-17,2,UK,In-App
+R0756,25-34,Female,5,9,Customer Service,2024-04-04,9,Germany,Social Media
+R0757,65+,Non-binary,5,7,Website,2024-05-14,7,France,Website
+R0758,45-54,Prefer not to say,2,2,Website,2023-07-19,2,USA,Phone
+R0759,18-24,Prefer not to say,4,6,Website,2024-02-29,6,India,Website
+R0760,45-54,Male,2,0,User Experience,2023-10-26,0,Japan,Email
+R0761,55-64,Female,3,10,Website,2023-09-27,10,Germany,In-App
+R0762,55-64,Non-binary,2,8,Product Quality,2023-07-16,8,UK,Social Media
+R0763,35-44,Female,1,5,Customer Service,2024-01-07,5,UK,Email
+R0764,25-34,Non-binary,2,6,Mobile App,2024-05-01,6,Japan,Website
+R0765,45-54,Prefer not to say,5,4,Website,2024-02-18,4,Japan,Website
+R0766,18-24,Non-binary,3,5,User Experience,2023-12-15,5,Australia,Email
+R0767,35-44,Female,3,3,Pricing,2024-03-18,3,France,Social Media
+R0768,18-24,Non-binary,3,10,Website,2023-08-12,10,UK,Email
+R0769,35-44,Prefer not to say,3,9,Website,2023-12-02,9,Australia,Email
+R0770,35-44,Female,3,6,Pricing,2024-05-17,6,Canada,Website
+R0771,55-64,Male,2,2,Website,2023-11-01,2,Germany,In-App
+R0772,55-64,Prefer not to say,1,2,Website,2024-01-02,2,France,Social Media
+R0773,55-64,Prefer not to say,3,7,Website,2023-06-13,7,Brazil,Phone
+R0774,35-44,Female,2,3,Product Quality,2024-05-08,3,UK,Social Media
+R0775,45-54,Male,5,7,Product Quality,2024-03-08,7,USA,Social Media
+R0776,18-24,Female,4,3,Mobile App,2024-01-15,3,Brazil,Phone
+R0777,35-44,Male,3,3,Delivery,2024-01-04,3,Mexico,Social Media
+R0778,18-24,Prefer not to say,4,9,Customer Service,2023-11-29,9,UK,Website
+R0779,55-64,Female,4,8,Website,2024-02-22,8,Germany,Social Media
+R0780,18-24,Non-binary,3,5,Product Quality,2024-05-28,5,USA,Social Media
+R0781,45-54,Prefer not to say,3,6,Customer Service,2023-10-04,6,USA,Social Media
+R0782,55-64,Male,1,4,Delivery,2024-03-03,4,UK,In-App
+R0783,65+,Non-binary,2,7,User Experience,2024-02-04,7,USA,Email
+R0784,35-44,Prefer not to say,1,1,Mobile App,2023-07-12,1,India,In-App
+R0785,18-24,Non-binary,1,1,Delivery,2024-04-19,1,Australia,Website
+R0786,25-34,Female,5,10,Mobile App,2024-01-20,10,Brazil,Email
+R0787,18-24,Non-binary,3,0,User Experience,2023-08-15,0,India,Phone
+R0788,55-64,Non-binary,4,4,User Experience,2024-03-25,4,UK,Website
+R0789,18-24,Non-binary,1,0,Pricing,2024-04-10,0,Canada,Social Media
+R0790,65+,Female,1,7,Website,2024-01-13,7,USA,Website
+R0791,25-34,Prefer not to say,1,1,Pricing,2023-09-05,1,USA,Social Media
+R0792,18-24,Prefer not to say,1,10,Website,2023-09-06,10,UK,Phone
+R0793,65+,Prefer not to say,3,5,Product Quality,2023-09-24,5,Japan,Phone
+R0794,45-54,Prefer not to say,2,1,Pricing,2024-01-13,1,USA,Email
+R0795,55-64,Non-binary,2,5,Customer Service,2023-12-17,5,France,Website
+R0796,45-54,Female,4,9,Delivery,2023-10-16,9,USA,Social Media
+R0797,25-34,Non-binary,2,7,Delivery,2024-04-01,7,Australia,Phone
+R0798,55-64,Female,4,8,Mobile App,2023-07-25,8,Japan,Website
+R0799,55-64,Male,1,4,Mobile App,2023-06-09,4,USA,In-App
+R0800,25-34,Prefer not to say,1,10,Mobile App,2024-02-10,10,France,Phone
+R0801,18-24,Male,4,6,Pricing,2023-11-28,6,Canada,Phone
+R0802,45-54,Non-binary,2,10,Pricing,2023-08-28,10,Germany,Website
+R0803,55-64,Male,4,7,Product Quality,2023-11-04,7,Australia,In-App
+R0804,35-44,Prefer not to say,1,7,Delivery,2024-01-07,7,Mexico,In-App
+R0805,25-34,Prefer not to say,5,8,Website,2023-11-20,8,Brazil,Website
+R0806,65+,Prefer not to say,5,1,User Experience,2024-01-16,1,Australia,Social Media
+R0807,35-44,Non-binary,1,4,Pricing,2024-04-24,4,USA,In-App
+R0808,25-34,Non-binary,2,1,Website,2023-08-31,1,Brazil,Social Media
+R0809,45-54,Non-binary,3,2,Customer Service,2023-07-28,2,Australia,Social Media
+R0810,55-64,Prefer not to say,1,5,Pricing,2024-03-15,5,France,Website
+R0811,45-54,Female,5,2,User Experience,2024-05-13,2,Canada,Email
+R0812,55-64,Female,1,6,Delivery,2023-10-11,6,France,In-App
+R0813,35-44,Male,1,8,Pricing,2023-10-15,8,Brazil,Social Media
+R0814,18-24,Prefer not to say,1,6,User Experience,2023-07-01,6,USA,Social Media
+R0815,25-34,Non-binary,4,6,Product Quality,2024-05-28,6,Brazil,In-App
+R0816,65+,Male,2,3,Product Quality,2024-03-13,3,Mexico,In-App
+R0817,55-64,Non-binary,2,3,Customer Service,2024-01-27,3,Brazil,Social Media
+R0818,18-24,Female,3,7,Website,2023-08-31,7,India,Phone
+R0819,25-34,Non-binary,1,8,User Experience,2023-08-20,8,UK,Website
+R0820,65+,Male,4,3,User Experience,2024-01-18,3,Australia,In-App
+R0821,45-54,Prefer not to say,2,9,Website,2023-12-25,9,Mexico,Email
+R0822,55-64,Non-binary,4,1,Customer Service,2023-09-21,1,Mexico,Phone
+R0823,55-64,Female,2,2,Customer Service,2024-03-01,2,India,Social Media
+R0824,45-54,Male,5,5,User Experience,2023-07-08,5,Brazil,In-App
+R0825,18-24,Non-binary,1,3,User Experience,2023-06-06,3,France,Website
+R0826,55-64,Prefer not to say,3,8,Delivery,2023-07-12,8,Mexico,Phone
+R0827,65+,Prefer not to say,5,2,Pricing,2023-11-04,2,Brazil,In-App
+R0828,55-64,Female,2,1,Website,2024-05-16,1,Mexico,Email
+R0829,65+,Prefer not to say,1,5,Customer Service,2023-08-06,5,Canada,Email
+R0830,18-24,Prefer not to say,2,6,Website,2024-02-29,6,Canada,In-App
+R0831,35-44,Prefer not to say,4,9,Customer Service,2024-02-13,9,UK,Email
+R0832,25-34,Male,5,8,Mobile App,2023-06-08,8,France,Social Media
+R0833,18-24,Female,4,1,Customer Service,2023-07-28,1,India,In-App
+R0834,65+,Non-binary,5,10,User Experience,2024-03-12,10,USA,Email
+R0835,45-54,Prefer not to say,5,9,Product Quality,2023-12-08,9,Mexico,Phone
+R0836,45-54,Female,2,10,Mobile App,2023-11-26,10,USA,In-App
+R0837,55-64,Male,4,6,Mobile App,2024-05-09,6,Germany,In-App
+R0838,55-64,Prefer not to say,4,3,User Experience,2024-04-24,3,India,In-App
+R0839,18-24,Female,1,9,User Experience,2024-03-21,9,France,Email
+R0840,65+,Male,5,3,Website,2023-08-21,3,Japan,Website
+R0841,25-34,Non-binary,4,7,Product Quality,2024-05-07,7,Brazil,In-App
+R0842,45-54,Female,1,4,Product Quality,2023-08-06,4,UK,Social Media
+R0843,65+,Male,3,9,Mobile App,2023-08-06,9,Japan,Website
+R0844,35-44,Male,5,2,Mobile App,2024-02-17,2,Brazil,In-App
+R0845,45-54,Prefer not to say,2,5,Customer Service,2024-04-24,5,USA,Phone
+R0846,55-64,Male,1,10,Product Quality,2024-05-13,10,France,Phone
+R0847,45-54,Female,3,2,Customer Service,2023-09-23,2,USA,Social Media
+R0848,65+,Male,3,8,Delivery,2024-03-19,8,USA,Email
+R0849,35-44,Prefer not to say,1,7,Customer Service,2023-12-02,7,Canada,Email
+R0850,45-54,Female,5,6,User Experience,2023-12-26,6,France,In-App
+R0851,35-44,Male,5,9,Mobile App,2024-04-16,9,Australia,In-App
+R0852,55-64,Female,3,9,Website,2023-10-06,9,USA,In-App
+R0853,45-54,Prefer not to say,1,1,Pricing,2024-03-19,1,UK,Website
+R0854,45-54,Prefer not to say,4,4,Mobile App,2023-07-06,4,Canada,In-App
+R0855,65+,Prefer not to say,3,3,User Experience,2024-05-09,3,India,Website
+R0856,65+,Non-binary,5,8,Website,2024-01-11,8,India,Website
+R0857,25-34,Non-binary,1,3,Product Quality,2024-04-29,3,France,Phone
+R0858,35-44,Female,1,1,User Experience,2024-02-14,1,India,Website
+R0859,18-24,Female,5,6,Product Quality,2023-06-20,6,Japan,Website
+R0860,45-54,Female,5,5,Mobile App,2024-05-21,5,Mexico,Phone
+R0861,55-64,Male,2,2,Delivery,2023-09-28,2,France,Website
+R0862,25-34,Non-binary,4,6,Customer Service,2024-05-20,6,Germany,Social Media
+R0863,25-34,Female,4,1,User Experience,2024-03-24,1,Germany,Email
+R0864,25-34,Prefer not to say,1,9,Website,2024-01-10,9,Japan,Email
+R0865,55-64,Prefer not to say,1,9,Mobile App,2023-12-20,9,Brazil,Email
+R0866,45-54,Male,1,8,User Experience,2024-04-24,8,India,Social Media
+R0867,65+,Male,2,4,Product Quality,2024-03-18,4,Australia,Website
+R0868,25-34,Non-binary,4,10,Customer Service,2023-12-13,10,Japan,Website
+R0869,65+,Prefer not to say,1,10,Mobile App,2023-08-07,10,Brazil,Website
+R0870,45-54,Male,4,1,Customer Service,2023-08-31,1,Japan,Website
+R0871,45-54,Prefer not to say,3,8,Website,2023-12-22,8,UK,Website
+R0872,55-64,Female,4,4,Mobile App,2023-09-22,4,India,Email
+R0873,18-24,Prefer not to say,3,9,Website,2024-01-23,9,USA,Email
+R0874,55-64,Female,3,1,Delivery,2023-08-19,1,UK,Phone
+R0875,25-34,Female,2,5,Pricing,2023-06-24,5,France,Email
+R0876,25-34,Male,1,2,Product Quality,2023-07-29,2,Germany,Social Media
+R0877,18-24,Female,1,6,Customer Service,2023-08-08,6,Brazil,Social Media
+R0878,65+,Prefer not to say,4,0,Customer Service,2023-09-05,0,India,In-App
+R0879,25-34,Female,2,9,Website,2023-10-02,9,USA,Email
+R0880,55-64,Non-binary,2,2,Customer Service,2023-08-18,2,UK,In-App
+R0881,45-54,Female,1,0,Customer Service,2023-10-16,0,France,Email
+R0882,45-54,Male,3,8,Product Quality,2024-02-03,8,India,Website
+R0883,65+,Female,5,8,Pricing,2024-03-30,8,Japan,Phone
+R0884,25-34,Male,1,10,Mobile App,2024-04-07,10,Canada,Phone
+R0885,55-64,Male,5,9,Mobile App,2023-12-23,9,France,Website
+R0886,18-24,Female,5,2,Mobile App,2023-06-24,2,India,Social Media
+R0887,25-34,Prefer not to say,4,8,Customer Service,2023-08-07,8,Australia,In-App
+R0888,65+,Prefer not to say,5,3,Pricing,2024-03-22,3,Australia,In-App
+R0889,18-24,Female,3,0,User Experience,2024-01-14,0,Brazil,Website
+R0890,35-44,Prefer not to say,1,8,Pricing,2024-04-09,8,Germany,In-App
+R0891,35-44,Female,1,6,Product Quality,2024-04-27,6,Canada,Website
+R0892,25-34,Prefer not to say,2,8,Delivery,2024-02-21,8,USA,Phone
+R0893,35-44,Prefer not to say,3,4,Customer Service,2024-04-18,4,France,Social Media
+R0894,25-34,Female,3,1,Customer Service,2023-11-16,1,India,Phone
+R0895,35-44,Female,4,2,Customer Service,2023-07-07,2,USA,Social Media
+R0896,45-54,Female,5,10,Website,2023-07-05,10,Germany,Website
+R0897,25-34,Male,3,5,Pricing,2024-04-10,5,Australia,In-App
+R0898,18-24,Non-binary,2,10,Customer Service,2023-10-22,10,India,Phone
+R0899,55-64,Male,5,10,Website,2023-09-12,10,Japan,Phone
+R0900,65+,Prefer not to say,2,1,Website,2023-07-29,1,India,In-App
+R0901,35-44,Male,5,5,Product Quality,2024-05-03,5,Canada,In-App
+R0902,45-54,Prefer not to say,2,6,Delivery,2023-06-05,6,Australia,Email
+R0903,35-44,Prefer not to say,4,0,Product Quality,2023-08-20,0,Canada,Phone
+R0904,25-34,Female,1,10,Product Quality,2023-09-06,10,USA,Email
+R0905,55-64,Male,1,3,Mobile App,2024-05-09,3,UK,Email
+R0906,18-24,Female,5,0,Mobile App,2023-07-02,0,Brazil,In-App
+R0907,55-64,Prefer not to say,1,3,Delivery,2023-07-28,3,UK,Website
+R0908,45-54,Female,3,1,User Experience,2023-07-29,1,Australia,Website
+R0909,25-34,Non-binary,1,6,Mobile App,2023-06-29,6,Canada,Social Media
+R0910,25-34,Prefer not to say,3,5,Product Quality,2023-11-29,5,Mexico,Phone
+R0911,65+,Non-binary,1,5,Customer Service,2024-03-24,5,Canada,Email
+R0912,25-34,Female,5,10,Website,2023-12-02,10,Brazil,In-App
+R0913,55-64,Prefer not to say,1,5,Pricing,2024-01-27,5,France,Website
+R0914,25-34,Non-binary,4,3,Mobile App,2024-04-08,3,Canada,Website
+R0915,35-44,Prefer not to say,4,0,Customer Service,2023-12-18,0,Mexico,Website
+R0916,25-34,Male,3,2,Mobile App,2024-02-17,2,Mexico,Email
+R0917,25-34,Male,1,4,Product Quality,2023-06-08,4,UK,Phone
+R0918,45-54,Male,1,9,Website,2024-04-24,9,India,Phone
+R0919,65+,Female,1,4,Product Quality,2024-04-28,4,Canada,Website
+R0920,35-44,Male,5,3,Delivery,2023-07-26,3,USA,Website
+R0921,25-34,Non-binary,2,3,User Experience,2023-10-15,3,France,Email
+R0922,18-24,Female,1,8,Mobile App,2023-11-30,8,France,In-App
+R0923,55-64,Male,5,10,Pricing,2024-05-16,10,UK,Website
+R0924,65+,Male,2,9,Pricing,2024-01-13,9,Germany,Phone
+R0925,18-24,Non-binary,5,9,Website,2024-03-23,9,Australia,Phone
+R0926,45-54,Non-binary,5,7,Website,2023-08-16,7,UK,Social Media
+R0927,65+,Female,4,2,User Experience,2023-07-23,2,UK,In-App
+R0928,25-34,Non-binary,2,4,Website,2023-12-19,4,UK,Social Media
+R0929,65+,Female,4,10,Website,2023-07-14,10,Mexico,Website
+R0930,55-64,Non-binary,2,2,Pricing,2024-03-16,2,France,Email
+R0931,65+,Prefer not to say,3,4,Customer Service,2023-11-19,4,Canada,Email
+R0932,18-24,Male,2,7,Mobile App,2024-03-10,7,India,In-App
+R0933,18-24,Male,5,6,Delivery,2024-01-06,6,France,Website
+R0934,65+,Prefer not to say,4,0,User Experience,2024-01-28,0,Mexico,Social Media
+R0935,45-54,Female,5,9,Delivery,2024-03-25,9,India,Phone
+R0936,25-34,Non-binary,2,3,Mobile App,2023-10-28,3,Canada,Website
+R0937,35-44,Prefer not to say,5,0,Website,2024-03-11,0,Canada,Website
+R0938,55-64,Male,3,5,Mobile App,2023-08-25,5,Germany,Email
+R0939,65+,Non-binary,2,9,Mobile App,2023-11-15,9,Germany,Email
+R0940,35-44,Female,1,3,Product Quality,2023-09-08,3,France,Social Media
+R0941,18-24,Prefer not to say,4,5,Pricing,2023-11-18,5,Germany,Email
+R0942,45-54,Female,2,10,Product Quality,2024-04-06,10,Mexico,Phone
+R0943,35-44,Non-binary,2,1,User Experience,2024-05-18,1,Canada,Phone
+R0944,25-34,Non-binary,3,4,Delivery,2024-04-28,4,India,Phone
+R0945,65+,Non-binary,1,9,User Experience,2023-06-02,9,UK,Email
+R0946,18-24,Male,1,8,User Experience,2024-01-03,8,France,Website
+R0947,65+,Prefer not to say,3,4,Product Quality,2023-08-21,4,Australia,Email
+R0948,18-24,Male,3,5,Product Quality,2024-02-27,5,Brazil,Email
+R0949,65+,Male,1,6,Pricing,2023-09-08,6,France,Phone
+R0950,45-54,Prefer not to say,1,5,Product Quality,2023-07-18,5,Germany,Phone
+R0951,18-24,Non-binary,2,1,Website,2023-07-24,1,Canada,Phone
+R0952,25-34,Prefer not to say,1,0,Mobile App,2023-07-10,0,India,Phone
+R0953,25-34,Prefer not to say,4,3,Delivery,2023-06-05,3,Brazil,Social Media
+R0954,35-44,Non-binary,3,9,User Experience,2023-07-04,9,USA,Phone
+R0955,65+,Male,3,5,Pricing,2024-03-19,5,Canada,Website
+R0956,65+,Male,4,5,Delivery,2023-09-01,5,USA,Email
+R0957,25-34,Prefer not to say,1,5,Pricing,2023-12-10,5,France,In-App
+R0958,25-34,Male,4,2,Product Quality,2023-07-04,2,Germany,Email
+R0959,35-44,Female,3,10,Mobile App,2023-06-16,10,USA,Social Media
+R0960,18-24,Prefer not to say,2,5,Delivery,2023-08-21,5,Brazil,Social Media
+R0961,18-24,Male,5,3,Pricing,2024-05-17,3,Mexico,Phone
+R0962,45-54,Prefer not to say,5,6,Delivery,2023-09-10,6,France,Website
+R0963,25-34,Male,1,10,Mobile App,2023-10-19,10,Mexico,Email
+R0964,25-34,Female,1,6,Website,2024-02-03,6,UK,Phone
+R0965,25-34,Prefer not to say,5,4,Website,2024-03-04,4,USA,In-App
+R0966,65+,Female,1,0,Website,2023-08-17,0,Mexico,Email
+R0967,35-44,Non-binary,5,1,Customer Service,2023-08-21,1,Australia,Social Media
+R0968,25-34,Male,2,8,Product Quality,2023-11-07,8,Canada,Email
+R0969,45-54,Male,3,9,Product Quality,2023-06-17,9,Canada,Website
+R0970,65+,Female,3,2,User Experience,2024-05-11,2,USA,In-App
+R0971,25-34,Female,4,7,Website,2023-11-11,7,Canada,Social Media
+R0972,25-34,Female,4,1,Website,2023-08-02,1,Canada,Email
+R0973,35-44,Male,3,5,Delivery,2024-04-02,5,Germany,Website
+R0974,65+,Prefer not to say,4,8,Delivery,2023-09-26,8,UK,Website
+R0975,18-24,Prefer not to say,1,3,Mobile App,2024-03-08,3,India,Website
+R0976,18-24,Male,5,3,Website,2023-12-21,3,Mexico,Email
+R0977,45-54,Non-binary,5,10,Website,2023-10-05,10,Australia,Phone
+R0978,25-34,Non-binary,4,1,Customer Service,2024-01-17,1,Brazil,In-App
+R0979,35-44,Female,2,4,Mobile App,2023-09-27,4,USA,Website
+R0980,25-34,Prefer not to say,1,4,Customer Service,2024-01-30,4,USA,Website
+R0981,35-44,Non-binary,2,9,Mobile App,2023-07-12,9,UK,Website
+R0982,18-24,Male,1,6,Product Quality,2024-03-18,6,Canada,Social Media
+R0983,45-54,Male,2,5,Delivery,2023-10-09,5,India,In-App
+R0984,45-54,Prefer not to say,2,10,Customer Service,2023-10-02,10,Australia,Email
+R0985,25-34,Prefer not to say,4,7,User Experience,2023-09-07,7,Mexico,Email
+R0986,55-64,Male,3,5,Mobile App,2023-11-29,5,Brazil,Website
+R0987,18-24,Male,5,3,Customer Service,2024-05-03,3,France,Website
+R0988,25-34,Male,5,4,User Experience,2023-12-27,4,France,Social Media
+R0989,55-64,Prefer not to say,2,0,Mobile App,2024-02-13,0,India,Social Media
+R0990,55-64,Male,2,7,Mobile App,2023-07-09,7,UK,In-App
+R0991,55-64,Non-binary,4,9,Product Quality,2023-08-15,9,Mexico,Email
+R0992,35-44,Non-binary,2,9,Customer Service,2024-01-01,9,USA,Website
+R0993,18-24,Prefer not to say,1,3,Website,2023-08-28,3,Australia,Phone
+R0994,45-54,Non-binary,2,8,Website,2023-07-23,8,Germany,In-App
+R0995,18-24,Male,3,8,Product Quality,2024-05-06,8,Germany,Phone
+R0996,35-44,Prefer not to say,3,9,Pricing,2023-06-29,9,Canada,Email
+R0997,35-44,Female,2,5,User Experience,2023-10-20,5,UK,Social Media
+R0998,35-44,Non-binary,5,0,User Experience,2024-03-27,0,India,Social Media
+R0999,45-54,Female,2,9,Pricing,2023-08-31,9,Brazil,Website
+R1000,65+,Female,1,7,Product Quality,2024-01-30,7,Japan,Phone
+R1001,35-44,Male,5,9,Pricing,2024-03-31,9,Germany,Email
+R1002,18-24,Prefer not to say,3,3,Pricing,2023-10-13,3,USA,Phone
+R1003,55-64,Male,5,5,User Experience,2023-10-05,5,USA,Email
+R1004,18-24,Prefer not to say,4,4,Customer Service,2024-04-15,4,Germany,Social Media
+R1005,18-24,Male,2,5,Mobile App,2024-02-05,5,Mexico,Email
+R1006,25-34,Male,2,10,Delivery,2024-03-24,10,India,Social Media
+R1007,65+,Non-binary,5,8,Delivery,2023-10-02,8,UK,Website
+R1008,25-34,Prefer not to say,4,9,User Experience,2024-05-19,9,India,In-App
+R1009,55-64,Male,1,10,Product Quality,2024-03-25,10,Mexico,Email
+R1010,25-34,Female,1,7,Mobile App,2024-02-12,7,UK,Social Media
+R1011,35-44,Male,3,1,Delivery,2024-03-29,1,Japan,In-App
+R1012,18-24,Prefer not to say,5,6,Website,2023-10-21,6,UK,Phone
+R1013,35-44,Male,3,4,User Experience,2024-02-05,4,Australia,Phone
+R1014,18-24,Non-binary,4,8,Mobile App,2024-02-13,8,Japan,Phone
+R1015,65+,Male,5,0,Product Quality,2024-05-23,0,Germany,Social Media
+R1016,55-64,Prefer not to say,5,5,Website,2024-05-21,5,Brazil,Phone
+R1017,25-34,Female,5,1,Product Quality,2023-07-07,1,UK,Phone
+R1018,35-44,Prefer not to say,3,9,User Experience,2023-06-29,9,Mexico,Phone
+R1019,45-54,Prefer not to say,3,10,Website,2023-07-25,10,Mexico,In-App
+R1020,45-54,Non-binary,5,2,Delivery,2024-02-17,2,UK,In-App
+R1021,25-34,Non-binary,2,5,Website,2024-05-07,5,France,Email
+R1022,65+,Non-binary,1,5,Pricing,2024-04-19,5,Germany,Email
+R1023,35-44,Female,2,1,Mobile App,2023-11-06,1,UK,Phone
+R1024,55-64,Non-binary,3,1,Product Quality,2023-12-27,1,Germany,Phone
+R1025,25-34,Male,3,0,User Experience,2024-05-04,0,Brazil,Phone
+R1026,25-34,Prefer not to say,2,3,Customer Service,2024-03-12,3,UK,Email
+R1027,55-64,Non-binary,2,10,Delivery,2023-06-12,10,Mexico,Website
+R1028,18-24,Non-binary,2,9,Pricing,2024-01-30,9,UK,Website
+R1029,55-64,Female,2,1,User Experience,2024-05-06,1,Canada,In-App
+R1030,18-24,Prefer not to say,1,8,Customer Service,2024-05-26,8,India,Email
+R1031,25-34,Non-binary,4,1,Customer Service,2024-02-02,1,USA,Website
+R1032,45-54,Female,1,5,Mobile App,2023-10-11,5,USA,Phone
+R1033,55-64,Non-binary,4,10,Delivery,2023-08-19,10,Mexico,Website
+R1034,65+,Female,1,1,User Experience,2024-04-18,1,India,In-App
+R1035,45-54,Prefer not to say,2,10,Pricing,2024-03-21,10,USA,Social Media
+R1036,45-54,Male,4,5,Product Quality,2024-05-01,5,Canada,In-App
+R1037,18-24,Female,3,7,Pricing,2024-03-25,7,Mexico,In-App
+R1038,35-44,Male,3,3,User Experience,2023-11-25,3,India,Email
+R1039,45-54,Prefer not to say,5,8,User Experience,2024-02-01,8,Mexico,Social Media
+R1040,55-64,Male,4,8,Delivery,2023-10-03,8,Australia,In-App
+R1041,35-44,Prefer not to say,5,8,Website,2023-06-23,8,Germany,Website
+R1042,35-44,Male,4,7,Pricing,2024-02-07,7,France,Phone
+R1043,65+,Non-binary,2,4,Website,2023-09-09,4,UK,Social Media
+R1044,55-64,Male,1,2,Customer Service,2023-06-19,2,Mexico,Email
+R1045,35-44,Female,2,9,Mobile App,2023-11-03,9,USA,Phone
+R1046,18-24,Non-binary,5,0,Pricing,2023-10-11,0,Mexico,Phone
+R1047,45-54,Non-binary,1,5,Customer Service,2023-08-24,5,Canada,Phone
+R1048,65+,Prefer not to say,5,2,Website,2023-07-11,2,Brazil,Email
+R1049,65+,Male,3,0,Delivery,2024-01-24,0,India,Phone
+R1050,25-34,Male,5,3,User Experience,2023-06-03,3,Mexico,Phone
+R1051,25-34,Prefer not to say,2,8,Delivery,2023-09-29,8,Mexico,Social Media
+R1052,45-54,Female,1,10,Customer Service,2024-05-12,10,Australia,In-App
+R1053,35-44,Male,5,1,Customer Service,2024-03-12,1,India,Social Media
+R1054,45-54,Male,2,8,Website,2024-04-06,8,USA,Email
+R1055,45-54,Prefer not to say,2,9,Mobile App,2023-08-31,9,USA,Website
+R1056,35-44,Non-binary,1,3,Mobile App,2023-09-22,3,Australia,Email
+R1057,55-64,Female,2,8,Customer Service,2023-12-26,8,Brazil,Social Media
+R1058,65+,Male,4,10,Product Quality,2024-04-08,10,Australia,Phone
+R1059,55-64,Male,3,9,Product Quality,2023-11-12,9,UK,Social Media
+R1060,18-24,Prefer not to say,5,8,User Experience,2023-06-08,8,USA,Social Media
+R1061,55-64,Male,5,10,Website,2024-03-18,10,UK,In-App
+R1062,45-54,Male,1,4,Pricing,2024-02-16,4,Germany,Social Media
+R1063,18-24,Male,3,0,Pricing,2024-05-12,0,France,Email
+R1064,35-44,Prefer not to say,2,3,Mobile App,2024-05-17,3,Mexico,Email
+R1065,35-44,Non-binary,4,0,Customer Service,2023-07-02,0,USA,Social Media
+R1066,45-54,Male,2,7,Delivery,2024-01-06,7,India,Social Media
+R1067,25-34,Male,4,8,Product Quality,2024-02-20,8,Japan,Phone
+R1068,18-24,Non-binary,2,6,Website,2024-01-03,6,Mexico,In-App
+R1069,25-34,Prefer not to say,3,5,Delivery,2024-02-01,5,Australia,Phone
+R1070,25-34,Prefer not to say,4,8,Mobile App,2024-04-12,8,USA,Phone
+R1071,18-24,Non-binary,2,8,Product Quality,2024-04-05,8,Japan,Social Media
+R1072,55-64,Female,3,8,Product Quality,2024-04-18,8,Germany,In-App
+R1073,25-34,Prefer not to say,1,0,User Experience,2023-11-22,0,India,Email
+R1074,35-44,Non-binary,2,8,Product Quality,2023-06-18,8,Germany,Social Media
+R1075,18-24,Prefer not to say,4,1,Delivery,2023-10-22,1,Mexico,Phone
+R1076,25-34,Prefer not to say,1,7,User Experience,2023-09-08,7,Canada,In-App
+R1077,65+,Male,1,0,Website,2024-05-22,0,USA,Social Media
+R1078,45-54,Non-binary,3,9,Website,2023-10-27,9,UK,In-App
+R1079,18-24,Prefer not to say,1,2,Customer Service,2023-06-16,2,USA,Social Media
+R1080,35-44,Male,4,3,Product Quality,2023-07-10,3,USA,Website
+R1081,25-34,Non-binary,2,7,Website,2023-06-11,7,Japan,Phone
+R1082,55-64,Non-binary,4,1,Delivery,2023-08-28,1,France,In-App
+R1083,45-54,Female,1,2,Pricing,2023-12-16,2,Brazil,Website
+R1084,25-34,Non-binary,2,4,Delivery,2024-03-05,4,Canada,In-App
+R1085,35-44,Prefer not to say,1,8,User Experience,2024-02-24,8,Canada,In-App
+R1086,55-64,Male,2,3,User Experience,2023-12-15,3,UK,In-App
+R1087,35-44,Non-binary,1,2,Mobile App,2023-11-21,2,Australia,In-App
+R1088,45-54,Male,4,8,Delivery,2023-11-20,8,Brazil,Email
+R1089,45-54,Female,2,5,Mobile App,2023-12-18,5,Mexico,Social Media
+R1090,25-34,Male,5,8,Mobile App,2024-04-17,8,Australia,Website
+R1091,65+,Female,2,7,Delivery,2023-07-18,7,Canada,Social Media
+R1092,18-24,Prefer not to say,2,7,Pricing,2023-07-20,7,Germany,Email
+R1093,35-44,Male,4,9,Product Quality,2024-04-17,9,India,Social Media
+R1094,18-24,Prefer not to say,1,10,Product Quality,2023-10-14,10,Canada,Email
+R1095,18-24,Female,2,2,Pricing,2023-07-03,2,Brazil,Website
+R1096,55-64,Prefer not to say,2,3,Mobile App,2024-02-07,3,France,Social Media
+R1097,65+,Female,5,9,Mobile App,2023-10-25,9,India,Social Media
+R1098,25-34,Non-binary,1,2,Product Quality,2024-02-15,2,Mexico,Email
+R1099,65+,Prefer not to say,3,10,Website,2023-09-20,10,Brazil,Email
+R1100,25-34,Male,4,4,Pricing,2023-09-19,4,UK,Website
+R1101,55-64,Non-binary,1,9,Customer Service,2024-01-27,9,UK,Email
+R1102,35-44,Female,4,0,User Experience,2023-10-15,0,UK,Email
+R1103,65+,Prefer not to say,3,4,Website,2023-06-13,4,India,Email
+R1104,35-44,Female,3,9,Pricing,2024-05-25,9,USA,Website
+R1105,45-54,Male,1,3,Mobile App,2023-07-02,3,Mexico,Website
+R1106,35-44,Non-binary,3,7,Website,2024-05-12,7,Australia,In-App
+R1107,55-64,Prefer not to say,3,5,Customer Service,2023-09-21,5,Mexico,Website
+R1108,35-44,Female,1,5,Pricing,2023-12-04,5,UK,Email
+R1109,65+,Male,5,7,Pricing,2023-06-02,7,France,Email
+R1110,25-34,Female,5,2,Pricing,2024-04-09,2,India,Phone
+R1111,25-34,Non-binary,5,7,Website,2023-08-25,7,France,Social Media
+R1112,35-44,Non-binary,3,4,User Experience,2023-09-23,4,Canada,Phone
+R1113,65+,Non-binary,3,8,Mobile App,2023-09-15,8,Australia,Email
+R1114,65+,Male,2,3,Delivery,2023-06-25,3,Japan,In-App
+R1115,45-54,Female,4,10,Delivery,2024-03-31,10,India,Phone
+R1116,25-34,Non-binary,5,8,Delivery,2023-07-11,8,USA,Website
+R1117,18-24,Non-binary,4,2,Mobile App,2023-06-22,2,Germany,Website
+R1118,25-34,Male,1,2,Product Quality,2023-07-29,2,Germany,Email
+R1119,25-34,Prefer not to say,1,3,Customer Service,2023-07-27,3,Germany,Social Media
+R1120,55-64,Non-binary,5,6,Delivery,2024-03-02,6,India,Phone
+R1121,45-54,Female,5,6,Pricing,2023-12-31,6,Brazil,Email
+R1122,18-24,Female,2,9,Customer Service,2023-11-30,9,UK,Social Media
+R1123,65+,Prefer not to say,3,3,Product Quality,2023-06-08,3,Australia,Phone
+R1124,25-34,Prefer not to say,1,4,Mobile App,2024-03-19,4,France,Website
+R1125,35-44,Non-binary,4,9,Customer Service,2023-10-10,9,UK,Email
+R1126,18-24,Male,4,7,Pricing,2023-06-08,7,Germany,Email
+R1127,65+,Male,2,6,Mobile App,2023-09-26,6,Australia,Email
+R1128,18-24,Male,5,7,Pricing,2024-04-19,7,USA,Website
+R1129,45-54,Female,4,4,Delivery,2023-10-20,4,Mexico,Social Media
+R1130,55-64,Non-binary,2,2,Product Quality,2024-03-23,2,UK,Website
+R1131,55-64,Male,5,7,Website,2023-10-10,7,Australia,Phone
+R1132,55-64,Male,2,5,Pricing,2024-04-24,5,France,Email
+R1133,55-64,Female,2,1,Mobile App,2024-01-07,1,Japan,Website
+R1134,65+,Female,1,6,Product Quality,2023-06-20,6,Australia,In-App
+R1135,18-24,Non-binary,1,10,Product Quality,2024-04-08,10,India,Phone
+R1136,65+,Male,3,8,Mobile App,2024-05-31,8,Japan,Social Media
+R1137,25-34,Female,5,0,Product Quality,2024-03-02,0,Germany,Social Media
+R1138,65+,Male,4,5,Mobile App,2023-09-29,5,Germany,Email
+R1139,18-24,Prefer not to say,1,2,Product Quality,2024-05-19,2,Mexico,Social Media
+R1140,55-64,Non-binary,3,4,User Experience,2024-05-26,4,UK,Social Media
+R1141,18-24,Male,2,4,Customer Service,2023-07-04,4,Mexico,Email
+R1142,55-64,Male,1,6,Mobile App,2024-01-10,6,Brazil,Website
+R1143,18-24,Prefer not to say,4,1,User Experience,2023-09-17,1,USA,Phone
+R1144,45-54,Male,5,6,Customer Service,2023-12-20,6,Australia,Social Media
+R1145,45-54,Male,1,2,User Experience,2024-04-14,2,Japan,In-App
+R1146,65+,Non-binary,4,8,Website,2023-08-20,8,Japan,Social Media
+R1147,65+,Female,1,5,Delivery,2023-07-07,5,Mexico,Website
+R1148,65+,Prefer not to say,4,10,Mobile App,2023-07-03,10,Germany,Email
+R1149,25-34,Non-binary,3,5,User Experience,2024-02-12,5,Japan,Phone
+R1150,45-54,Male,4,8,Pricing,2024-05-26,8,France,Email
+R1151,65+,Prefer not to say,4,10,Delivery,2023-07-12,10,UK,Email
+R1152,18-24,Non-binary,2,4,Customer Service,2023-12-01,4,France,In-App
+R1153,45-54,Prefer not to say,5,9,Delivery,2024-01-04,9,Japan,Phone
+R1154,55-64,Male,4,9,Product Quality,2024-02-20,9,Japan,Social Media
+R1155,45-54,Male,5,1,Pricing,2023-08-29,1,UK,In-App
+R1156,45-54,Non-binary,5,10,Website,2024-02-09,10,USA,Website
+R1157,25-34,Female,4,0,Pricing,2024-03-16,0,UK,Email
+R1158,18-24,Non-binary,1,1,Pricing,2023-10-01,1,Japan,Phone
+R1159,25-34,Male,1,8,Website,2023-06-28,8,Japan,Social Media
+R1160,55-64,Female,5,0,Mobile App,2023-11-04,0,France,Website
+R1161,65+,Non-binary,1,10,Customer Service,2023-12-11,10,Canada,Email
+R1162,25-34,Female,2,0,Customer Service,2023-08-01,0,Mexico,In-App
+R1163,18-24,Female,3,4,Pricing,2024-04-28,4,Japan,Email
+R1164,35-44,Non-binary,2,8,User Experience,2023-09-28,8,Canada,Phone
+R1165,18-24,Prefer not to say,1,2,Website,2024-03-09,2,Australia,Phone
+R1166,35-44,Non-binary,3,1,Delivery,2023-09-27,1,India,Email
+R1167,18-24,Prefer not to say,4,6,Website,2024-05-10,6,India,Phone
+R1168,25-34,Non-binary,4,1,Customer Service,2023-10-15,1,France,Phone
+R1169,35-44,Non-binary,5,3,Pricing,2024-04-24,3,Mexico,Phone
+R1170,35-44,Prefer not to say,1,10,Delivery,2023-11-22,10,Brazil,Email
+R1171,25-34,Female,3,8,User Experience,2023-06-13,8,Mexico,Phone
+R1172,18-24,Prefer not to say,2,6,Customer Service,2024-04-21,6,USA,Email
+R1173,65+,Female,5,8,Mobile App,2024-01-11,8,UK,Email
+R1174,25-34,Prefer not to say,3,9,Delivery,2024-04-10,9,Germany,In-App
+R1175,55-64,Prefer not to say,5,5,Mobile App,2023-08-31,5,Brazil,In-App
+R1176,18-24,Prefer not to say,3,1,Mobile App,2023-10-13,1,UK,Email
+R1177,35-44,Male,3,1,Customer Service,2023-12-14,1,Brazil,In-App
+R1178,25-34,Female,2,6,User Experience,2023-08-27,6,Australia,Social Media
+R1179,65+,Prefer not to say,2,4,Mobile App,2024-03-07,4,USA,Website
+R1180,55-64,Female,1,4,Pricing,2023-08-16,4,Canada,Phone
+R1181,55-64,Male,4,10,Website,2024-05-13,10,Germany,Social Media
+R1182,35-44,Prefer not to say,3,1,Delivery,2024-02-12,1,France,Email
+R1183,45-54,Male,3,8,Delivery,2024-04-09,8,Brazil,In-App
+R1184,65+,Prefer not to say,5,1,Delivery,2024-03-31,1,USA,Phone
+R1185,35-44,Non-binary,4,1,Pricing,2023-12-18,1,Brazil,Email
+R1186,55-64,Prefer not to say,4,1,Product Quality,2024-05-02,1,USA,Email
+R1187,18-24,Female,4,5,Customer Service,2023-09-19,5,USA,Email
+R1188,45-54,Prefer not to say,2,5,Delivery,2024-01-02,5,UK,In-App
+R1189,45-54,Female,3,10,Mobile App,2023-12-25,10,Australia,Social Media
+R1190,55-64,Non-binary,3,6,Customer Service,2024-03-07,6,UK,In-App
+R1191,55-64,Non-binary,5,9,Customer Service,2023-08-06,9,Australia,Website
+R1192,18-24,Male,3,3,Website,2023-07-23,3,Mexico,Website
+R1193,25-34,Prefer not to say,4,7,Customer Service,2023-08-31,7,Canada,Website
+R1194,18-24,Male,3,3,Website,2023-07-25,3,France,In-App
+R1195,35-44,Non-binary,5,0,Customer Service,2023-06-12,0,UK,Email
+R1196,55-64,Male,2,5,Pricing,2023-06-19,5,Japan,Website
+R1197,55-64,Male,4,6,User Experience,2023-10-29,6,UK,In-App
+R1198,18-24,Non-binary,5,5,User Experience,2023-11-24,5,Mexico,Email
+R1199,35-44,Prefer not to say,2,8,Mobile App,2024-01-29,8,UK,In-App
+R1200,55-64,Female,1,9,User Experience,2024-01-18,9,Canada,Website
+R1201,65+,Prefer not to say,5,8,Delivery,2023-07-14,8,Germany,In-App
+R1202,45-54,Non-binary,2,0,Pricing,2023-09-28,0,Mexico,Phone
+R1203,35-44,Non-binary,1,3,Customer Service,2023-12-21,3,Canada,Email
+R1204,45-54,Prefer not to say,2,2,Product Quality,2024-05-23,2,Japan,Phone
+R1205,18-24,Female,1,0,Delivery,2024-05-07,0,USA,Social Media
+R1206,45-54,Female,3,1,Website,2023-11-24,1,Mexico,Website
+R1207,55-64,Female,5,9,Customer Service,2024-03-06,9,UK,Email
+R1208,45-54,Female,5,9,Pricing,2024-03-15,9,France,Email
+R1209,35-44,Prefer not to say,2,10,Mobile App,2023-12-06,10,France,Email
+R1210,35-44,Prefer not to say,1,10,Pricing,2023-12-15,10,Germany,In-App
+R1211,55-64,Non-binary,1,0,Product Quality,2024-04-06,0,Mexico,Email
+R1212,25-34,Prefer not to say,4,10,Pricing,2023-11-19,10,USA,Phone
+R1213,45-54,Female,2,10,Customer Service,2024-05-25,10,Mexico,Social Media
+R1214,18-24,Non-binary,2,5,Customer Service,2023-08-30,5,Brazil,Phone
+R1215,25-34,Female,2,1,Pricing,2023-11-11,1,Brazil,Website
+R1216,18-24,Non-binary,3,2,Product Quality,2024-02-21,2,Brazil,Website
+R1217,65+,Female,3,6,Mobile App,2023-10-30,6,USA,Website
+R1218,65+,Prefer not to say,3,5,Website,2023-09-04,5,Mexico,Phone
+R1219,18-24,Female,4,3,Website,2023-09-04,3,Mexico,In-App
+R1220,65+,Male,1,1,Delivery,2024-05-29,1,Canada,Social Media
+R1221,45-54,Non-binary,5,0,Customer Service,2023-09-22,0,Brazil,Website
+R1222,55-64,Male,4,2,Customer Service,2024-04-26,2,Canada,Email
+R1223,18-24,Non-binary,4,5,Pricing,2024-05-03,5,India,Phone
+R1224,45-54,Male,2,7,Product Quality,2023-09-30,7,Japan,In-App
+R1225,65+,Prefer not to say,4,10,Website,2024-01-11,10,India,Website
+R1226,25-34,Female,5,7,Pricing,2024-04-24,7,India,Email
+R1227,35-44,Male,4,0,Customer Service,2023-12-06,0,UK,Email
+R1228,18-24,Non-binary,2,5,Delivery,2024-04-02,5,Germany,Phone
+R1229,35-44,Male,5,2,User Experience,2024-05-30,2,USA,In-App
+R1230,65+,Non-binary,3,10,Website,2023-10-22,10,Canada,Phone
+R1231,55-64,Female,3,6,Pricing,2024-01-19,6,France,In-App
+R1232,55-64,Female,2,2,User Experience,2023-08-31,2,Canada,Email
+R1233,65+,Prefer not to say,1,2,Customer Service,2023-09-09,2,Canada,In-App
+R1234,55-64,Non-binary,3,4,Product Quality,2023-06-16,4,USA,Email
+R1235,35-44,Non-binary,3,3,Pricing,2023-10-18,3,India,In-App
+R1236,25-34,Male,4,9,User Experience,2023-08-26,9,Canada,Phone
+R1237,25-34,Non-binary,3,3,User Experience,2023-08-30,3,Japan,In-App
+R1238,55-64,Non-binary,1,4,Pricing,2024-05-15,4,Germany,Phone
+R1239,55-64,Female,2,10,Pricing,2023-12-14,10,Australia,Social Media
+R1240,35-44,Female,3,8,Website,2024-04-05,8,Japan,Website
+R1241,35-44,Prefer not to say,4,5,User Experience,2024-03-22,5,Mexico,Website
+R1242,18-24,Prefer not to say,2,0,Product Quality,2023-07-25,0,USA,Phone
+R1243,55-64,Male,2,5,User Experience,2023-08-15,5,Mexico,In-App
+R1244,65+,Non-binary,5,2,Website,2023-07-26,2,France,Phone
+R1245,35-44,Prefer not to say,3,9,Website,2024-05-10,9,India,Website
+R1246,25-34,Male,4,0,User Experience,2023-12-23,0,India,In-App
+R1247,25-34,Male,3,1,Delivery,2023-10-22,1,India,Email
+R1248,35-44,Non-binary,4,3,Mobile App,2023-08-12,3,Japan,Social Media
+R1249,35-44,Male,3,9,Mobile App,2024-05-02,9,Brazil,Website
+R1250,45-54,Non-binary,3,2,Website,2024-05-18,2,France,Social Media
+R1251,45-54,Male,3,3,Pricing,2024-04-22,3,Japan,Website
+R1252,18-24,Non-binary,5,4,Delivery,2023-10-18,4,Japan,Website
+R1253,35-44,Male,5,1,Customer Service,2023-10-17,1,Canada,In-App
+R1254,65+,Non-binary,3,1,Website,2024-04-01,1,Brazil,Social Media
+R1255,18-24,Male,4,8,User Experience,2024-01-11,8,Australia,Website
+R1256,18-24,Non-binary,5,9,Delivery,2023-06-03,9,USA,Social Media
+R1257,55-64,Male,4,9,Mobile App,2024-01-12,9,Australia,Phone
+R1258,18-24,Non-binary,5,0,Website,2023-10-21,0,Brazil,Phone
+R1259,65+,Male,1,8,Mobile App,2024-03-22,8,Canada,Phone
+R1260,25-34,Non-binary,5,2,Delivery,2024-02-10,2,USA,Social Media
+R1261,45-54,Non-binary,3,2,Delivery,2023-09-30,2,Japan,Social Media
+R1262,25-34,Female,4,5,Delivery,2023-10-30,5,UK,Website
+R1263,45-54,Female,1,5,Mobile App,2023-11-20,5,France,Social Media
+R1264,25-34,Non-binary,2,7,Mobile App,2024-04-11,7,Canada,Email
+R1265,18-24,Prefer not to say,2,0,Product Quality,2023-10-18,0,France,In-App
+R1266,35-44,Prefer not to say,2,7,Website,2023-12-30,7,Canada,Social Media
+R1267,65+,Non-binary,3,6,Delivery,2024-02-15,6,Australia,Phone
+R1268,18-24,Non-binary,1,5,User Experience,2023-12-28,5,Australia,Social Media
+R1269,65+,Female,4,5,Website,2024-03-21,5,Mexico,In-App
+R1270,55-64,Male,1,8,Delivery,2024-03-18,8,France,Email
+R1271,35-44,Prefer not to say,3,8,Website,2023-11-24,8,Australia,In-App
+R1272,55-64,Female,1,8,Pricing,2024-03-24,8,Brazil,Email
+R1273,18-24,Prefer not to say,5,3,User Experience,2023-12-05,3,Brazil,In-App
+R1274,35-44,Female,1,5,User Experience,2024-05-13,5,USA,In-App
+R1275,65+,Male,3,2,Product Quality,2023-10-21,2,Japan,In-App
+R1276,45-54,Female,3,9,Website,2024-02-13,9,Japan,Website
+R1277,65+,Non-binary,4,8,Delivery,2023-10-06,8,Australia,Email
+R1278,25-34,Non-binary,1,1,Customer Service,2024-01-13,1,Canada,In-App
+R1279,35-44,Non-binary,3,0,Website,2023-11-14,0,USA,Website
+R1280,65+,Prefer not to say,1,0,Customer Service,2024-02-11,0,USA,Social Media
+R1281,18-24,Male,1,2,Website,2024-04-26,2,UK,Email
+R1282,35-44,Prefer not to say,1,2,Website,2023-10-10,2,USA,Website
+R1283,25-34,Female,4,0,Pricing,2024-04-01,0,USA,Social Media
+R1284,18-24,Non-binary,1,1,Pricing,2023-08-25,1,Canada,Phone
+R1285,55-64,Female,4,2,User Experience,2023-07-14,2,USA,In-App
+R1286,35-44,Female,1,2,Mobile App,2023-12-10,2,Japan,Social Media
+R1287,35-44,Male,4,0,Customer Service,2024-02-07,0,Japan,Email
+R1288,18-24,Male,2,0,Product Quality,2024-02-28,0,Brazil,Website
+R1289,35-44,Non-binary,3,2,Product Quality,2024-03-25,2,USA,In-App
+R1290,65+,Female,1,10,Pricing,2023-12-04,10,Australia,Phone
+R1291,35-44,Prefer not to say,3,9,Delivery,2023-12-14,9,Mexico,Phone
+R1292,65+,Male,2,6,Product Quality,2024-04-13,6,India,Email
+R1293,45-54,Prefer not to say,3,6,Website,2023-12-28,6,Germany,In-App
+R1294,65+,Male,4,3,Delivery,2024-01-09,3,Brazil,In-App
+R1295,65+,Prefer not to say,4,8,User Experience,2024-04-01,8,Brazil,In-App
+R1296,65+,Non-binary,3,8,Delivery,2023-10-28,8,Australia,Email
+R1297,45-54,Female,4,2,Pricing,2023-12-19,2,Japan,Website
+R1298,35-44,Female,5,4,Pricing,2023-10-30,4,USA,Website
+R1299,55-64,Female,1,6,Mobile App,2023-10-15,6,Germany,Email
+R1300,65+,Non-binary,2,1,User Experience,2023-10-14,1,Canada,In-App
+R1301,25-34,Prefer not to say,1,3,Product Quality,2024-02-21,3,Australia,Website
+R1302,25-34,Prefer not to say,3,0,Pricing,2023-11-01,0,UK,In-App
+R1303,18-24,Non-binary,2,2,Delivery,2023-10-07,2,Mexico,In-App
+R1304,18-24,Non-binary,4,9,Website,2023-06-16,9,Canada,Phone
+R1305,65+,Female,4,1,User Experience,2024-05-12,1,Japan,Phone
+R1306,55-64,Non-binary,3,10,Customer Service,2023-09-08,10,Brazil,Website
+R1307,35-44,Male,2,9,Customer Service,2024-05-16,9,UK,In-App
+R1308,65+,Female,1,3,Website,2023-06-14,3,Japan,Social Media
+R1309,35-44,Prefer not to say,5,5,Pricing,2023-12-21,5,Canada,Email
+R1310,65+,Male,4,7,Product Quality,2023-07-15,7,Canada,Social Media
+R1311,55-64,Female,1,5,Delivery,2023-07-28,5,USA,In-App
+R1312,65+,Male,4,4,User Experience,2023-06-28,4,Japan,Email
+R1313,55-64,Female,1,4,Mobile App,2023-08-24,4,Mexico,Email
+R1314,35-44,Male,5,3,Product Quality,2024-01-26,3,USA,Phone
+R1315,65+,Male,2,5,Customer Service,2024-01-22,5,UK,Email
+R1316,55-64,Female,5,5,Product Quality,2024-03-26,5,India,Email
+R1317,55-64,Female,3,3,Mobile App,2024-02-17,3,Mexico,Email
+R1318,55-64,Non-binary,3,3,Mobile App,2023-10-03,3,UK,Email
+R1319,45-54,Non-binary,4,2,Customer Service,2024-02-18,2,Mexico,In-App
+R1320,35-44,Prefer not to say,1,7,Mobile App,2023-09-27,7,UK,In-App
+R1321,18-24,Non-binary,2,1,Delivery,2024-01-08,1,India,Social Media
+R1322,55-64,Male,3,4,Website,2023-11-26,4,Japan,Social Media
+R1323,35-44,Non-binary,5,8,User Experience,2023-07-01,8,India,In-App
+R1324,25-34,Non-binary,1,6,Customer Service,2023-10-13,6,UK,Phone
+R1325,25-34,Female,1,10,User Experience,2023-10-15,10,Germany,Social Media
+R1326,35-44,Prefer not to say,1,4,Pricing,2023-09-20,4,UK,In-App
+R1327,18-24,Female,5,6,User Experience,2024-04-10,6,Japan,Social Media
+R1328,25-34,Non-binary,3,4,Mobile App,2023-06-15,4,Germany,Email
+R1329,45-54,Prefer not to say,1,2,User Experience,2024-01-30,2,Canada,Email
+R1330,55-64,Prefer not to say,4,10,Website,2024-04-18,10,Canada,Social Media
+R1331,45-54,Non-binary,5,2,Product Quality,2024-01-19,2,USA,In-App
+R1332,35-44,Non-binary,2,3,Delivery,2023-07-11,3,Germany,Phone
+R1333,25-34,Prefer not to say,2,5,User Experience,2024-01-02,5,UK,Social Media
+R1334,55-64,Non-binary,2,3,Customer Service,2023-09-16,3,USA,In-App
+R1335,55-64,Non-binary,3,5,Customer Service,2023-07-07,5,Canada,In-App
+R1336,35-44,Male,2,1,Product Quality,2024-03-30,1,Australia,Email
+R1337,65+,Prefer not to say,3,0,Mobile App,2024-03-05,0,Mexico,Phone
+R1338,18-24,Male,2,8,Website,2023-08-04,8,Brazil,Social Media
+R1339,45-54,Male,5,8,Delivery,2023-07-28,8,Mexico,Social Media
+R1340,18-24,Female,1,0,Delivery,2023-11-18,0,Brazil,Social Media
+R1341,25-34,Male,1,3,Customer Service,2023-07-22,3,India,Email
+R1342,25-34,Female,4,0,User Experience,2024-03-15,0,France,Social Media
+R1343,45-54,Male,1,2,User Experience,2023-12-23,2,Canada,Social Media
+R1344,25-34,Non-binary,4,9,Mobile App,2023-07-01,9,France,Phone
+R1345,18-24,Male,4,9,Product Quality,2024-04-06,9,Canada,In-App
+R1346,45-54,Male,5,3,Pricing,2023-07-11,3,France,Phone
+R1347,55-64,Male,1,7,Delivery,2023-06-02,7,France,Social Media
+R1348,55-64,Female,2,5,Product Quality,2023-08-27,5,Canada,Phone
+R1349,55-64,Prefer not to say,1,4,Delivery,2023-09-16,4,USA,Website
+R1350,35-44,Non-binary,1,1,Customer Service,2023-11-13,1,USA,Email
+R1351,45-54,Prefer not to say,1,10,Product Quality,2023-07-24,10,Australia,Email
+R1352,45-54,Non-binary,1,0,Customer Service,2023-08-10,0,Australia,In-App
+R1353,25-34,Female,3,10,User Experience,2023-11-29,10,Australia,In-App
+R1354,55-64,Non-binary,3,5,Delivery,2024-02-01,5,UK,In-App
+R1355,45-54,Non-binary,5,2,Customer Service,2024-04-21,2,France,Social Media
+R1356,35-44,Prefer not to say,3,8,Product Quality,2023-07-12,8,Brazil,Social Media
+R1357,65+,Non-binary,4,5,Pricing,2023-10-29,5,Japan,In-App
+R1358,25-34,Male,5,9,Product Quality,2024-04-12,9,India,Email
+R1359,25-34,Non-binary,4,9,Customer Service,2023-08-31,9,India,In-App
+R1360,35-44,Male,1,1,User Experience,2024-02-19,1,UK,Phone
+R1361,25-34,Female,5,2,Mobile App,2024-02-28,2,UK,Phone
+R1362,45-54,Prefer not to say,1,4,Pricing,2023-07-28,4,Germany,Email
+R1363,18-24,Non-binary,3,7,Pricing,2023-07-17,7,Japan,Email
+R1364,65+,Male,3,3,Customer Service,2023-07-23,3,Japan,Phone
+R1365,55-64,Male,5,10,Website,2024-01-18,10,Brazil,In-App
+R1366,35-44,Female,3,0,Website,2023-10-19,0,Brazil,In-App
+R1367,18-24,Male,3,2,Delivery,2023-08-05,2,Australia,Website
+R1368,35-44,Female,1,8,Mobile App,2023-07-12,8,Mexico,Phone
+R1369,45-54,Non-binary,4,7,Customer Service,2024-04-06,7,India,In-App
+R1370,25-34,Female,2,1,Pricing,2023-09-26,1,India,In-App
+R1371,45-54,Non-binary,2,10,Product Quality,2023-07-14,10,France,Email
+R1372,18-24,Prefer not to say,3,5,Website,2024-05-29,5,Canada,Social Media
+R1373,55-64,Male,4,2,User Experience,2024-01-26,2,UK,Phone
+R1374,55-64,Prefer not to say,2,4,Product Quality,2024-03-28,4,Japan,Website
+R1375,45-54,Female,3,8,Product Quality,2023-12-20,8,Japan,Social Media
+R1376,45-54,Non-binary,2,0,User Experience,2023-11-17,0,USA,Website
+R1377,55-64,Female,4,4,Website,2024-04-17,4,Japan,Email
+R1378,25-34,Prefer not to say,2,0,User Experience,2023-11-10,0,Germany,Email
+R1379,18-24,Prefer not to say,3,8,User Experience,2024-02-05,8,France,In-App
+R1380,65+,Female,2,1,User Experience,2023-07-23,1,Canada,Website
+R1381,25-34,Non-binary,4,7,Website,2024-03-15,7,Japan,Website
+R1382,55-64,Non-binary,1,7,Website,2023-09-06,7,UK,Phone
+R1383,65+,Non-binary,3,7,Website,2024-04-30,7,India,Email
+R1384,45-54,Non-binary,1,5,Pricing,2024-04-06,5,UK,Website
+R1385,18-24,Non-binary,5,6,Mobile App,2024-01-19,6,Canada,Social Media
+R1386,25-34,Female,2,4,Product Quality,2023-09-02,4,Mexico,Phone
+R1387,25-34,Female,5,6,Customer Service,2024-02-25,6,Australia,In-App
+R1388,18-24,Female,2,2,Website,2023-10-20,2,Canada,Social Media
+R1389,65+,Prefer not to say,5,7,Customer Service,2024-01-01,7,Canada,Website
+R1390,55-64,Prefer not to say,5,10,Product Quality,2024-03-17,10,Mexico,Social Media
+R1391,35-44,Prefer not to say,2,9,Pricing,2024-05-28,9,Brazil,Website
+R1392,25-34,Non-binary,5,9,Pricing,2024-04-13,9,Germany,In-App
+R1393,55-64,Non-binary,1,1,Website,2024-02-19,1,USA,Social Media
+R1394,45-54,Prefer not to say,3,1,Delivery,2023-10-23,1,USA,Email
+R1395,35-44,Non-binary,1,5,Delivery,2024-02-06,5,Australia,Email
+R1396,45-54,Female,2,10,Customer Service,2023-12-08,10,India,Email
+R1397,25-34,Prefer not to say,4,8,Customer Service,2024-01-13,8,Japan,Website
+R1398,55-64,Non-binary,1,6,Delivery,2024-05-25,6,India,Website
+R1399,18-24,Non-binary,3,2,Mobile App,2023-12-29,2,Japan,In-App
+R1400,35-44,Prefer not to say,5,9,Website,2023-10-26,9,India,Website
+R1401,25-34,Prefer not to say,4,4,Website,2023-10-22,4,Mexico,In-App
+R1402,18-24,Non-binary,4,0,User Experience,2023-06-03,0,India,Phone
+R1403,25-34,Female,3,10,Website,2023-07-01,10,India,Email
+R1404,18-24,Female,3,7,Product Quality,2023-08-09,7,Australia,In-App
+R1405,65+,Male,4,4,Website,2023-06-02,4,Mexico,Email
+R1406,65+,Male,1,7,User Experience,2024-04-13,7,India,Social Media
+R1407,55-64,Male,3,4,Website,2023-09-26,4,USA,In-App
+R1408,35-44,Male,1,1,Delivery,2024-05-30,1,UK,Website
+R1409,45-54,Prefer not to say,5,1,Customer Service,2023-11-08,1,Brazil,In-App
+R1410,45-54,Male,5,9,Mobile App,2023-09-27,9,France,Social Media
+R1411,45-54,Female,2,5,Customer Service,2024-02-20,5,Japan,Phone
+R1412,18-24,Female,2,6,Customer Service,2023-06-25,6,Brazil,Social Media
+R1413,25-34,Non-binary,4,5,User Experience,2024-04-25,5,India,Social Media
+R1414,25-34,Prefer not to say,3,10,Pricing,2024-01-28,10,Germany,Phone
+R1415,45-54,Non-binary,4,9,Customer Service,2024-04-01,9,Australia,Website
+R1416,18-24,Male,1,7,User Experience,2023-08-06,7,Brazil,Website
+R1417,55-64,Female,5,5,Mobile App,2024-05-30,5,India,In-App
+R1418,65+,Non-binary,5,4,Mobile App,2023-11-06,4,Mexico,Email
+R1419,35-44,Non-binary,2,7,Delivery,2023-11-14,7,Mexico,Email
+R1420,35-44,Male,5,10,Mobile App,2023-10-20,10,UK,Website
+R1421,18-24,Prefer not to say,1,1,Mobile App,2023-07-28,1,Canada,Phone
+R1422,55-64,Non-binary,1,5,User Experience,2024-03-19,5,UK,In-App
+R1423,25-34,Prefer not to say,2,9,Mobile App,2024-02-08,9,India,Phone
+R1424,65+,Male,3,10,Website,2024-03-28,10,Brazil,In-App
+R1425,55-64,Non-binary,1,3,User Experience,2024-01-28,3,Germany,Email
+R1426,55-64,Prefer not to say,3,4,Product Quality,2023-09-03,4,Japan,Website
+R1427,65+,Prefer not to say,3,9,User Experience,2023-07-19,9,Japan,Website
+R1428,55-64,Prefer not to say,1,2,User Experience,2023-07-01,2,France,Email
+R1429,25-34,Male,1,7,Delivery,2023-12-30,7,Brazil,Website
+R1430,55-64,Female,3,7,Mobile App,2023-06-24,7,Australia,Website
+R1431,25-34,Female,4,1,Mobile App,2023-12-15,1,France,Email
+R1432,65+,Prefer not to say,2,8,Website,2024-02-22,8,Canada,Phone
+R1433,45-54,Non-binary,3,0,User Experience,2024-04-22,0,USA,Social Media
+R1434,35-44,Non-binary,4,0,Delivery,2024-02-25,0,UK,Phone
+R1435,65+,Female,1,7,Product Quality,2024-05-06,7,Canada,Phone
+R1436,55-64,Prefer not to say,3,10,Delivery,2024-05-22,10,France,In-App
+R1437,18-24,Male,1,5,Product Quality,2023-08-13,5,Mexico,Website
+R1438,35-44,Prefer not to say,2,6,Website,2024-05-09,6,USA,Phone
+R1439,35-44,Female,3,5,Customer Service,2023-11-20,5,Germany,In-App
+R1440,65+,Non-binary,1,6,Customer Service,2024-01-10,6,France,Phone
+R1441,45-54,Female,5,10,Customer Service,2023-08-08,10,UK,Website
+R1442,35-44,Prefer not to say,5,9,Product Quality,2023-08-06,9,Japan,Email
+R1443,35-44,Male,5,5,Delivery,2024-02-16,5,Brazil,In-App
+R1444,65+,Male,3,9,Website,2024-01-08,9,Mexico,Website
+R1445,35-44,Prefer not to say,2,5,Customer Service,2023-07-14,5,France,Phone
+R1446,25-34,Non-binary,2,0,Pricing,2023-09-13,0,Brazil,Website
+R1447,65+,Non-binary,5,10,Customer Service,2023-06-03,10,USA,Social Media
+R1448,65+,Prefer not to say,3,3,Mobile App,2024-03-19,3,India,Phone
+R1449,65+,Male,3,7,Pricing,2024-05-29,7,France,Phone
+R1450,45-54,Male,5,9,Customer Service,2023-07-20,9,USA,Phone
+R1451,65+,Male,3,7,User Experience,2024-04-01,7,UK,In-App
+R1452,25-34,Prefer not to say,5,0,Delivery,2023-06-10,0,Australia,In-App
+R1453,35-44,Male,2,4,Mobile App,2024-02-08,4,India,Social Media
+R1454,65+,Male,2,5,User Experience,2023-11-20,5,UK,Phone
+R1455,55-64,Female,1,8,Customer Service,2023-08-03,8,UK,In-App
+R1456,25-34,Prefer not to say,4,2,Website,2023-08-01,2,UK,In-App
+R1457,18-24,Male,5,0,Mobile App,2023-08-04,0,UK,Social Media
+R1458,18-24,Prefer not to say,5,4,Pricing,2023-11-19,4,Mexico,Website
+R1459,35-44,Prefer not to say,2,3,User Experience,2023-06-16,3,USA,Website
+R1460,45-54,Non-binary,4,3,Product Quality,2024-01-21,3,France,Email
+R1461,55-64,Non-binary,2,6,User Experience,2023-08-29,6,Canada,Email
+R1462,35-44,Prefer not to say,3,8,Product Quality,2024-04-15,8,Brazil,Email
+R1463,25-34,Female,5,8,Delivery,2023-08-16,8,Brazil,Social Media
+R1464,45-54,Female,2,7,Product Quality,2023-10-28,7,UK,Social Media
+R1465,65+,Non-binary,1,8,Product Quality,2023-09-13,8,Japan,Website
+R1466,55-64,Prefer not to say,2,0,Customer Service,2024-04-30,0,USA,Website
+R1467,18-24,Female,4,8,Product Quality,2024-02-12,8,France,Email
+R1468,35-44,Male,5,2,User Experience,2023-08-04,2,Mexico,Social Media
+R1469,18-24,Non-binary,2,2,Website,2024-04-26,2,France,Website
+R1470,55-64,Prefer not to say,4,10,Customer Service,2024-05-04,10,UK,Website
+R1471,18-24,Non-binary,5,7,Website,2023-12-27,7,UK,Email
+R1472,65+,Prefer not to say,1,6,Delivery,2023-12-04,6,Australia,Website
+R1473,18-24,Male,5,2,Mobile App,2023-09-10,2,UK,In-App
+R1474,65+,Male,4,4,User Experience,2023-10-26,4,Brazil,Social Media
+R1475,45-54,Male,5,0,Mobile App,2024-04-03,0,Japan,Phone
+R1476,55-64,Female,1,9,Delivery,2023-09-29,9,Canada,In-App
+R1477,18-24,Male,5,2,Customer Service,2023-09-01,2,UK,Website
+R1478,65+,Non-binary,2,4,Product Quality,2023-08-16,4,Japan,Email
+R1479,25-34,Non-binary,2,2,User Experience,2024-03-16,2,UK,Phone
+R1480,55-64,Non-binary,5,1,Product Quality,2024-01-18,1,India,Website
+R1481,65+,Prefer not to say,5,7,Customer Service,2023-07-26,7,Canada,Email
+R1482,45-54,Male,4,0,Mobile App,2023-09-20,0,France,Social Media
+R1483,18-24,Female,5,7,User Experience,2024-05-28,7,Brazil,Website
+R1484,65+,Prefer not to say,3,7,Website,2023-10-21,7,Japan,Phone
+R1485,65+,Non-binary,2,1,Product Quality,2024-05-12,1,Germany,Email
+R1486,55-64,Female,5,2,Customer Service,2024-05-30,2,Canada,In-App
+R1487,65+,Male,3,7,Mobile App,2024-03-26,7,USA,Email
+R1488,45-54,Male,1,6,Pricing,2023-11-28,6,India,Phone
+R1489,65+,Non-binary,4,8,User Experience,2023-09-16,8,Brazil,Social Media
+R1490,18-24,Prefer not to say,1,1,Mobile App,2024-05-06,1,Germany,Website
+R1491,18-24,Non-binary,2,9,Pricing,2024-02-29,9,USA,Website
+R1492,65+,Prefer not to say,2,2,Website,2024-02-08,2,India,In-App
+R1493,25-34,Non-binary,3,6,Website,2023-07-01,6,Mexico,Phone
+R1494,45-54,Male,2,3,Delivery,2023-08-15,3,UK,Website
+R1495,65+,Non-binary,2,10,Pricing,2023-11-07,10,Brazil,In-App
+R1496,35-44,Prefer not to say,4,0,Mobile App,2023-07-18,0,USA,Social Media
+R1497,18-24,Prefer not to say,2,3,User Experience,2023-07-26,3,Canada,Phone
+R1498,55-64,Prefer not to say,5,2,Pricing,2023-08-10,2,USA,Website
+R1499,25-34,Female,2,10,Mobile App,2023-12-01,10,France,Social Media
+R1500,25-34,Non-binary,5,0,User Experience,2023-12-07,0,India,Social Media

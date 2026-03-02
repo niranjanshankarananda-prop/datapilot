@@ -39,7 +39,17 @@ def format_result(result: Any) -> dict:
         }
 
     if isinstance(result, (list, tuple)):
-        return {"type": ResultType.TABLE, "value": list(result)}
+        result_list = list(result)
+        # If list of dicts, extract column names for proper table rendering
+        if result_list and isinstance(result_list[0], dict):
+            columns = list(result_list[0].keys())
+            return {
+                "type": ResultType.TABLE,
+                "value": result_list,
+                "columns": columns,
+                "shape": [len(result_list), len(columns)],
+            }
+        return {"type": ResultType.TABLE, "value": result_list}
 
     if isinstance(result, dict):
         return {"type": ResultType.TABLE, "value": result}

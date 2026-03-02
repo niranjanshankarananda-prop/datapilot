@@ -1,4 +1,5 @@
 from typing import Any, Optional
+import os
 import uuid
 from datetime import datetime, timedelta
 
@@ -22,9 +23,52 @@ from app.sandbox.validators import SecurityViolationError
 from starlette.responses import StreamingResponse
 import io
 import csv
+import re
+from difflib import get_close_matches
 
 
 router = APIRouter(tags=["pages"])
+
+
+def fix_column_names_in_code(code: str, actual_columns: list[str]) -> str:
+    """Fix mismatched column names in generated code using fuzzy matching.
+
+    Finds quoted strings in df['...'] or df["..."] patterns and replaces
+    them with the closest matching actual column name if different.
+    """
+    col_set = set(actual_columns)
+    col_lower_map = {c.lower(): c for c in actual_columns}
+
+    def replace_col(match):
+        quote = match.group(1)
+        col_name = match.group(2)
+
+        # Exact match — no change needed
+        if col_name in col_set:
+            return f"[{quote}{col_name}{quote}]"
+
+        # Case-insensitive match
+        if col_name.lower() in col_lower_map:
+            return f"[{quote}{col_lower_map[col_name.lower()]}{quote}]"
+
+        # Fuzzy match (typo correction)
+        close = get_close_matches(col_name, actual_columns, n=1, cutoff=0.6)
+        if close:
+            return f"[{quote}{close[0]}{quote}]"
+
+        # Also try lowercase fuzzy
+        close_lower = get_close_matches(
+            col_name.lower(), [c.lower() for c in actual_columns], n=1, cutoff=0.6
+        )
+        if close_lower:
+            real_col = col_lower_map[close_lower[0]]
+            return f"[{quote}{real_col}{quote}]"
+
+        return match.group(0)
+
+    # Match df['COLUMN'] or df["COLUMN"] patterns
+    fixed = re.sub(r"\[(['\"])([^'\"]+)\1\]", replace_col, code)
+    return fixed
 
 _data_storage: dict[str, pd.DataFrame] = {}
 
@@ -88,6 +132,73 @@ async def upload_dataset(
     return RedirectResponse(url=f"/workspace/{dataset.id}", status_code=303)
 
 
+SAMPLE_DATASETS = {
+    "sales_data": {"filename": "sales_data.csv", "desc": "5K rows — product sales, revenue, regions"},
+    "customer_data": {"filename": "customer_data.csv", "desc": "2K rows — segments, purchases, churn risk"},
+    "financial_data": {"filename": "financial_data.csv", "desc": "3K rows — transactions, payment methods"},
+    "web_analytics": {"filename": "web_analytics.csv", "desc": "2K rows — page views, bounce rates, sources"},
+    "survey_results": {"filename": "survey_results.csv", "desc": "1.5K rows — satisfaction, NPS, demographics"},
+}
+
+SAMPLE_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "tests", "fixtures", "sample_csvs")
+
+
+@router.post("/sample/{name}", response_class=HTMLResponse)
+async def load_sample(name: str, db: Session = Depends(get_db)):
+    if name not in SAMPLE_DATASETS:
+        raise HTTPException(status_code=404, detail="Sample dataset not found")
+
+    info = SAMPLE_DATASETS[name]
+    filepath = os.path.join(SAMPLE_DIR, info["filename"])
+    if not os.path.exists(filepath):
+        raise HTTPException(status_code=404, detail="Sample file not found")
+
+    df = pd.read_csv(filepath)
+
+    storage_key = str(uuid.uuid4())
+    _data_storage[storage_key] = df
+
+    columns = schema_detector.detect_schema(df)
+    profile = data_profiler.generate_profile(df)
+
+    dataset = Dataset(
+        filename=info["filename"],
+        file_type="csv",
+        row_count=len(df),
+        column_count=len(df.columns),
+        columns=columns,
+        data_profile=profile,
+        storage_key=storage_key,
+        expires_at=datetime.utcnow() + timedelta(hours=24),
+    )
+
+    db.add(dataset)
+    db.commit()
+    db.refresh(dataset)
+
+    return RedirectResponse(url=f"/workspace/{dataset.id}", status_code=303)
+
+
+@router.get("/sample/{name}/download")
+async def download_sample(name: str):
+    if name not in SAMPLE_DATASETS:
+        raise HTTPException(status_code=404, detail="Sample dataset not found")
+
+    info = SAMPLE_DATASETS[name]
+    filepath = os.path.join(SAMPLE_DIR, info["filename"])
+    if not os.path.exists(filepath):
+        raise HTTPException(status_code=404, detail="Sample file not found")
+
+    with open(filepath, "r") as f:
+        content = f.read()
+
+    return StreamingResponse(
+        iter([content]),
+        media_type="text/csv",
+        headers={"Content-Disposition": f"attachment; filename={info['filename']}"},
+    )
+
+
 @router.get("/workspace/{dataset_id}", response_class=HTMLResponse)
 async def workspace(request: Request, dataset_id: int, db: Session = Depends(get_db)):
     dataset = get_dataset_or_404(dataset_id, db)
@@ -141,14 +252,27 @@ async def submit_query(
 
     storage_key = str(dataset.storage_key)
     if storage_key not in _data_storage:
-        raise HTTPException(status_code=404, detail="Dataset data not found in memory")
+        # Data lost due to server restart — return a friendly error
+        query = Query(
+            dataset_id=str(dataset_id),
+            question=question,
+            status="error",
+            error="Server was restarted and your data is no longer in memory. Please go back and re-upload your file.",
+        )
+        db.add(query)
+        db.commit()
+        db.refresh(query)
+        return templates.TemplateResponse(
+            "components/query-result.html",
+            {"request": request, "query": query},
+        )
 
     df = _data_storage[storage_key]
 
     schema = []
     for col in df.columns:
         dtype = str(df[col].dtype)
-        sample_values = df[col].dropna().head(3).tolist()
+        sample_values = df[col].dropna().unique()[:5].tolist()
         sample = ", ".join(str(v) for v in sample_values)
         schema.append({"name": col, "dtype": dtype, "sample": sample})
 
@@ -161,14 +285,61 @@ async def submit_query(
     db.commit()
     db.refresh(query)
 
+    column_names = [col["name"] for col in schema]
+
     try:
         generated_code = nl_to_pandas(question, schema, api_key=api_key or None)
+        # Auto-fix column name typos and case mismatches
+        generated_code = fix_column_names_in_code(generated_code, column_names)
         query.generated_code = generated_code
 
-        result = execute_pandas_code(generated_code, df)
+        try:
+            result = execute_pandas_code(generated_code, df)
+        except ExecutionError as e:
+            err_str = str(e)
+            # Detect column mismatch errors and provide helpful feedback
+            if "KeyError" in err_str or "not in index" in err_str:
+                query.error = (
+                    f"Could not find a matching column in your data. "
+                    f"Available columns: {', '.join(column_names)}. "
+                    f"Please rephrase your query using these column names."
+                )
+                query.status = "error"
+            else:
+                query.error = f"Execution error: {err_str}"
+                query.status = "error"
+            db.commit()
+            db.refresh(query)
+            return templates.TemplateResponse(
+                "components/query-result.html",
+                {"request": request, "query": query},
+            )
+
         formatted_result = format_result(result)
 
-        query.result = formatted_result
+        # Check for empty results and give helpful feedback
+        is_empty = False
+        if formatted_result.get("type") == "table":
+            val = formatted_result.get("value")
+            if isinstance(val, (list, tuple)) and len(val) == 0:
+                is_empty = True
+            elif isinstance(val, dict) and len(val) == 0:
+                is_empty = True
+        elif formatted_result.get("type") == "text" and formatted_result.get("value") == "No result returned":
+            is_empty = True
+
+        if is_empty:
+            query.result = {
+                "type": "text",
+                "value": (
+                    "No matching data found for your query. "
+                    f"Available columns: {', '.join(column_names)}. "
+                    "Try rephrasing with different filters or column names."
+                ),
+            }
+        else:
+            query.result = formatted_result
+
         query.status = "success"
 
     except SecurityViolationError as e:
@@ -180,7 +351,15 @@ async def submit_query(
         query.status = "error"
 
     except Exception as e:
-        query.error = str(e)
+        err_str = str(e)
+        if "KeyError" in err_str or "not in index" in err_str:
+            query.error = (
+                f"Could not find a matching column in your data. "
+                f"Available columns: {', '.join(column_names)}. "
+                f"Please rephrase your query using these column names."
+            )
+        else:
+            query.error = err_str
         query.status = "error"
 
     db.commit()

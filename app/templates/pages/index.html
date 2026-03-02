@@ -19,7 +19,10 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z" />
                     </svg>
                 </div>
-                <span class="text-xs font-medium" id="api-key-status-home">No key configured</span>
+                <div class="flex items-center gap-1.5">
+                    <span id="api-key-dot" class="w-2 h-2 rounded-full bg-red-400"></span>
+                    <span class="text-xs font-medium" id="api-key-status-home">No key configured</span>
+                </div>
             </div>
             <button type="button" onclick="document.getElementById('api-settings-panel').classList.toggle('hidden')" class="text-xs text-gray-400 hover:text-white bg-surface-300/60 hover:bg-surface-300 border border-white/[0.06] px-3 py-1.5 rounded-lg transition-all">
                 Settings
@@ -149,8 +152,63 @@
             </form>
         </div>
 
-        <!-- How It Works -->
+        <!-- Sample Datasets -->
         <div class="glass-card rounded-2xl p-6 animate-slide-up" style="animation-delay: 0.1s;">
+            <div class="text-center mb-4">
+                <h3 class="text-sm font-semibold text-white mb-1">Try With Sample Data</h3>
+                <p class="text-[11px] text-gray-500">Tested and verified on these datasets. Download, explore, and upload to try it yourself.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <div class="flex items-center justify-between bg-surface-300/40 border border-white/[0.04] rounded-xl px-3.5 py-2.5 hover:border-indigo-500/20 hover:bg-indigo-500/5 transition-all group">
+                    <div class="min-w-0">
+                        <p class="text-xs font-medium text-gray-300 group-hover:text-white transition-colors">sales_data.csv <span class="text-[9px] text-indigo-500 font-normal">5K rows</span></p>
+                        <p class="text-[10px] text-gray-600">Product sales, revenue, units, regions</p>
+                    </div>
+                    <a href="/sample/sales_data/download" class="flex-shrink-0 ml-2 p-1.5 rounded-lg text-gray-600 hover:text-indigo-400 hover:bg-indigo-500/10 transition-all" title="Download">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
+                    </a>
+                </div>
+                <div class="flex items-center justify-between bg-surface-300/40 border border-white/[0.04] rounded-xl px-3.5 py-2.5 hover:border-purple-500/20 hover:bg-purple-500/5 transition-all group">
+                    <div class="min-w-0">
+                        <p class="text-xs font-medium text-gray-300 group-hover:text-white transition-colors">customer_data.csv <span class="text-[9px] text-purple-500 font-normal">2K rows</span></p>
+                        <p class="text-[10px] text-gray-600">Segments, purchases, churn risk, lifetime value</p>
+                    </div>
+                    <a href="/sample/customer_data/download" class="flex-shrink-0 ml-2 p-1.5 rounded-lg text-gray-600 hover:text-purple-400 hover:bg-purple-500/10 transition-all" title="Download">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
+                    </a>
+                </div>
+                <div class="flex items-center justify-between bg-surface-300/40 border border-white/[0.04] rounded-xl px-3.5 py-2.5 hover:border-emerald-500/20 hover:bg-emerald-500/5 transition-all group">
+                    <div class="min-w-0">
+                        <p class="text-xs font-medium text-gray-300 group-hover:text-white transition-colors">financial_data.csv <span class="text-[9px] text-emerald-500 font-normal">3K rows</span></p>
+                        <p class="text-[10px] text-gray-600">Transactions, payment methods, merchants</p>
+                    </div>
+                    <a href="/sample/financial_data/download" class="flex-shrink-0 ml-2 p-1.5 rounded-lg text-gray-600 hover:text-emerald-400 hover:bg-emerald-500/10 transition-all" title="Download">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
+                    </a>
+                </div>
+                <div class="flex items-center justify-between bg-surface-300/40 border border-white/[0.04] rounded-xl px-3.5 py-2.5 hover:border-cyan-500/20 hover:bg-cyan-500/5 transition-all group">
+                    <div class="min-w-0">
+                        <p class="text-xs font-medium text-gray-300 group-hover:text-white transition-colors">web_analytics.csv <span class="text-[9px] text-cyan-500 font-normal">2K rows</span></p>
+                        <p class="text-[10px] text-gray-600">Page views, bounce rates, traffic sources</p>
+                    </div>
+                    <a href="/sample/web_analytics/download" class="flex-shrink-0 ml-2 p-1.5 rounded-lg text-gray-600 hover:text-cyan-400 hover:bg-cyan-500/10 transition-all" title="Download">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
+                    </a>
+                </div>
+                <div class="sm:col-span-2 flex items-center justify-between bg-surface-300/40 border border-white/[0.04] rounded-xl px-3.5 py-2.5 hover:border-amber-500/20 hover:bg-amber-500/5 transition-all group">
+                    <div class="min-w-0">
+                        <p class="text-xs font-medium text-gray-300 group-hover:text-white transition-colors">survey_results.csv <span class="text-[9px] text-amber-500 font-normal">1.5K rows</span></p>
+                        <p class="text-[10px] text-gray-600">Satisfaction ratings, NPS scores, demographics</p>
+                    </div>
+                    <a href="/sample/survey_results/download" class="flex-shrink-0 ml-2 p-1.5 rounded-lg text-gray-600 hover:text-amber-400 hover:bg-amber-500/10 transition-all" title="Download">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- How It Works -->
+        <div class="glass-card rounded-2xl p-6 animate-slide-up" style="animation-delay: 0.15s;">
             <h3 class="text-sm font-semibold text-white mb-4 text-center">How It Works</h3>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div class="text-center space-y-2">
@@ -171,8 +229,40 @@
             </div>
         </div>
 
+        <!-- Limitations -->
+        <div class="glass-card rounded-2xl p-6 animate-slide-up border border-amber-500/10" style="animation-delay: 0.2s;">
+            <div class="flex items-center gap-2 mb-3">
+                <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126z" />
+                </svg>
+                <h3 class="text-sm font-semibold text-white">Good to Know</h3>
+            </div>
+            <ul class="space-y-2 text-xs text-gray-400">
+                <li class="flex items-start gap-2">
+                    <span class="text-amber-500 mt-0.5 flex-shrink-0">*</span>
+                    <span><strong class="text-gray-300">Valid API key required</strong> — You need a free Groq, Together AI, or OpenRouter API key configured above before querying. Without it, queries will fail.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-amber-500 mt-0.5 flex-shrink-0">*</span>
+                    <span><strong class="text-gray-300">Use column names in queries</strong> — For best results, reference actual column names from your data (shown as clickable pills in workspace).</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-amber-500 mt-0.5 flex-shrink-0">*</span>
+                    <span><strong class="text-gray-300">Simple queries work best</strong> — Filtering, top-N, averages, groupby, and counts are well-supported. Complex multi-step analysis may need rephrasing.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-amber-500 mt-0.5 flex-shrink-0">*</span>
+                    <span><strong class="text-gray-300">In-memory storage</strong> — Uploaded data is stored in server memory. If the server restarts, you'll need to re-upload your file.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-amber-500 mt-0.5 flex-shrink-0">*</span>
+                    <span><strong class="text-gray-300">Works with any CSV/Excel</strong> — The app adapts to any dataset structure. Column names and types are auto-detected.</span>
+                </li>
+            </ul>
+        </div>
+
         <!-- Feedback Section -->
-        <div class="glass-card rounded-2xl p-6 animate-slide-up" style="animation-delay: 0.2s;">
+        <div class="glass-card rounded-2xl p-6 animate-slide-up" style="animation-delay: 0.25s;">
             <h3 class="text-sm font-semibold text-white mb-3 text-center">Share Your Experience</h3>
             <form id="feedback-form" onsubmit="submitFeedback(event)">
                 <div class="flex gap-3 justify-center mb-3" id="rating-stars">
@@ -277,15 +367,22 @@
     }
 
     function updateApiKeyStatus() {
-        const key = localStorage.getItem('datapilot_api_key') || '';
-        const status = document.getElementById('api-key-status-home');
+        var key = localStorage.getItem('datapilot_api_key') || '';
+        var status = document.getElementById('api-key-status-home');
+        var dot = document.getElementById('api-key-dot');
+        var topBar = status.closest('.glass-card');
         if (key) {
-            status.textContent = getProviderName(key) + ' key configured';
-            status.className = 'text-xs text-emerald-400';
+            var provider = getProviderName(key);
+            if (dot) { dot.className = 'w-2 h-2 rounded-full bg-emerald-400 animate-pulse'; }
+            status.textContent = provider + ' key active';
+            status.className = 'text-xs font-medium text-emerald-400';
+            if (topBar) topBar.style.borderColor = 'rgba(16,185,129,0.2)';
             document.getElementById('api-key-input-home').placeholder = '••••••' + key.slice(-6) + ' (saved)';
         } else {
-            status.textContent = 'No key configured — get a free key below';
-            status.className = 'text-xs text-amber-400';
+            if (dot) { dot.className = 'w-2 h-2 rounded-full bg-red-400'; }
+            status.textContent = 'No API key — required to query data';
+            status.className = 'text-xs font-medium text-red-400';
+            if (topBar) topBar.style.borderColor = 'rgba(239,68,68,0.2)';
         }
     }
 

@@ -8,14 +8,53 @@ SYSTEM_PROMPT = """You are a data analysis assistant that converts natural langu
 You must generate ONLY Python Pandas code that operates on a DataFrame variable called 'df'.
 The dataset is already loaded into a pandas DataFrame named 'df'.
 
-IMPORTANT RULES:
+CRITICAL RULES:
 1. Only use pandas, numpy, and datetime libraries
-2. Do NOT import any libraries - assume pandas is available as 'pd' and numpy as 'np'
+2. Do NOT import any libraries - pd, np, and datetime are already available
 3. The input DataFrame is already in variable 'df'
 4. Always assign your final result to a variable called 'result'
-5. For returning dataframes, convert them to dict format using: result = df.to_dict(orient='records')
-6. For returning scalar values (like counts, sums, means), assign directly: result = <scalar_value>
-7. For returning text/strings: result = <string>
+5. For DataFrame results: assign the DataFrame directly, do NOT call .to_dict() or .tolist()
+   Example: result = df[df['AMOUNT'] > 100]
+6. For scalar values (counts, sums, means): result = df['AMOUNT'].sum()
+7. For text/strings: result = "some answer"
+
+COLUMN MATCHING:
+- Use the EXACT column names from the schema provided (they are case-sensitive)
+- Match user's natural language to the closest column name
+  e.g., "bounce rate" -> BOUNCE_RATE, "page views" -> PAGE_VIEWS, "amount" -> AMOUNT
+- When user asks to "show" or "filter" data, return ALL relevant columns, not just one
+
+RESULT GUIDELINES:
+- When filtering rows, return the full filtered DataFrame with all columns
+- When asked for "top N", use .head(N) or .nlargest(N, column)
+- When asked about specific columns, still include other useful context columns
+- Always use parentheses around conditions in boolean filtering:
+  df[(df['A'] > 10) & (df['B'] < 20)]  -- correct
+  df[df['A'] > 10 & df['B'] < 20]  -- WRONG, operator precedence issue
+- For groupby operations, use .reset_index() to return a clean DataFrame
+
+EXAMPLES:
+
+Schema: PAGE_PATH(str), SESSIONS(int64), PAGE_VIEWS(int64), BOUNCE_RATE(float64)
+Question: "show me pages with bounce rate more than 40"
+Code:
+result = df[df['BOUNCE_RATE'] > 40]
+
+Question: "show me pages with bounce rate > 40 and page views > 2000"
+Code:
+result = df[(df['BOUNCE_RATE'] > 40) & (df['PAGE_VIEWS'] > 2000)]
+
+Question: "top 5 pages by sessions"
+Code:
+result = df.nlargest(5, 'SESSIONS')
+
+Question: "average bounce rate by page"
+Code:
+result = df.groupby('PAGE_PATH')['BOUNCE_RATE'].mean().reset_index()
+
+Question: "how many rows have page views greater than 1000"
+Code:
+result = len(df[df['PAGE_VIEWS'] > 1000])
 
 Return ONLY the Python code, no explanations or markdown.
 """
@@ -58,7 +97,7 @@ def generate_schema_info(columns: list[dict]) -> str:
         name = col.get("name", "")
         dtype = col.get("dtype", "")
         sample = col.get("sample", "")
-        schema_parts.append(f"- {name}: {dtype} (sample: {sample})")
+        schema_parts.append(f"- {name} ({dtype}): example values = [{sample}]")
     return "\n".join(schema_parts)
 
 
@@ -74,12 +113,15 @@ def nl_to_pandas(question: str, dataset_schema: list[dict], api_key: str | None 
 
     schema_info = generate_schema_info(dataset_schema)
 
-    user_prompt = f"""Dataset schema:
+    column_names = [col.get("name", "") for col in dataset_schema]
+    user_prompt = f"""Dataset columns: {', '.join(column_names)}
+
+Full schema:
 {schema_info}
 
 Question: {question}
 
-Generate the Pandas code to answer this question:"""
+Generate Pandas code (assign result to 'result' variable):"""
 
     with httpx.Client(timeout=30.0) as client:
         response = client.post(

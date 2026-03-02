@@ -14,6 +14,8 @@ class ExecutionError(Exception):
 
 
 def _write_wrapper(obj):
+    if isinstance(obj, (pd.DataFrame, pd.Series, dict, list)):
+        return obj
     return full_write_guard(obj)
 
 

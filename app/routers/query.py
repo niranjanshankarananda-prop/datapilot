@@ -38,7 +38,7 @@ def get_dataset_schema(df: pd.DataFrame) -> list[dict[str, Any]]:
     schema = []
     for col in df.columns:
         dtype = str(df[col].dtype)
-        sample_values = df[col].dropna().head(3).tolist()
+        sample_values = df[col].dropna().unique()[:5].tolist()
         sample = ", ".join(str(v) for v in sample_values)
         schema.append({"name": col, "dtype": dtype, "sample": sample})
     return schema

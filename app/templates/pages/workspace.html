@@ -213,6 +213,43 @@
                         </div>
                     </div>
                     <div class="p-4">
+                        <!-- Available data points -->
+                        <div class="mb-3">
+                            <p class="text-[10px] uppercase tracking-wider text-gray-600 font-semibold mb-1.5">Available data points <span class="text-gray-700">(click to insert)</span></p>
+                            <div class="flex flex-wrap gap-1.5" id="column-pills">
+                                {% for col in preview_columns %}
+                                <button type="button" onclick="insertColumnName('{{ col.name }}')"
+                                    class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-surface-300/60 border border-white/[0.06] hover:border-indigo-500/30 hover:bg-indigo-500/10 text-xs text-gray-400 hover:text-indigo-300 font-mono transition-all duration-150 cursor-pointer">
+                                    {{ col.name }}
+                                    <span class="text-[9px] text-gray-600 dtype-{{ col.dtype|lower|replace(' ', '') }} px-1 rounded">{{ col.dtype }}</span>
+                                </button>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <!-- Sample queries -->
+                        <div class="mb-3">
+                            <p class="text-[10px] uppercase tracking-wider text-gray-600 font-semibold mb-1.5">Try asking</p>
+                            <div class="flex flex-wrap gap-1.5" id="sample-queries">
+                                <button type="button" onclick="insertSampleQuery('Show me top 5 rows by {{ preview_columns[0].name }}')"
+                                    class="px-2.5 py-1 rounded-lg bg-surface-300/40 border border-white/[0.04] hover:border-purple-500/30 hover:bg-purple-500/10 text-xs text-gray-500 hover:text-purple-300 transition-all duration-150 cursor-pointer">
+                                    Top 5 rows by {{ preview_columns[0].name }}
+                                </button>
+                                {% if preview_columns|length > 1 %}
+                                <button type="button" onclick="insertSampleQuery('What is the average {{ preview_columns[1].name }}?')"
+                                    class="px-2.5 py-1 rounded-lg bg-surface-300/40 border border-white/[0.04] hover:border-purple-500/30 hover:bg-purple-500/10 text-xs text-gray-500 hover:text-purple-300 transition-all duration-150 cursor-pointer">
+                                    Average {{ preview_columns[1].name }}
+                                </button>
+                                {% endif %}
+                                {% if preview_columns|length > 2 %}
+                                <button type="button" onclick="insertSampleQuery('Show rows where {{ preview_columns[2].name }} is greater than 100')"
+                                    class="px-2.5 py-1 rounded-lg bg-surface-300/40 border border-white/[0.04] hover:border-purple-500/30 hover:bg-purple-500/10 text-xs text-gray-500 hover:text-purple-300 transition-all duration-150 cursor-pointer">
+                                    Filter by {{ preview_columns[2].name }} > 100
+                                </button>
+                                {% endif %}
+                            </div>
+                        </div>
+
                         <form
                             hx-post="/workspace/{{ dataset.id }}/query"
                             hx-target="#query-results"
@@ -224,7 +261,8 @@
                                 <input
                                     type="text"
                                     name="question"
-                                    placeholder="e.g., Show me the top 10 values in column X"
+                                    id="query-input"
+                                    placeholder="e.g., Show me the top 10 rows by {{ preview_columns[0].name }}"
                                     class="flex-1 bg-transparent px-4 py-3.5 text-sm text-gray-200 placeholder-gray-600 focus:outline-none"
                                     required
                                     autocomplete="off"
@@ -373,6 +411,28 @@
         const hidden = document.getElementById('api-key-hidden');
         if (hidden) hidden.value = key;
     })();
+
+    // Insert column name into query input
+    function insertColumnName(colName) {
+        var input = document.getElementById('query-input');
+        if (!input) return;
+        var pos = input.selectionStart || input.value.length;
+        var before = input.value.substring(0, pos);
+        var after = input.value.substring(pos);
+        var space = (before.length > 0 && !before.endsWith(' ')) ? ' ' : '';
+        input.value = before + space + colName + ' ' + after;
+        input.focus();
+        var newPos = pos + space.length + colName.length + 1;
+        input.setSelectionRange(newPos, newPos);
+    }
+
+    // Insert sample query into input
+    function insertSampleQuery(query) {
+        var input = document.getElementById('query-input');
+        if (!input) return;
+        input.value = query;
+        input.focus();
+    }
 
     // CSV export from table
     function exportResultCSV(btn) {
