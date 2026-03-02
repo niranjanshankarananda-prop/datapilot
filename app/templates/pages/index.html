@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block title %}DataPilot - Upload Data{% endblock %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-2xl w-full space-y-8">
+        <div class="text-center">
+            <h1 class="text-4xl font-extrabold text-gray-900">DataPilot</h1>
+            <p class="mt-4 text-xl text-gray-600">Upload your data and get AI-powered insights</p>
+        </div>
+
+        <div class="mt-8 bg-white py-8 px-4 shadow-xl rounded-lg sm:px-10">
+            <form 
+                action="/upload" 
+                method="post" 
+                enctype="multipart/form-data" 
+                class="space-y-6"
+                hx-post="/upload" 
+                hx-target="body"
+                hx-swap="outerHTML"
+            >
+                <div>
+                    <label for="file-upload" class="block text-sm font-medium text-gray-700">
+                        Upload File
+                    </label>
+                    <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md hover:border-indigo-500 transition-colors cursor-pointer" id="drop-zone">
+                        <div class="space-y-1 text-center">
+                            <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <div class="flex text-sm text-gray-600 justify-center">
+                                <label for="file-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none">
+                                    <span>Upload a file</span>
+                                    <input id="file-upload" name="file" type="file" class="sr-only" accept=".csv,.tsv,.xlsx,.xls">
+                                </label>
+                                <p class="pl-1">or drag and drop</p>
+                            </div>
+                            <p class="text-xs text-gray-500">CSV, TSV, Excel up to 100MB</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="file-info" class="hidden">
+                    <div class="flex items-center justify-between bg-indigo-50 rounded-md p-3">
+                        <span id="filename" class="text-sm font-medium text-indigo-700"></span>
+                        <button type="button" id="remove-file" class="text-indigo-500 hover:text-indigo-700">
+                            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="border-t border-gray-200 pt-6">
+                    <p class="text-sm text-gray-500 text-center mb-4">or paste tabular data</p>
+                    <textarea 
+                        name="pasted-data" 
+                        placeholder="Paste your data here (tab or comma separated)..." 
+                        class="w-full h-40 p-3 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 font-mono text-sm"
+                    ></textarea>
+                </div>
+
+                <div>
+                    <button 
+                        type="submit" 
+                        class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
+                    >
+                        Analyze Data
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="text-center text-sm text-gray-500">
+            <p>Supported formats: CSV, TSV, Excel (.xlsx, .xls)</p>
+        </div>
+    </div>
+</div>
+
+{% block scripts %}
+<script>
+    const fileInput = document.getElementById('file-upload');
+    const fileInfo = document.getElementById('file-info');
+    const filenameDisplay = document.getElementById('filename');
+    const removeFileBtn = document.getElementById('remove-file');
+    const dropZone = document.getElementById('drop-zone');
+
+    fileInput.addEventListener('change', function(e) {
+        if (this.files && this.files[0]) {
+            const file = this.files[0];
+            filenameDisplay.textContent = file.name + ' (' + formatBytes(file.size) + ')';
+            fileInfo.classList.remove('hidden');
+            dropZone.classList.add('hidden');
+        }
+    });
+
+    removeFileBtn.addEventListener('click', function() {
+        fileInput.value = '';
+        fileInfo.classList.add('hidden');
+        dropZone.classList.remove('hidden');
+    });
+
+    function formatBytes(bytes, decimals = 2) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const dm = decimals < 0 ? 0 : decimals;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    }
+
+    dropZone.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        dropZone.classList.add('border-indigo-500', 'bg-indigo-50');
+    });
+
+    dropZone.addEventListener('dragleave', function(e) {
+        e.preventDefault();
+        dropZone.classList.remove('border-indigo-500', 'bg-indigo-50');
+    });
+
+    dropZone.addEventListener('drop', function(e) {
+        e.preventDefault();
+        dropZone.classList.remove('border-indigo-500', 'bg-indigo-50');
+        
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            fileInput.files = files;
+            const event = new Event('change', { bubbles: true });
+            fileInput.dispatchEvent(event);
+        }
+    });
+</script>
+{% endblock %}
+{% endblock %}
