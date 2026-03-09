@@ -15,7 +15,7 @@
         background: rgba(255, 255, 255, 0.015);
     }
     .data-table-wrapper table tbody tr:hover {
-        background: rgba(99, 102, 241, 0.06);
+        background: rgba(59, 130, 246, 0.07);
     }
 
     /* Data type color badges */
@@ -27,8 +27,8 @@
 
     /* Chat query input focus ring */
     .query-input-wrapper:focus-within {
-        border-color: rgba(99, 102, 241, 0.5);
-        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        border-color: rgba(59, 130, 246, 0.5);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
     }
 
     /* Profile card progress bars */
@@ -68,8 +68,8 @@
         50% { opacity: 0.6; transform: scale(1.15) rotate(12deg); }
     }
     @keyframes wsGlow {
-        0%, 100% { box-shadow: 0 0 12px rgba(99, 102, 241, 0.15), 0 4px 15px rgba(99, 102, 241, 0.1); }
-        50% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.3), 0 4px 25px rgba(99, 102, 241, 0.15); }
+        0%, 100% { box-shadow: 0 0 12px rgba(245, 158, 11, 0.2), 0 4px 15px rgba(245, 158, 11, 0.1); }
+        50% { box-shadow: 0 0 22px rgba(245, 158, 11, 0.4), 0 4px 25px rgba(245, 158, 11, 0.2); }
     }
 
     .ws-slide-down { animation: wsSlideDown 0.5s ease-out both; }
@@ -102,10 +102,10 @@
         transition: all 0.3s ease;
     }
     .chart-container-wrapper:hover {
-        box-shadow: 0 0 30px rgba(99, 102, 241, 0.15);
-        border-color: rgba(99, 102, 241, 0.3);
+        box-shadow: 0 0 30px rgba(59, 130, 246, 0.15);
+        border-color: rgba(59, 130, 246, 0.3);
     }
-    
+
     /* Query result card enhanced glow */
     .glass-card:has(.chart-container) {
         position: relative;
@@ -115,7 +115,7 @@
         position: absolute;
         inset: -1px;
         border-radius: inherit;
-        background: linear-gradient(135deg, rgba(99,102,241,0.1), transparent, rgba(139,92,246,0.1));
+        background: linear-gradient(135deg, rgba(59,130,246,0.1), transparent, rgba(6,182,212,0.1));
         z-index: -1;
         opacity: 0;
         transition: opacity 0.3s ease;
@@ -167,13 +167,13 @@
             <div class="flex items-center justify-between h-16">
                 <!-- Left: Back + Branding -->
                 <div class="flex items-center space-x-4">
-                    <a href="/" class="group flex items-center justify-center w-9 h-9 rounded-lg bg-surface-300/50 hover:bg-indigo-500/10 border border-white/5 hover:border-indigo-500/30 transition-all duration-200">
+                    <a href="/" class="group flex items-center justify-center w-9 h-9 rounded-lg bg-surface-300/50 hover:bg-blue-500/10 border border-white/5 hover:border-blue-500/30 transition-all duration-200">
                         <svg class="h-4 w-4 text-gray-500 group-hover:text-indigo-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                         </svg>
                     </a>
                     <div class="hidden sm:flex items-center space-x-3">
-                        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center shadow-md shadow-indigo-500/20">
+                        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-blue-400 flex items-center justify-center shadow-md shadow-blue-500/25">
                             <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5" />
                             </svg>
@@ -219,8 +219,8 @@
                 <div class="glass-card gradient-border rounded-2xl overflow-hidden animate-slide-up">
                     <div class="px-5 py-4 border-b border-white/5 flex items-center justify-between">
                         <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 rounded-lg bg-indigo-500/10 flex items-center justify-center">
-                                <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                            <div class="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center">
+                                <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 01-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-7.5A1.125 1.125 0 0112 18.375" />
                                 </svg>
                             </div>
@@ -263,8 +263,8 @@
                 <!-- Data Profile Card -->
                 <div class="glass-card gradient-border rounded-2xl overflow-hidden animate-slide-up" style="animation-delay: 0.1s;">
                     <div class="px-5 py-4 border-b border-white/5 flex items-center space-x-3">
-                        <div class="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center">
-                            <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <div class="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center">
+                            <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z" />
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z" />
                             </svg>
@@ -276,7 +276,7 @@
                     </div>
                     <div class="p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 stagger-up">
                         {% for col_profile in column_profile %}
-                        <div class="group bg-surface-300/40 hover:bg-surface-300/70 border border-white/[0.04] hover:border-indigo-500/20 rounded-xl p-3.5 transition-all duration-200 hover-lift">
+                        <div class="group bg-surface-300/40 hover:bg-surface-300/70 border border-white/[0.04] hover:border-blue-500/20 rounded-xl p-3.5 transition-all duration-200 hover-lift">
                             <!-- Column name + type badge -->
                             <div class="flex items-start justify-between mb-2">
                                 <h3 class="font-medium text-gray-200 text-sm truncate max-w-[140px]" title="{{ col_profile.name }}">{{ col_profile.name }}</h3>
@@ -338,7 +338,7 @@
                             <div class="flex flex-wrap gap-1.5 stagger-pop" id="column-pills">
                                 {% for col in preview_columns %}
                                 <button type="button" onclick="insertColumnName('{{ col.name }}')"
-                                    class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-surface-300/60 border border-white/[0.06] hover:border-indigo-500/30 hover:bg-indigo-500/10 text-xs text-gray-400 hover:text-indigo-300 font-mono transition-all duration-150 cursor-pointer">
+                                    class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-surface-300/60 border border-white/[0.06] hover:border-blue-500/30 hover:bg-blue-500/10 text-xs text-gray-400 hover:text-blue-300 font-mono transition-all duration-150 cursor-pointer">
                                     {{ col.name }}
                                     <span class="text-[9px] text-gray-600 dtype-{{ col.dtype|lower|replace(' ', '') }} px-1 rounded">{{ col.dtype }}</span>
                                 </button>
@@ -351,18 +351,18 @@
                             <p class="text-[10px] uppercase tracking-wider text-gray-600 font-semibold mb-1.5">Try asking</p>
                             <div class="flex flex-wrap gap-1.5 stagger-pop" id="sample-queries">
                                 <button type="button" onclick="insertSampleQuery('Show me top 5 rows by {{ preview_columns[0].name }}')"
-                                    class="px-2.5 py-1 rounded-lg bg-surface-300/40 border border-white/[0.04] hover:border-purple-500/30 hover:bg-purple-500/10 text-xs text-gray-500 hover:text-purple-300 transition-all duration-150 cursor-pointer">
+                                    class="px-2.5 py-1 rounded-lg bg-surface-300/40 border border-white/[0.04] hover:border-blue-500/30 hover:bg-blue-500/5 text-xs text-gray-500 hover:text-blue-300 transition-all duration-150 cursor-pointer">
                                     Top 5 rows by {{ preview_columns[0].name }}
                                 </button>
                                 {% if preview_columns|length > 1 %}
                                 <button type="button" onclick="insertSampleQuery('What is the average {{ preview_columns[1].name }}?')"
-                                    class="px-2.5 py-1 rounded-lg bg-surface-300/40 border border-white/[0.04] hover:border-purple-500/30 hover:bg-purple-500/10 text-xs text-gray-500 hover:text-purple-300 transition-all duration-150 cursor-pointer">
+                                    class="px-2.5 py-1 rounded-lg bg-surface-300/40 border border-white/[0.04] hover:border-blue-500/30 hover:bg-blue-500/5 text-xs text-gray-500 hover:text-blue-300 transition-all duration-150 cursor-pointer">
                                     Average {{ preview_columns[1].name }}
                                 </button>
                                 {% endif %}
                                 {% if preview_columns|length > 2 %}
                                 <button type="button" onclick="insertSampleQuery('Show rows where {{ preview_columns[2].name }} is greater than 100')"
-                                    class="px-2.5 py-1 rounded-lg bg-surface-300/40 border border-white/[0.04] hover:border-purple-500/30 hover:bg-purple-500/10 text-xs text-gray-500 hover:text-purple-300 transition-all duration-150 cursor-pointer">
+                                    class="px-2.5 py-1 rounded-lg bg-surface-300/40 border border-white/[0.04] hover:border-blue-500/30 hover:bg-blue-500/5 text-xs text-gray-500 hover:text-blue-300 transition-all duration-150 cursor-pointer">
                                     Filter by {{ preview_columns[2].name }} > 100
                                 </button>
                                 {% endif %}
@@ -388,7 +388,7 @@
                                 >
                                 <button
                                     type="submit"
-                                    class="flex-shrink-0 m-1.5 p-2.5 rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white shadow-lg shadow-indigo-500/20 transition-all duration-200 hover:scale-110 ws-glow"
+                                    class="flex-shrink-0 m-1.5 p-2.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-gray-900 shadow-lg shadow-amber-500/25 transition-all duration-200 hover:scale-105 ws-glow cursor-pointer"
                                 >
                                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
@@ -400,7 +400,7 @@
                                 <div class="glass-card rounded-2xl overflow-hidden animate-pulse">
                                     <!-- Question bubble skeleton -->
                                     <div class="px-5 py-3.5 border-b border-white/5 flex items-center gap-3">
-                                        <div class="w-7 h-7 rounded-full bg-indigo-500/20 shimmer"></div>
+                                        <div class="w-7 h-7 rounded-full bg-blue-500/20 shimmer"></div>
                                         <div class="flex-1 space-y-1.5">
                                             <div class="h-3 w-3/4 rounded bg-surface-300/80 shimmer"></div>
                                             <div class="h-2 w-1/4 rounded bg-surface-300/50 shimmer"></div>
@@ -409,11 +409,11 @@
                                     <!-- Result body skeleton -->
                                     <div class="p-5 space-y-3">
                                         <div class="flex items-center gap-2 mb-2">
-                                            <svg class="animate-spin h-4 w-4 text-indigo-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <svg class="animate-spin h-4 w-4 text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                             </svg>
-                                            <span class="text-xs text-indigo-400 font-medium">Analyzing your data...</span>
+                                            <span class="text-xs text-blue-400 font-medium">Analyzing your data...</span>
                                         </div>
                                         <!-- Table skeleton rows -->
                                         <div class="space-y-2">
@@ -467,7 +467,7 @@
                     const darkLayout = Object.assign({}, config.layout || {}, {
                         paper_bgcolor: 'rgba(0,0,0,0)',
                         plot_bgcolor: 'rgba(0,0,0,0)',
-                        font: { color: '#9ca3af', family: 'Inter, sans-serif', size: 12 },
+                        font: { color: '#94a3b8', family: 'Fira Sans, sans-serif', size: 12 },
                         xaxis: Object.assign({}, (config.layout || {}).xaxis || {}, {
                             gridcolor: 'rgba(255,255,255,0.04)',
                             linecolor: 'rgba(255,255,255,0.06)',
@@ -518,7 +518,7 @@
                 const darkLayout = Object.assign({}, config.layout || {}, {
                     paper_bgcolor: 'rgba(0,0,0,0)',
                     plot_bgcolor: 'rgba(0,0,0,0)',
-                    font: { color: '#9ca3af', family: 'Inter, sans-serif', size: 12 },
+                    font: { color: '#94a3b8', family: 'Fira Sans, sans-serif', size: 12 },
                     xaxis: Object.assign({}, (config.layout || {}).xaxis || {}, {
                         gridcolor: 'rgba(255,255,255,0.04)',
                         linecolor: 'rgba(255,255,255,0.06)',

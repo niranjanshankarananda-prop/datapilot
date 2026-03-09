@@ -33,7 +33,7 @@
         bottom: -8px;
         width: 1px;
         height: 16px;
-        background: linear-gradient(to bottom, rgba(99,102,241,0.3), transparent);
+        background: linear-gradient(to bottom, rgba(59,130,246,0.3), transparent);
     }
     .step-connector:last-child::after {
         display: none;
@@ -72,10 +72,10 @@
 <div class="min-h-screen flex flex-col py-8 px-4 sm:px-6 lg:px-8 relative">
 
     <!-- Decorative background orbs -->
-    <div class="absolute top-20 left-10 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="absolute bottom-20 right-10 w-80 h-80 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-600/5 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="absolute top-40 right-1/4 w-64 h-64 bg-emerald-600/5 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute top-20 left-10 w-96 h-96 bg-blue-700/8 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-20 right-10 w-80 h-80 bg-blue-600/6 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-700/4 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute top-40 right-1/4 w-64 h-64 bg-slate-500/5 rounded-full blur-3xl pointer-events-none"></div>
 
     <!-- Top Bar: API Key Settings -->
     <div class="relative z-10 max-w-5xl w-full mx-auto mb-6">
@@ -101,13 +101,13 @@
                 <div class="flex-1">
                     <label class="block text-xs text-gray-400 mb-1.5">API Key <span class="text-gray-600">(stored in your browser)</span></label>
                     <input type="password" id="api-key-input-home" placeholder="gsk_... or sk-or-... or Together key"
-                        class="w-full bg-surface-300/60 border border-white/[0.06] rounded-lg px-3 py-2 text-sm text-gray-200 placeholder-gray-600 focus:outline-none focus:ring-1 focus:ring-indigo-500/40 font-mono">
+                        class="w-full bg-surface-300/60 border border-white/[0.06] rounded-lg px-3 py-2 text-sm text-gray-200 placeholder-gray-600 focus:outline-none focus:ring-1 focus:ring-blue-500/40 font-mono">
                 </div>
                 <button type="button" onclick="saveApiKey()" class="text-xs bg-emerald-600/80 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg transition-colors font-medium whitespace-nowrap">Save Key</button>
             </div>
             <div class="flex gap-3 mt-2.5">
                 <span class="text-[10px] text-gray-600">Get a free key:</span>
-                <a href="https://console.groq.com/keys" target="_blank" class="text-[11px] text-indigo-400 hover:text-indigo-300 underline underline-offset-2">Groq</a>
+                <a href="https://console.groq.com/keys" target="_blank" class="text-[11px] text-blue-400 hover:text-blue-300 underline underline-offset-2">Groq</a>
                 <a href="https://api.together.xyz/settings/api-keys" target="_blank" class="text-[11px] text-emerald-400 hover:text-emerald-300 underline underline-offset-2">Together AI</a>
                 <a href="https://openrouter.ai/keys" target="_blank" class="text-[11px] text-purple-400 hover:text-purple-300 underline underline-offset-2">OpenRouter</a>
             </div>
@@ -129,8 +129,8 @@
         <p class="text-sm text-gray-400 font-light max-w-md mx-auto">Upload your data and get AI-powered insights in seconds</p>
         <div class="mt-1.5 h-7 flex items-center justify-center">
             <span class="text-xs text-gray-600 mr-1.5">Try:</span>
-            <span id="typing-demo" class="text-xs text-indigo-400 font-mono"></span>
-            <span class="animate-pulse text-indigo-400 text-xs">|</span>
+            <span id="typing-demo" class="text-xs text-blue-400 font-mono"></span>
+            <span class="animate-pulse text-blue-400 text-xs">|</span>
         </div>
     </div>
 
@@ -202,19 +202,19 @@
         <div class="glass-card gradient-border rounded-2xl p-5 shadow-2xl shadow-black/20 hover-lift animate-slide-up">
             <form action="/upload" method="post" enctype="multipart/form-data" class="space-y-4">
                 <!-- Drop zone -->
-                <div class="relative flex justify-center px-5 py-5 border-2 border-dashed border-gray-600/50 rounded-xl hover:border-indigo-500/60 hover:bg-indigo-500/5 transition-all duration-300 cursor-pointer group" id="drop-zone">
+                <div class="relative flex justify-center px-5 py-5 border-2 border-dashed border-gray-600/50 rounded-xl hover:border-blue-500/60 hover:bg-blue-500/5 transition-all duration-300 cursor-pointer group" id="drop-zone">
                     <input id="file-upload" name="file" type="file"
                         class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                         accept=".csv,.tsv,.xlsx,.xls">
                     <div class="flex items-center gap-4">
-                        <div class="flex-shrink-0 w-11 h-11 rounded-xl bg-surface-300/50 group-hover:bg-indigo-500/10 flex items-center justify-center transition-colors duration-300">
-                            <svg class="h-6 w-6 text-gray-500 group-hover:text-indigo-400 transition-colors duration-300" stroke="currentColor" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
+                        <div class="flex-shrink-0 w-11 h-11 rounded-xl bg-surface-300/50 group-hover:bg-blue-500/10 flex items-center justify-center transition-colors duration-300">
+                            <svg class="h-6 w-6 text-gray-500 group-hover:text-blue-400 transition-colors duration-300" stroke="currentColor" fill="none" viewBox="0 0 24 24" stroke-width="1.5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
                             </svg>
                         </div>
                         <div class="text-left">
                             <div class="flex text-sm text-gray-400">
-                                <span class="font-semibold text-indigo-400">Choose a file</span>
+                                <span class="font-semibold text-blue-400">Choose a file</span>
                                 <p class="pl-1.5">or drag and drop</p>
                             </div>
                             <p class="text-[11px] text-gray-500 mt-0.5">CSV, TSV, Excel up to 100MB</p>
@@ -234,14 +234,14 @@
 
                 <!-- File Info (shown after selection) -->
                 <div id="file-info" class="hidden animate-slide-down">
-                    <div class="flex items-center justify-between bg-indigo-500/10 border border-indigo-500/20 rounded-xl px-4 py-3">
+                    <div class="flex items-center justify-between bg-blue-500/10 border border-blue-500/20 rounded-xl px-4 py-3">
                         <div class="flex items-center space-x-3">
-                            <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-indigo-500/20 flex items-center justify-center">
-                                <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                            <div class="flex-shrink-0 w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center">
+                                <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
                                 </svg>
                             </div>
-                            <span id="filename" class="text-sm font-medium text-indigo-300"></span>
+                            <span id="filename" class="text-sm font-medium text-blue-300"></span>
                         </div>
                         <button type="button" id="remove-file" class="p-1 rounded-lg text-gray-500 hover:text-red-400 hover:bg-red-500/10 transition-all duration-200">
                             <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
@@ -270,8 +270,8 @@
             <!-- LEFT: How It Works -->
             <div class="glass-card rounded-2xl p-6 anim-slide-left" style="animation-delay: 0.2s;">
                 <div class="flex items-center gap-2.5 mb-5">
-                    <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 flex items-center justify-center">
-                        <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                    <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/15 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" />
                         </svg>
                     </div>
@@ -279,8 +279,8 @@
                 </div>
                 <div class="space-y-5">
                     <div class="flex items-start gap-4 step-connector anim-float-up" style="animation-delay: 0.3s;">
-                        <div class="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500/20 to-indigo-600/10 border border-indigo-500/20 flex items-center justify-center">
-                            <span class="text-indigo-400 font-bold text-sm">1</span>
+                        <div class="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/10 border border-blue-500/20 flex items-center justify-center">
+                            <span class="text-blue-400 font-bold text-sm">1</span>
                         </div>
                         <div>
                             <p class="text-sm text-gray-200 font-medium">Upload your file</p>
@@ -288,8 +288,8 @@
                         </div>
                     </div>
                     <div class="flex items-start gap-4 step-connector anim-float-up" style="animation-delay: 0.4s;">
-                        <div class="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-600/10 border border-purple-500/20 flex items-center justify-center">
-                            <span class="text-purple-400 font-bold text-sm">2</span>
+                        <div class="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-blue-400/20 to-blue-500/10 border border-blue-400/20 flex items-center justify-center">
+                            <span class="text-blue-300 font-bold text-sm">2</span>
                         </div>
                         <div>
                             <p class="text-sm text-gray-200 font-medium">Ask in plain English</p>
@@ -438,7 +438,7 @@
                     </div>
                     <textarea id="feedback-text" placeholder="What did you like? What can be improved?"
                         class="w-full h-20 p-3 bg-surface-300/40 border border-gray-700/40 rounded-xl text-gray-300 placeholder-gray-600 text-sm focus:ring-1 focus:ring-indigo-500/40 focus:border-indigo-500/50 transition-all duration-200 resize-none mb-3"></textarea>
-                    <button type="submit" class="w-full py-2 px-4 rounded-lg text-xs font-medium text-white bg-surface-300/60 hover:bg-indigo-600/60 border border-white/[0.06] hover:border-indigo-500/30 transition-all">
+                    <button type="submit" class="w-full py-2 px-4 rounded-lg text-xs font-medium text-gray-900 bg-amber-500/80 hover:bg-amber-400 border border-amber-500/30 hover:border-amber-400/50 transition-all cursor-pointer">
                         Submit Feedback
                     </button>
                 </form>
@@ -508,17 +508,17 @@
 
     dropZone.addEventListener('dragover', function(e) {
         e.preventDefault();
-        dropZone.classList.add('border-indigo-500/60', 'bg-indigo-500/10');
+        dropZone.classList.add('border-blue-500/60', 'bg-blue-500/10');
     });
 
     dropZone.addEventListener('dragleave', function(e) {
         e.preventDefault();
-        dropZone.classList.remove('border-indigo-500/60', 'bg-indigo-500/10');
+        dropZone.classList.remove('border-blue-500/60', 'bg-blue-500/10');
     });
 
     dropZone.addEventListener('drop', function(e) {
         e.preventDefault();
-        dropZone.classList.remove('border-indigo-500/60', 'bg-indigo-500/10');
+        dropZone.classList.remove('border-blue-500/60', 'bg-blue-500/10');
 
         const files = e.dataTransfer.files;
         if (files.length > 0) {
