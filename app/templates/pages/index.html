@@ -52,6 +52,11 @@
     /* Prevent horizontal overflow from decorative orbs */
     .min-h-screen { overflow-x: hidden; }
 
+    @keyframes waveBar {
+        0%, 100% { transform: scaleY(0.4); }
+        50% { transform: scaleY(1); }
+    }
+
     @media (max-width: 640px) {
         /* Hide large orbs on mobile to save GPU */
         .blur-3xl { display: none; }
@@ -129,6 +134,69 @@
         </div>
     </div>
 
+    <!-- ★ Voice Demo Banner ★ -->
+    <div class="max-w-2xl w-full mx-auto relative z-10 mb-5 anim-float-up" style="animation-delay:0.15s;" id="voice-demo-banner">
+        <div class="relative overflow-hidden rounded-2xl border border-amber-500/30 bg-gradient-to-r from-amber-950/40 via-orange-950/30 to-amber-950/40 backdrop-blur-md shadow-lg shadow-amber-900/20 px-5 py-4">
+            <!-- Shimmer sweep -->
+            <div class="absolute inset-0 pointer-events-none">
+                <div class="absolute inset-0 bg-gradient-to-r from-transparent via-amber-400/5 to-transparent animate-[shimmer_3s_ease-in-out_infinite]"></div>
+            </div>
+            <!-- Badge -->
+            <div class="flex items-center gap-3 mb-3">
+                <span class="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-widest text-amber-300 bg-amber-500/15 border border-amber-500/25 px-2.5 py-1 rounded-full">
+                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3zm5.25 11a.75.75 0 00-1.5 0 3.75 3.75 0 01-7.5 0 .75.75 0 00-1.5 0 5.25 5.25 0 004.5 5.2V19H9.75a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5H12.75v-1.8A5.25 5.25 0 0017.25 12z"/></svg>
+                    AI Voice Demo
+                </span>
+                <span class="text-[10px] text-amber-500/60 italic">Experimental — Voicebox + Qwen TTS</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <!-- Big play button -->
+                <button id="voice-play-btn" onclick="toggleVoiceDemo()" aria-label="Play DataPilot voice introduction"
+                    class="flex-shrink-0 w-14 h-14 rounded-2xl bg-amber-500 hover:bg-amber-400 shadow-lg shadow-amber-500/30 flex items-center justify-center transition-all duration-200 cursor-pointer group focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent">
+                    <!-- Play icon -->
+                    <svg id="voice-icon-play" class="w-6 h-6 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z"/>
+                    </svg>
+                    <!-- Pause icon (hidden by default) -->
+                    <svg id="voice-icon-pause" class="w-6 h-6 text-white hidden" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                    </svg>
+                </button>
+                <!-- Text + waveform -->
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-semibold text-amber-100">Hear DataPilot in Action</p>
+                    <p class="text-xs text-amber-400/70 mt-0.5">AI-narrated 50s tour · No SQL, just ask</p>
+                    <!-- Waveform bars animation -->
+                    <div id="voice-waveform" class="flex items-end gap-0.5 h-5 mt-2 opacity-0 transition-opacity duration-300">
+                        <div class="w-1 bg-amber-400/60 rounded-full animate-[waveBar_1.0s_ease-in-out_infinite]" style="height:40%;animation-delay:0.0s"></div>
+                        <div class="w-1 bg-amber-400/70 rounded-full animate-[waveBar_1.0s_ease-in-out_infinite]" style="height:70%;animation-delay:0.1s"></div>
+                        <div class="w-1 bg-amber-400/80 rounded-full animate-[waveBar_1.0s_ease-in-out_infinite]" style="height:55%;animation-delay:0.2s"></div>
+                        <div class="w-1 bg-amber-400/90 rounded-full animate-[waveBar_1.0s_ease-in-out_infinite]" style="height:90%;animation-delay:0.3s"></div>
+                        <div class="w-1 bg-amber-400   rounded-full animate-[waveBar_1.0s_ease-in-out_infinite]" style="height:60%;animation-delay:0.4s"></div>
+                        <div class="w-1 bg-amber-400/90 rounded-full animate-[waveBar_1.0s_ease-in-out_infinite]" style="height:80%;animation-delay:0.5s"></div>
+                        <div class="w-1 bg-amber-400/80 rounded-full animate-[waveBar_1.0s_ease-in-out_infinite]" style="height:45%;animation-delay:0.6s"></div>
+                        <div class="w-1 bg-amber-400/70 rounded-full animate-[waveBar_1.0s_ease-in-out_infinite]" style="height:65%;animation-delay:0.7s"></div>
+                        <div class="w-1 bg-amber-400/60 rounded-full animate-[waveBar_1.0s_ease-in-out_infinite]" style="height:50%;animation-delay:0.8s"></div>
+                        <div class="w-1 bg-amber-400/70 rounded-full animate-[waveBar_1.0s_ease-in-out_infinite]" style="height:75%;animation-delay:0.9s"></div>
+                        <div class="w-1 bg-amber-400/80 rounded-full animate-[waveBar_1.0s_ease-in-out_infinite]" style="height:35%;animation-delay:1.0s"></div>
+                        <div class="w-1 bg-amber-400/90 rounded-full animate-[waveBar_1.0s_ease-in-out_infinite]" style="height:85%;animation-delay:0.15s"></div>
+                        <div class="w-1 bg-amber-400   rounded-full animate-[waveBar_1.0s_ease-in-out_infinite]" style="height:55%;animation-delay:0.25s"></div>
+                        <div class="w-1 bg-amber-400/80 rounded-full animate-[waveBar_1.0s_ease-in-out_infinite]" style="height:70%;animation-delay:0.35s"></div>
+                        <div class="w-1 bg-amber-400/60 rounded-full animate-[waveBar_1.0s_ease-in-out_infinite]" style="height:40%;animation-delay:0.45s"></div>
+                    </div>
+                    <p id="voice-progress-text" class="text-[10px] text-amber-600/50 hidden mt-1">Playing…</p>
+                </div>
+                <!-- Dismiss -->
+                <button onclick="document.getElementById('voice-demo-banner').style.display='none'" class="flex-shrink-0 p-1.5 rounded-lg text-amber-600/40 hover:text-amber-400 hover:bg-amber-500/10 transition-all cursor-pointer" aria-label="Dismiss voice demo">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden audio element for voice demo -->
+    <audio id="voice-audio" src="/static/datapilot_intro.wav" preload="none"></audio>
+
     <!-- Upload Card (top, compact) -->
     <div class="max-w-xl w-full mx-auto relative z-10 mb-6">
         <div class="glass-card gradient-border rounded-2xl p-5 shadow-2xl shadow-black/20 hover-lift animate-slide-up">
@@ -183,9 +251,9 @@
                     </div>
                 </div>
 
-                <!-- Submit Button -->
+                <!-- Submit Button (amber CTA — UI-UX Pro Max data analytics palette) -->
                 <button type="submit"
-                    class="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 via-indigo-500 to-purple-600 hover:from-indigo-500 hover:via-indigo-400 hover:to-purple-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:ring-offset-2 focus:ring-offset-surface shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/40 transition-all duration-300">
+                    class="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl text-sm font-semibold text-gray-900 bg-gradient-to-r from-amber-500 via-amber-400 to-orange-400 hover:from-amber-400 hover:via-amber-300 hover:to-orange-300 focus:outline-none focus:ring-2 focus:ring-amber-400/60 focus:ring-offset-2 focus:ring-offset-surface shadow-lg shadow-amber-500/25 hover:shadow-amber-400/40 transition-all duration-300 cursor-pointer">
                     <svg class="w-5 h-5 flex-shrink-0 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" />
                     </svg>
@@ -546,6 +614,35 @@
                 s.style.color = i < selectedRating ? '#facc15' : '';
             });
         });
+    });
+
+    // Voice demo toggle
+    let voicePlaying = false;
+    const voiceAudio = document.getElementById('voice-audio');
+
+    function toggleVoiceDemo() {
+        if (voicePlaying) {
+            voiceAudio.pause();
+            document.getElementById('voice-icon-play').classList.remove('hidden');
+            document.getElementById('voice-icon-pause').classList.add('hidden');
+            document.getElementById('voice-waveform').style.opacity = '0';
+            document.getElementById('voice-progress-text').classList.add('hidden');
+        } else {
+            voiceAudio.play();
+            document.getElementById('voice-icon-play').classList.add('hidden');
+            document.getElementById('voice-icon-pause').classList.remove('hidden');
+            document.getElementById('voice-waveform').style.opacity = '1';
+            document.getElementById('voice-progress-text').classList.remove('hidden');
+        }
+        voicePlaying = !voicePlaying;
+    }
+
+    voiceAudio.addEventListener('ended', function() {
+        voicePlaying = false;
+        document.getElementById('voice-icon-play').classList.remove('hidden');
+        document.getElementById('voice-icon-pause').classList.add('hidden');
+        document.getElementById('voice-waveform').style.opacity = '0';
+        document.getElementById('voice-progress-text').classList.add('hidden');
     });
 
     // Feedback submit — saves to server
