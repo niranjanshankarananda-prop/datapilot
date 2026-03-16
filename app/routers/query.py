@@ -2,6 +2,7 @@ from typing import Any, AsyncGenerator
 import asyncio
 import json
 import os
+import sys
 import time
 
 import pandas as pd
@@ -20,6 +21,16 @@ from app.services.query_router import route_query, QueryRoute
 from app.services.result_formatter import format_result
 from app.sandbox.executor import execute_pandas_code, ExecutionError
 from app.sandbox.validators import SecurityViolationError
+
+# Shared eval tracer (graceful no-op if not on path)
+try:
+    _SHARED = "/Users/niranjan/Documents/AI_PROJS/shared"
+    if _SHARED not in sys.path:
+        sys.path.insert(0, _SHARED)
+    from eval.tracer import trace_rag_call as _trace
+    _TRACING_AVAILABLE = True
+except ImportError:
+    _TRACING_AVAILABLE = False
 
 
 router = APIRouter(prefix="/api", tags=["query"])
@@ -95,6 +106,16 @@ def create_query(request: QueryRequest, db: Session = Depends(get_db)) -> QueryR
 
         query.result = formatted_result
         query.status = "success"
+
+        if _TRACING_AVAILABLE:
+            _trace(
+                question=request.question,
+                context=[generated_code],
+                answer=str(formatted_result)[:500],
+                model="llama-3.3-70b",
+                latency_ms=0,
+                product="datapilot",
+            )
 
     except SQLSecurityError as e:
         query.error = f"SQL security violation: {str(e)}"
