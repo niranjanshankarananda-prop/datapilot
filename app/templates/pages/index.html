@@ -49,6 +49,26 @@
         80% { transform: translateX(5px); }
     }
 
+    /* DB Connector tab styles */
+    .tab-active  { background: rgba(59,130,246,0.15); color: #93c5fd; border: 1px solid rgba(59,130,246,0.25); }
+    .tab-inactive { background: transparent; color: #6b7280; border: 1px solid transparent; }
+    .tab-inactive:hover { color: #d1d5db; background: rgba(255,255,255,0.04); }
+    .db-type-active  { background: rgba(59,130,246,0.15); border-color: rgba(59,130,246,0.4); color: #93c5fd; }
+    .db-type-inactive { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.07); color: #6b7280; }
+    .db-type-inactive:hover { border-color: rgba(59,130,246,0.25); color: #9ca3af; }
+    .db-input {
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 0.5rem;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.8125rem;
+        color: #e2e8f0;
+        outline: none;
+        transition: border-color 0.15s;
+    }
+    .db-input:focus { border-color: rgba(59,130,246,0.45); box-shadow: 0 0 0 2px rgba(59,130,246,0.1); }
+    .db-input::placeholder { color: #4b5563; }
+
     /* Prevent horizontal overflow from decorative orbs */
     .min-h-screen { overflow-x: hidden; }
 
@@ -200,6 +220,23 @@
     <!-- Upload Card (top, compact) -->
     <div class="max-w-xl w-full mx-auto relative z-10 mb-6">
         <div class="glass-card gradient-border rounded-2xl p-5 shadow-2xl shadow-black/20 hover-lift animate-slide-up">
+
+            <!-- Tab Switcher -->
+            <div class="flex rounded-xl bg-surface-300/40 border border-white/[0.05] p-1 mb-5">
+                <button type="button" id="tab-upload" onclick="switchTab('upload')"
+                    class="flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-semibold transition-all duration-200 tab-active">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
+                    Upload File
+                </button>
+                <button type="button" id="tab-db" onclick="switchTab('db')"
+                    class="flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-semibold transition-all duration-200 tab-inactive">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 5.625c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"/></svg>
+                    Connect to Database
+                </button>
+            </div>
+
+            <!-- Panel: Upload File -->
+            <div id="panel-upload">
             <form action="/upload" method="post" enctype="multipart/form-data" class="space-y-4">
                 <!-- Drop zone -->
                 <div class="relative flex justify-center px-5 py-5 border-2 border-dashed border-gray-600/50 rounded-xl hover:border-blue-500/60 hover:bg-blue-500/5 transition-all duration-300 cursor-pointer group" id="drop-zone">
@@ -255,11 +292,144 @@
                 <button type="submit"
                     class="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl text-sm font-semibold text-gray-900 bg-gradient-to-r from-amber-500 via-amber-400 to-orange-400 hover:from-amber-400 hover:via-amber-300 hover:to-orange-300 focus:outline-none focus:ring-2 focus:ring-amber-400/60 focus:ring-offset-2 focus:ring-offset-surface shadow-lg shadow-amber-500/25 hover:shadow-amber-400/40 transition-all duration-300 cursor-pointer">
                     <svg class="w-5 h-5 flex-shrink-0 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" />
                     </svg>
                     Analyze Data
                 </button>
             </form>
+            </div><!-- /panel-upload -->
+
+            <!-- Panel: Connect to Database -->
+            <div id="panel-db" class="hidden space-y-4">
+
+                <!-- DB type selector -->
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1.5">Database Type</label>
+                    <div class="grid grid-cols-4 gap-1.5" id="db-type-grid">
+                        <button type="button" data-db="postgres" onclick="selectDbType('postgres')"
+                            class="db-type-btn db-type-active flex flex-col items-center gap-1 py-2.5 px-1 rounded-xl border text-[10px] font-semibold transition-all cursor-pointer">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                            PostgreSQL
+                        </button>
+                        <button type="button" data-db="mysql" onclick="selectDbType('mysql')"
+                            class="db-type-btn db-type-inactive flex flex-col items-center gap-1 py-2.5 px-1 rounded-xl border text-[10px] font-semibold transition-all cursor-pointer">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L1 9l11 6 9-4.91V17h2V9z"/><path d="M5 13.18v4L12 21l7-3.82v-4L12 17z"/></svg>
+                            MySQL
+                        </button>
+                        <button type="button" data-db="sqlite" onclick="selectDbType('sqlite')"
+                            class="db-type-btn db-type-inactive flex flex-col items-center gap-1 py-2.5 px-1 rounded-xl border text-[10px] font-semibold transition-all cursor-pointer">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0018 0V5"/><path d="M3 12a9 3 0 0018 0"/></svg>
+                            SQLite
+                        </button>
+                        <button type="button" data-db="mssql" onclick="selectDbType('mssql')"
+                            class="db-type-btn db-type-inactive flex flex-col items-center gap-1 py-2.5 px-1 rounded-xl border text-[10px] font-semibold transition-all cursor-pointer">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4" stroke="white" stroke-width="2" fill="none"/></svg>
+                            SQL Server
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Remote DB fields (Postgres / MySQL / MSSQL) -->
+                <div id="db-remote-fields" class="space-y-3">
+                    <div class="grid grid-cols-3 gap-2">
+                        <div class="col-span-2">
+                            <label class="block text-xs text-gray-400 mb-1">Host</label>
+                            <input type="text" id="db-host" placeholder="localhost" value="localhost"
+                                class="w-full db-input" oninput="buildConnectionString()">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-gray-400 mb-1">Port</label>
+                            <input type="number" id="db-port" placeholder="5432" value="5432"
+                                class="w-full db-input" oninput="buildConnectionString()">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Database Name</label>
+                        <input type="text" id="db-name" placeholder="mydb"
+                            class="w-full db-input" oninput="buildConnectionString()">
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-xs text-gray-400 mb-1">Username</label>
+                            <input type="text" id="db-user" placeholder="postgres"
+                                class="w-full db-input" oninput="buildConnectionString()">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-gray-400 mb-1">Password</label>
+                            <input type="password" id="db-pass" placeholder="••••••••"
+                                class="w-full db-input" oninput="buildConnectionString()">
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <input type="checkbox" id="db-ssl" onchange="buildConnectionString()"
+                            class="rounded border-gray-600 bg-surface-300/60 text-blue-500 focus:ring-blue-500/40">
+                        <label for="db-ssl" class="text-xs text-gray-400">Require SSL</label>
+                    </div>
+                </div>
+
+                <!-- SQLite-only field -->
+                <div id="db-sqlite-fields" class="hidden space-y-3">
+                    <div>
+                        <label class="block text-xs text-gray-400 mb-1">Database File Path <span class="text-gray-600">(absolute path on server)</span></label>
+                        <input type="text" id="db-sqlite-path" placeholder="/path/to/database.db"
+                            class="w-full db-input font-mono" oninput="buildConnectionString()">
+                    </div>
+                </div>
+
+                <!-- Connection string preview -->
+                <div>
+                    <div class="flex items-center justify-between mb-1">
+                        <label class="text-xs text-gray-400">Connection String <span class="text-gray-600">(auto-built · editable)</span></label>
+                        <button type="button" onclick="toggleConnStr()" class="text-[10px] text-blue-400 hover:text-blue-300">edit manually</button>
+                    </div>
+                    <textarea id="db-connstr" rows="2" readonly
+                        class="w-full db-input font-mono text-[11px] resize-none text-emerald-300/80"
+                        placeholder="Connection string will appear here…"></textarea>
+                </div>
+
+                <!-- Table name + inspect -->
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">Table Name</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="db-table" placeholder="my_table"
+                            class="flex-1 db-input">
+                        <button type="button" onclick="inspectTables()"
+                            class="px-3 py-2 rounded-lg bg-blue-600/30 hover:bg-blue-600/50 border border-blue-500/30 text-xs text-blue-300 font-medium transition-all whitespace-nowrap">
+                            Inspect DB
+                        </button>
+                    </div>
+                    <!-- Table list dropdown (populated after inspect) -->
+                    <div id="db-table-list" class="hidden mt-1 bg-surface-300/80 border border-white/[0.06] rounded-lg overflow-hidden max-h-32 overflow-y-auto text-xs"></div>
+                </div>
+
+                <!-- Display name -->
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">Display Name <span class="text-gray-600">(optional)</span></label>
+                    <input type="text" id="db-display" placeholder="My Production DB"
+                        class="w-full db-input">
+                </div>
+
+                <!-- Error / status -->
+                <div id="db-error" class="hidden">
+                    <div class="flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-2.5">
+                        <svg class="w-4 h-4 text-red-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"/></svg>
+                        <span class="text-sm text-red-300" id="db-error-msg"></span>
+                    </div>
+                </div>
+
+                <!-- Connect button -->
+                <button type="button" onclick="connectDatabase()"
+                    class="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 focus:outline-none focus:ring-2 focus:ring-blue-400/60 shadow-lg shadow-blue-500/20 transition-all duration-300 cursor-pointer">
+                    <svg id="db-connect-icon" class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375"/>
+                    </svg>
+                    <span id="db-connect-label">Connect &amp; Analyze</span>
+                </button>
+
+                <!-- Supported formats note -->
+                <p class="text-center text-[10px] text-gray-600">PostgreSQL · MySQL · SQLite · SQL Server · any SQLAlchemy-compatible URL</p>
+            </div><!-- /panel-db -->
+
         </div>
     </div>
 
@@ -458,6 +628,138 @@
 
 {% block scripts %}
 <script>
+    /* ─── DB Connector ─── */
+    var DB_DEFAULTS = { postgres: 5432, mysql: 3306, mssql: 1433 };
+    var DB_DRIVERS  = { postgres: 'postgresql', mysql: 'mysql+pymysql', mssql: 'mssql+pyodbc' };
+    var currentDbType = 'postgres';
+    var connStrManual = false;
+
+    function switchTab(tab) {
+        var isUpload = (tab === 'upload');
+        document.getElementById('panel-upload').classList.toggle('hidden', !isUpload);
+        document.getElementById('panel-db').classList.toggle('hidden', isUpload);
+        document.getElementById('tab-upload').className = 'flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-semibold transition-all duration-200 ' + (isUpload ? 'tab-active' : 'tab-inactive');
+        document.getElementById('tab-db').className     = 'flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-semibold transition-all duration-200 ' + (!isUpload ? 'tab-active' : 'tab-inactive');
+    }
+
+    function selectDbType(type) {
+        currentDbType = type;
+        document.querySelectorAll('.db-type-btn').forEach(function(b) {
+            var cls = b.className.replace(/db-type-\w+/, b.dataset.db === type ? 'db-type-active' : 'db-type-inactive');
+            b.className = cls;
+        });
+        var isSqlite = (type === 'sqlite');
+        document.getElementById('db-remote-fields').classList.toggle('hidden', isSqlite);
+        document.getElementById('db-sqlite-fields').classList.toggle('hidden', !isSqlite);
+        if (!isSqlite) {
+            document.getElementById('db-port').value = DB_DEFAULTS[type] || 5432;
+        }
+        connStrManual = false;
+        document.getElementById('db-connstr').readOnly = true;
+        buildConnectionString();
+    }
+
+    function buildConnectionString() {
+        if (connStrManual) return;
+        var cs = '';
+        if (currentDbType === 'sqlite') {
+            var path = document.getElementById('db-sqlite-path').value.trim();
+            cs = path ? ('sqlite:///' + (path.startsWith('/') ? '/' : '') + path) : '';
+        } else {
+            var host = document.getElementById('db-host').value.trim() || 'localhost';
+            var port = document.getElementById('db-port').value.trim();
+            var name = document.getElementById('db-name').value.trim();
+            var user = document.getElementById('db-user').value.trim();
+            var pass = document.getElementById('db-pass').value.trim();
+            var ssl  = document.getElementById('db-ssl').checked;
+            var driver = DB_DRIVERS[currentDbType] || 'postgresql';
+            var auth = user ? (pass ? encodeURIComponent(user) + ':' + encodeURIComponent(pass) + '@' : encodeURIComponent(user) + '@') : '';
+            var portStr = port ? ':' + port : '';
+            cs = driver + '://' + auth + host + portStr + '/' + name;
+            if (ssl) cs += '?sslmode=require';
+            if (currentDbType === 'mssql') cs += (ssl ? '&' : '?') + 'driver=ODBC+Driver+17+for+SQL+Server';
+        }
+        document.getElementById('db-connstr').value = cs;
+    }
+
+    function toggleConnStr() {
+        var ta = document.getElementById('db-connstr');
+        connStrManual = !connStrManual;
+        ta.readOnly = !connStrManual;
+        if (connStrManual) { ta.focus(); ta.style.color = '#fcd34d'; }
+        else { ta.style.color = ''; buildConnectionString(); }
+    }
+
+    function inspectTables() {
+        var cs = document.getElementById('db-connstr').value.trim();
+        if (!cs) { showDbError('Enter connection details first.'); return; }
+        hideDbError();
+        var btn = document.querySelector('[onclick="inspectTables()"]');
+        btn.textContent = 'Inspecting\u2026';
+        btn.disabled = true;
+        fetch('/api/datasets/inspect-db', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ connection_string: cs })
+        }).then(function(res) {
+            return res.json().then(function(data) { return { ok: res.ok, data: data }; });
+        }).then(function(r) {
+            if (!r.ok) throw new Error(r.data.detail || 'Inspection failed');
+            var list = document.getElementById('db-table-list');
+            list.textContent = '';
+            if (r.data.tables && r.data.tables.length) {
+                r.data.tables.forEach(function(t) {
+                    var div = document.createElement('div');
+                    div.className = 'px-3 py-2 hover:bg-blue-500/10 cursor-pointer text-gray-300 border-b border-white/[0.04] last:border-0';
+                    div.textContent = t;
+                    div.addEventListener('click', function() {
+                        document.getElementById('db-table').value = t;
+                        list.classList.add('hidden');
+                    });
+                    list.appendChild(div);
+                });
+                list.classList.remove('hidden');
+            } else { showDbError('No tables found.'); }
+        }).catch(function(e) { showDbError(e.message); })
+        .finally(function() { btn.textContent = 'Inspect DB'; btn.disabled = false; });
+    }
+
+    function connectDatabase() {
+        hideDbError();
+        var cs      = document.getElementById('db-connstr').value.trim();
+        var table   = document.getElementById('db-table').value.trim();
+        var display = document.getElementById('db-display').value.trim();
+        if (!cs)    { showDbError('Connection string is required.'); return; }
+        if (!table) { showDbError('Table name is required.'); return; }
+        var label = document.getElementById('db-connect-label');
+        var icon  = document.getElementById('db-connect-icon');
+        label.textContent = 'Connecting\u2026';
+        icon.classList.add('animate-spin');
+        var body = { connection_string: cs, table_name: table };
+        if (display) body.display_name = display;
+        fetch('/api/datasets/register-db', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        }).then(function(res) {
+            return res.json().then(function(data) { return { ok: res.ok, data: data }; });
+        }).then(function(r) {
+            if (!r.ok) throw new Error(r.data.detail || 'Connection failed');
+            window.location.href = '/workspace/' + r.data.id;
+        }).catch(function(e) {
+            showDbError(e.message);
+            label.textContent = 'Connect \u0026 Analyze';
+            icon.classList.remove('animate-spin');
+        });
+    }
+
+    function showDbError(msg) {
+        document.getElementById('db-error-msg').textContent = msg;
+        document.getElementById('db-error').classList.remove('hidden');
+    }
+    function hideDbError() { document.getElementById('db-error').classList.add('hidden'); }
+    /* ─── End DB Connector ─── */
+
     const fileInput = document.getElementById('file-upload');
     const fileInfo = document.getElementById('file-info');
     const filenameDisplay = document.getElementById('filename');

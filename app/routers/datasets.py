@@ -78,6 +78,23 @@ async def upload_dataset(
     )
 
 
+class DBInspectRequest(BaseModel):
+    connection_string: str
+
+
+@router.post("/inspect-db")
+async def inspect_database(request: DBInspectRequest) -> dict:
+    """Return the list of tables in a database without registering it."""
+    try:
+        engine = create_engine(request.connection_string)
+        inspector = inspect(engine)
+        tables = inspector.get_table_names()
+        engine.dispose()
+        return {"tables": tables}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Cannot connect: {e}")
+
+
 class DBDatasetRequest(BaseModel):
     connection_string: str
     table_name: str
