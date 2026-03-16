@@ -17,5 +17,7 @@ class Dataset(Base):
     columns = Column(JSON, nullable=False)
     data_profile = Column(JSON, nullable=False)
     storage_key = Column(String, nullable=False, index=True)
+    dataset_type = Column(String, nullable=False, default="file")
+    db_connection_string = Column(String, nullable=True)
     expires_at = Column(DateTime, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
