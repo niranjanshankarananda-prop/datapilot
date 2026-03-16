@@ -38,8 +38,16 @@ router = APIRouter(prefix="/api", tags=["query"])
 
 DATASETS_DIR = os.environ.get("DATASETS_DIR", "./datasets")
 
+# Shared in-memory storage — populated by datasets.py and pages.py upload handlers
+from app.routers.datasets import _data_storage as _upload_storage  # noqa: E402
+
 
 def load_dataset(dataset_id: str) -> pd.DataFrame:
+    # Check in-memory store first (populated on upload)
+    if dataset_id in _upload_storage:
+        return _upload_storage[dataset_id]
+
+    # Fallback: try disk (for pre-seeded datasets or file-backed deployments)
     for ext in [".csv", ".xlsx", ".parquet"]:
         path = os.path.join(DATASETS_DIR, f"{dataset_id}{ext}")
         if os.path.exists(path):
