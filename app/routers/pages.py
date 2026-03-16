@@ -216,21 +216,37 @@ async def workspace(request: Request, dataset_id: int, db: Session = Depends(get
     dataset = get_dataset_or_404(dataset_id, db)
 
     storage_key = str(dataset.storage_key)
-    if storage_key not in _data_storage:
-        raise HTTPException(status_code=404, detail="Dataset data not found in memory")
 
-    df = _data_storage[storage_key]
-    preview_df = df.head(20)
+    if getattr(dataset, "dataset_type", "file") == "database":
+        from sqlalchemy import create_engine, text as sa_text
+        try:
+            eng = create_engine(dataset.db_connection_string)
+            with eng.connect() as conn:
+                result = conn.execute(sa_text(f"SELECT * FROM {dataset.filename} LIMIT 20"))
+                col_names = list(result.keys())
+                rows = result.fetchall()
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Cannot load DB preview: {e}")
+        preview_data = [dict(zip(col_names, row)) for row in rows]
+        schema_cols = dataset.columns or []
+        preview_columns = [{"name": c["name"], "dtype": c["dtype"]} for c in schema_cols]
+        column_profile = [{"name": c["name"], "dtype": c["dtype"]} for c in schema_cols]
+    else:
+        if storage_key not in _data_storage:
+            raise HTTPException(status_code=404, detail="Dataset data not found in memory")
 
-    preview_data = preview_df.to_dict(orient="records")
-    preview_columns = [{"name": col, "dtype": str(df[col].dtype)} for col in df.columns]
+        df = _data_storage[storage_key]
+        preview_df = df.head(20)
 
-    raw_profile = dataset.data_profile.get("columns", {})
-    column_profile = [
-        {"name": col_name, "dtype": str(df[col_name].dtype), **col_data}
-        for col_name, col_data in raw_profile.items()
-        if col_name in df.columns
-    ]
+        preview_data = preview_df.to_dict(orient="records")
+        preview_columns = [{"name": col, "dtype": str(df[col].dtype)} for col in df.columns]
+
+        raw_profile = dataset.data_profile.get("columns", {})
+        column_profile = [
+            {"name": col_name, "dtype": str(df[col_name].dtype), **col_data}
+            for col_name, col_data in raw_profile.items()
+            if col_name in df.columns
+        ]
 
     queries = (
         db.query(Query)
@@ -260,8 +276,50 @@ async def submit_query(
     api_key: str = Form(""),
     db: Session = Depends(get_db),
 ):
-    dataset = get_dataset_or_404(dataset_id, db)
+    from app.services.nl_to_sql import nl_to_sql
+    from app.services.sql_executor import execute_sql_query, SQLSecurityError
+    from app.services.query_router import route_query, QueryRoute
 
+    dataset = get_dataset_or_404(dataset_id, db)
+    dataset_type = getattr(dataset, "dataset_type", "file")
+    route = route_query(dataset_type)
+
+    # --- SQL (database) path ---
+    if route == QueryRoute.SQL:
+        schema = dataset.columns or []
+        query = Query(
+            dataset_id=str(dataset_id),
+            question=question,
+            status="processing",
+        )
+        db.add(query)
+        db.commit()
+        db.refresh(query)
+        try:
+            generated_sql = nl_to_sql(
+                question, schema,
+                table_name=dataset.filename,
+                api_key=api_key or None,
+            )
+            query.generated_code = generated_sql
+            raw_result = execute_sql_query(generated_sql, dataset.db_connection_string)
+            formatted_result = format_result(raw_result)
+            query.result = formatted_result
+            query.status = "success"
+        except SQLSecurityError as e:
+            query.error = f"SQL security violation: {e}"
+            query.status = "error"
+        except Exception as e:
+            query.error = str(e)
+            query.status = "error"
+        db.commit()
+        db.refresh(query)
+        return templates.TemplateResponse(
+            "components/query-result.html",
+            {"request": request, "query": query},
+        )
+
+    # --- Pandas (file) path ---
     storage_key = str(dataset.storage_key)
     if storage_key not in _data_storage:
         # Data lost due to server restart — return a friendly error
