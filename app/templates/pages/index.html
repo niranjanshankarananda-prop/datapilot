@@ -859,14 +859,28 @@
 
     function saveApiKey() {
         const input = document.getElementById('api-key-input-home');
+        const btn = document.querySelector('[onclick="saveApiKey()"]');
         const key = input.value.trim();
         if (key) {
             localStorage.setItem('datapilot_api_key', key);
             input.value = '';
+            updateApiKeyStatus();
+            if (btn) {
+                const origText = btn.textContent;
+                const origClass = btn.className;
+                btn.textContent = 'Saved ✓';
+                btn.className = origClass.replace('bg-emerald-600/80 hover:bg-emerald-500', 'bg-emerald-400 cursor-default');
+                setTimeout(() => {
+                    btn.textContent = origText;
+                    btn.className = origClass;
+                    // Auto-close panel so user sees the green status bar
+                    document.getElementById('api-settings-panel').classList.add('hidden');
+                }, 1500);
+            }
         } else {
             localStorage.removeItem('datapilot_api_key');
+            updateApiKeyStatus();
         }
-        updateApiKeyStatus();
     }
 
     updateApiKeyStatus();
