@@ -26,6 +26,11 @@ COLUMN MATCHING:
 
 RESULT GUIDELINES:
 - When filtering rows, return the full filtered DataFrame with all columns
+- When user asks "find [column] OF [entity]" or "[column] for [country/category/group]":
+  ALWAYS return the full filtered DataFrame (not just that one column)
+  e.g. "number of employees of sri lanka" → result = df[df['Country'] == 'Sri Lanka']
+  ONLY select a single column + aggregate when user says "total", "sum", "average", "mean", "count"
+  e.g. "total employees in sri lanka" → result = df[df['Country'] == 'Sri Lanka']['Number of employees'].sum()
 - When asked for "top N":
   - For NUMERIC columns: use .nlargest(N, column) or .sort_values(column, ascending=False).head(N)
   - For STRING/OBJECT columns: NEVER use .nlargest() — use .sort_values(column, ascending=False).head(N) instead
@@ -63,6 +68,15 @@ result = df.groupby('PAGE_PATH')['BOUNCE_RATE'].mean().reset_index()
 Question: "how many rows have page views greater than 1000"
 Code:
 result = len(df[df['PAGE_VIEWS'] > 1000])
+
+Schema: Name(str), Country(str), Industry(str), Number of employees(int64)
+Question: "find the number of employees of sri lanka"
+Code:
+result = df[df['Country'] == 'Sri Lanka']
+
+Question: "total employees in sri lanka"
+Code:
+result = df[df['Country'] == 'Sri Lanka']['Number of employees'].sum()
 
 Return ONLY the Python code, no explanations or markdown.
 """
